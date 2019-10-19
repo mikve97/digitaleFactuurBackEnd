@@ -1,0 +1,17 @@
+.gitignore
+.settings/*
+.settings/org.eclipse.jdt.core.prefs
+.project
+build.fxbuild
+.classpath
+.settings/**
+.settings/*
+**/.settings/**
+bin/**
+**/bin/**
+bin/*
+bin/application/*
+bin/.gitignore
+front_end_rittenregistratie_API.iml
+.idea/*
+/bin/

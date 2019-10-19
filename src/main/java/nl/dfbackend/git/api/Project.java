@@ -4,27 +4,52 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
 
 public class Project {
-    private long id;
+    @Length(max = 3)
+    private int id;
 
-    @Length(max = 12)
-    private String content;
+    @Length(max = 11)
+    private int trips;
+
+    @Length(max = 255)
+    private String name;
 
     public Project() {
         // Jackson deserialization
     }
-
-    public Project(long id, String content) {
+    public Project(int id, String name, int trips ) {
         this.id = id;
-        this.content = content;
+
+        this.trips = trips;
+
+        this.name = name;
     }
 
     @JsonProperty
-    public long getId() {
-        return id;
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @JsonProperty
-    public String getContent() {
-        return content;
+    public String getName() {
+        return this.name;
     }
+
+    public void setId(String name) {
+        this.name = name;
+    }
+
+    @JsonProperty
+    public int getTrips() {
+        return this.trips;
+    }
+
+    public void setTrips(int trips) {
+        this.trips = trips;
+    }
+
+
 }
