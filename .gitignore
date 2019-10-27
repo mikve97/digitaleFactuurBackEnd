@@ -15,3 +15,4 @@ bin/.gitignore
 front_end_rittenregistratie_API.iml
 .idea/*
 /bin/
+/target/
