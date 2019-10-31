@@ -6,6 +6,11 @@ import org.hibernate.validator.constraints.*;
 import javax.validation.constraints.*;
 
 public class MainConfiguration extends Configuration {
-    // TODO: implement service configuration
-
+	@NotEmpty
+	private String password;
+	
+	@JsonProperty
+	public String getPassword() {
+		return password;
+	}
 }

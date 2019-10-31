@@ -27,7 +27,7 @@ public class MainApplication extends Application<MainConfiguration> {
         environment.jersey().register(resource);
         environment.jersey().register(resourceHello);
         //gebruikt andere versie, zie pom
-//        environment.jersey().register(AuthFactory.binder(new BasicAuthFactory<>(new HelloAuthenticator(), "SECURITY REALM", User.class)));
+        environment.jersey().register(AuthFactory.binder(new BasicAuthFactory<>(new HelloAuthenticator(configuration.getPassword()), "SECURITY REALM", User.class)));
     }
 
 }
