@@ -1,11 +1,20 @@
 ## YAML Template
 ---
 # password
-logging:
-login: username
 password: p@ssw0rd
 
 server:
     applicationConnectors:
         - type: http
           port: 8085
+        - type: https
+          port: 8443
+          keyStorePath: digitaleFactuurBackEnd.keystore
+          keyStorePassword: p@ssw0rd
+          validateCerts: false
+
+database:
+    driverClass: com.mysql.jdbc.Driver
+    user: root
+    password: 1
+    url: jdbc:mysql://localhost:3306/digitaleFactuur
