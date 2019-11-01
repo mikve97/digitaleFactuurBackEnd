@@ -14,7 +14,7 @@ server:
           validateCerts: false
 
 database:
-    driverClass: com.mysql.jdbc.Driver
-    user: root
-    password: 1
-    url: jdbc:mysql://localhost:3306/digitaleFactuur
+    driverClass: org.postgresql.Driver
+    user: postgres
+    password: 1234
+    url: jdbc:postgresql://localhost/iipsen
