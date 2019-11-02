@@ -19,7 +19,7 @@ public class ProjectResource {
 
     @Path("/getProject")
     @GET
-    public Response getMessage(@QueryParam("jwtToken") String jwtToken, @QueryParam("projectId") String projectId) {
+    public Response getMessage(@QueryParam("jwtTok en") String jwtToken, @QueryParam("projectId") String projectId) {
 
         Project project = new Project(1, "TestProject", 11);
         return Response.ok(project).build();
