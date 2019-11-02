@@ -3,6 +3,7 @@ package nl.dfbackend.git.api;
 import java.security.Principal;
 
 public class User implements Principal {
+
     private int userId;
     private String email;
     private String Password;
