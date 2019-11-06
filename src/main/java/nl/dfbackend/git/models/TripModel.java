@@ -7,20 +7,20 @@ import java.util.Objects;
  *
  */
 public class TripModel {
-    private int id;
+    private int tripId;
     private int projectId;
     private int userId;
-    private String licensePlate;
+    private String licenseplate;
     private String startLocation;
     private String endLocation;
     private double startKilometergauge;
     private double endKilometergauge;
     
     public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation, double startKilometergauge, double endKilometergauge) {
-		this.id = id;
+		this.tripId = id;
 		this.projectId = projectId;
 		this.userId = userId;
-		this.licensePlate = licensePlate;
+		this.licenseplate = licensePlate;
 		this.startLocation = startLocation;
 		this.endLocation = endLocation;
 		this.startKilometergauge = startKilometergauge;
@@ -28,11 +28,11 @@ public class TripModel {
 	}
 
 	public int getTripId() {
-		return id;
+		return tripId;
 	}
 
 	public void setTripId(int id) {
-		this.id = id;
+		this.tripId = id;
 	}
 
 	public int getProjectId() {
@@ -51,12 +51,12 @@ public class TripModel {
 		this.userId = userId;
 	}
 
-	public String getLicensePlate() {
-		return licensePlate;
+	public String getLicenseplate() {
+		return licenseplate;
 	}
 
-	public void setLicensePlate(String licensePlate) {
-		this.licensePlate = licensePlate;
+	public void setLicenseplate(String licensePlate) {
+		this.licenseplate = licensePlate;
 	}
 
 	public String getStartLocation() {
@@ -95,10 +95,10 @@ public class TripModel {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 59 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 59 * hash + (int) (this.tripId ^ (this.tripId >>> 32));
         hash = 59 * hash + Objects.hashCode(this.projectId);
         hash = 59 * hash + Objects.hashCode(this.userId);
-        hash = 59 * hash + Objects.hashCode(this.licensePlate);
+        hash = 59 * hash + Objects.hashCode(this.licenseplate);
         hash = 59 * hash + Objects.hashCode(this.startLocation);
         hash = 59 * hash + Objects.hashCode(this.endLocation);
         hash = 59 * hash + Objects.hashCode(this.startKilometergauge);
@@ -115,7 +115,7 @@ public class TripModel {
             return false;
         }
         final TripModel other = (TripModel) obj;
-        if (this.id != other.id) {
+        if (this.tripId != other.tripId) {
             return false;
         }
         if (!Objects.equals(this.projectId, other.projectId)) {
@@ -124,7 +124,7 @@ public class TripModel {
         if (!Objects.equals(this.userId, other.userId)) {
             return false;
         }
-        if (!Objects.equals(this.licensePlate, other.licensePlate)) {
+        if (!Objects.equals(this.licenseplate, other.licenseplate)) {
             return false;
         }
         if (!Objects.equals(this.startLocation, other.startLocation)) {
@@ -145,10 +145,10 @@ public class TripModel {
     @Override
     public String toString() {
     	return "Trip{" +
-    			"id=" + id +
+    			"id=" + tripId +
     			", projectId=" + projectId +
     			", userId=" + userId +
-    			", licensePlate= '" + licensePlate + '\'' +
+    			", licensePlate= '" + licenseplate + '\'' +
     			", startLocation= '" + startLocation + '\'' +
     			", endLocation= '" + endLocation + '\'' +
     			", startKilometergauge=" + startKilometergauge +
