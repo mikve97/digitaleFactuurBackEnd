@@ -24,7 +24,7 @@ public class LoginService {
         System.out.println(String.format("user tries to login: %s, %s", credentail.getUsername(), credentail.getPassword()));
 
         // controleer of gebruiker bestaat.
-            // hier komt je dao waarin een query heb staan dat gebruiker controller of die bestaat.
+        // hier komt je dao waarin een query heb staan dat gebruiker controller of die bestaat.
         if(dao.userExist(credentail.getUsername(), credentail.getPassword()))
         {
             // todo
