@@ -1,14 +1,16 @@
 package nl.dfbackend.git;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.validator.constraints.*;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
-
+/**
+ * @author Oussama Fahchouch
+ */
 public class MainConfiguration extends Configuration {
 	@Valid
     @NotNull

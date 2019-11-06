@@ -3,6 +3,9 @@ package nl.dfbackend.git.util;
 import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
 
+/**
+ * @author Oussama Fahchouch
+ */
 public class DbConnector {
 	private final static String url = "manny.db.elephantsql.com:5432";
 	private final static String dbName = "kvszgnmq";
@@ -11,6 +14,9 @@ public class DbConnector {
 	private static PGPoolingDataSource source = null;
 	private static DbConnector singleInstance = null;
 	
+	/**
+	 * @author Oussama Fahchouch
+	 */
     public static DbConnector getInstance() 
     { 
         if (singleInstance == null) 
@@ -21,6 +27,9 @@ public class DbConnector {
         return singleInstance; 
     } 
 	
+    /**
+     * @author Oussama Fahchouch
+     */
 	public static DBI getDBI() {
 		source.setServerName(url);
 		source.setDatabaseName(dbName);

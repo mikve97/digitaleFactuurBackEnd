@@ -8,8 +8,14 @@ import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
 import nl.dfbackend.git.models.TripModel;
 
+/**
+ * @author Oussama Fahchouch
+ */
 public class TripMapper implements ResultSetMapper<TripModel> {
-
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@Override
 	public TripModel map(int index, ResultSet r, StatementContext ctx) throws SQLException {
 		return new TripModel(

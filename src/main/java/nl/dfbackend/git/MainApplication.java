@@ -11,15 +11,26 @@ import nl.dfbackend.git.resources.TripResource;
 
 public class MainApplication extends Application<MainConfiguration> {
 
+    /**
+     * @param args
+     * @throws Exception
+     */
     public static void main(String[] args) throws Exception {
          new MainApplication().run(new String[] {"server", "config.yml"});
     }
     
+    
+    /**
+     * @author Oussama Fahchouch
+     */
     @Override
     public String getName() {
         return "digitaleFactuurBackEnd";
     }
     
+    /**
+     *  @author Oussama Fahchouch
+     */
     @Override
     public void initialize(final Bootstrap<MainConfiguration> bootstrap) {
     	bootstrap.addBundle(new MigrationsBundle<MainConfiguration>() {

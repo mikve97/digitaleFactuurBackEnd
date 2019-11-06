@@ -14,6 +14,9 @@ import javax.ws.rs.core.MediaType;
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.services.TripService;
 
+/**
+ * @author Oussama Fahchouch
+ */
 @Path("/trips")
 public class TripResource {
 	private TripService tripService;
@@ -22,12 +25,18 @@ public class TripResource {
 		this.tripService = new TripService();
 	}
 
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getAllTrips() throws SQLException {
 		return tripService.fetchAllTrips();
 	}
 	
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@Path("/trip/{id}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -35,6 +44,9 @@ public class TripResource {
 		return tripService.fetchTrip(id);
 	}
 	
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@Path("/trip/add/for-project/{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
@@ -47,6 +59,9 @@ public class TripResource {
 		return true;
 	}
 	
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@Path("/trip/add/for-user/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)

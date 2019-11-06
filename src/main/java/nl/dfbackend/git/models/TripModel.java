@@ -2,6 +2,10 @@ package nl.dfbackend.git.models;
 
 import java.util.Objects;
 
+/**
+ * @author Oussamam Fahchouch
+ *
+ */
 public class TripModel {
     private int id;
     private int projectId;
