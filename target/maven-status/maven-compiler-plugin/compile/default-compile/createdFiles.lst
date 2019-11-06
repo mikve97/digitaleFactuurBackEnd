@@ -1,0 +1,5 @@
+nl/dfbackend/git/resources/TripResource.class
+nl/dfbackend/git/services/TripService.class
+nl/dfbackend/git/util/DbConnector.class
+nl/dfbackend/git/persistences/TripDAO.class
+nl/dfbackend/git/models/TripModel.class
