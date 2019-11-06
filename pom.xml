@@ -29,6 +29,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            
+            <dependency>
+		      	<groupId>org.jdbi</groupId>
+		      	<artifactId>jdbi3-bom</artifactId>
+		      	<type>pom</type>
+		      	<version>3.8.2</version>
+		      	<scope>import</scope>
+    		</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -42,6 +50,32 @@
             <groupId>com.github.toastshaman</groupId>
             <artifactId>dropwizard-auth-jwt</artifactId>
             <version>1.1.2-0</version>
+        </dependency>
+        
+        <dependency>
+    		<groupId>org.jdbi</groupId>
+    		<artifactId>jdbi3-core</artifactId>
+  		</dependency>
+  		
+  		<dependency>
+    		<groupId>org.jdbi</groupId>
+    		<artifactId>jdbi</artifactId>
+    		<version>2.78</version>
+  		</dependency>
+        <dependency>
+            <groupId>io.dropwizard</groupId>
+            <artifactId>dropwizard-migrations</artifactId>
+            <version>${dropwizard.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901-1.jdbc4</version>
         </dependency>
     </dependencies>
 
@@ -120,6 +154,31 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+             <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.6.3</version>
+                <configuration>
+                    <changeLogFile>migrations.xml</changeLogFile>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://manny.db.elephantsql.com:5432/kvszgnmq</url>
+                    <username>kvszgnmq</username>
+                    <password>HLwhrVFmFDIO5LGAtLNPMghrHhQjEbdK</password>
+                </configuration>
+            </plugin>
+             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals><goal>copy-dependencies</goal></goals>
                     </execution>
                 </executions>
             </plugin>
