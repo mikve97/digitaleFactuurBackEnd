@@ -6,7 +6,14 @@ public class User implements Principal {
 
     private int userId;
     private String email;
-    private String Password;
+    private String password;
+    private String authToken;
+
+    public User(int userId, String email, String password){
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+    }
 
     public int getUserId() {
         return userId;
@@ -25,11 +32,19 @@ public class User implements Principal {
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        password = password;
+    }
+
+    public String getAuthToken() {
+        return authToken;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
     }
 
     @Override

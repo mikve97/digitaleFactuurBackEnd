@@ -16,10 +16,16 @@ import java.io.UnsupportedEncodingException;
  */
 public class MainConfiguration extends Configuration {
     @NotEmpty
-    private String jwtTokenSecret = "dfwzsdzwh823zebdwdz772632gdsbd";
+    private String jwtTokenSecret;
 
+    @JsonProperty("jwt-secret")
     public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
         return jwtTokenSecret.getBytes("UTF-8");
+    }
+
+    @JsonProperty("jwt-secret")
+    public void setJwtTokenSecret(String jwtTokenSecret) {
+        this.jwtTokenSecret = jwtTokenSecret;
     }
 
 	@Valid
