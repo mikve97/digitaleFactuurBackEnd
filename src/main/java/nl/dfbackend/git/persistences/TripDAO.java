@@ -8,6 +8,7 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
 import nl.dfbackend.git.models.TripModel;
+import nl.dfbackend.git.mappers.TripMapper;
 
 @RegisterMapper(TripMapper.class)
 public interface TripDAO {	
