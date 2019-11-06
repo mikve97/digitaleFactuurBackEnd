@@ -16,8 +16,7 @@ public class TripModel {
     private double startKilometergauge;
     private double endKilometergauge;
     
-    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation,
-    		double startKilometergauge, double endKilometergauge) {
+    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation, double startKilometergauge, double endKilometergauge) {
 		this.id = id;
 		this.projectId = projectId;
 		this.userId = userId;

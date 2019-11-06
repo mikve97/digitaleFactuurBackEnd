@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="oussama">
+        <createTable tableName="trips">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="projectid" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userid" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="licenseplate" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startlocation" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endlocation" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="startkilometergauge" type="double">
+                <constraints nullable="false"/>
+            </column>
+            <column name="endkilometergauge" type="double">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="2" author="oussama">
+        <insert tableName="trips">
+              <column name="projectid" value="1" />
+              <column name="userid" value="1" />
+              <column name="licenseplate" value="AA-BB-12" />
+              <column name="startlocation" value="Adres A" />
+              <column name="endlocation" value="Adres B" />
+              <column name="startkilometergauge" value="33358.34" />
+              <column name="endkilometergauge" value="33493.64" />               
+        </insert>
+        
+        <insert tableName="trips">
+              <column name="projectid" value="1" />
+              <column name="userid" value="2" />
+              <column name="licenseplate" value="AZ-CB-34" />
+              <column name="startlocation" value="Adres A" />
+              <column name="endlocation" value="Adres B" />
+              <column name="startkilometergauge" value="13958.93" />
+              <column name="endkilometergauge" value="13993.82" />               
+        </insert>
+    </changeSet>
+</databaseChangeLog>

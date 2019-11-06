@@ -50,6 +50,19 @@ public interface TripPersistence {
 	 */
 	@SqlUpdate("DELETE FROM trips WHERE ID = :id")
 	void remove(@Bind("id") int id);
-	
+
+
+	/**
+	 * @author Mike van Es
+	 */
+	@SqlQuery("SELECT * FROM trips WHERE projectid IS NOT NULL ORDER BY projectid")
+	List<TripModel> getAllTripsWithProject();
+
+	/**
+	 * @author Mike van Es
+	 */
+	@SqlQuery("SELECT * FROM trips WHERE projectid = :pid ")
+	List<TripModel> getAllTripsByProject(@Bind("pid") int pid);
+
 	void close();
 }
