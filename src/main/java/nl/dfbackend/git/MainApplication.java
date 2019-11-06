@@ -12,9 +12,7 @@ import nl.dfbackend.git.resources.TripResource;
 public class MainApplication extends Application<MainConfiguration> {
 
     public static void main(String[] args) throws Exception {
-        //Gebruik deze als we een config.yml gaan gebruiken voor bv een db verbinding
-        // new MainApplication().run(new String[] {"server", "config.yml"});
-        new MainApplication().run(new String[] {"server"});
+         new MainApplication().run(new String[] {"server", "config.yml"});
     }
     
     @Override
