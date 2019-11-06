@@ -6,6 +6,7 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import nl.dfbackend.git.resources.ProjectResource;
+import nl.dfbackend.git.resources.TripResource;
 
 
 public class MainApplication extends Application<MainConfiguration> {
