@@ -35,7 +35,7 @@ public class DbConnector {
 		source.setDatabaseName(dbName);
 		source.setUser(username);
 		source.setPassword(password);
-		source.setMaxConnections(10);
+		source.setMaxConnections(100);
 		
 		return new DBI(source);
 	}
