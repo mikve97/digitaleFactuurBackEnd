@@ -6,10 +6,7 @@ import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.services.ProjectService;
 import org.eclipse.jetty.server.Authentication;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -20,6 +17,7 @@ public class ProjectResource {
 
     private final String apiKey;
     private final String userId;
+    ProjectService pService = new ProjectService();
 
     public ProjectResource(String apiKey, String userId) {
         this.apiKey = apiKey;
@@ -30,14 +28,34 @@ public class ProjectResource {
     @GET
     public Response getAllProjects() {
 
-        ProjectService pService = new ProjectService();
-        List<ProjectModel> projects = pService.getProjectsFromApi(this.apiKey, this.userId);
+
+        List<ProjectModel> projects = this.pService.getProjectsFromApi(this.apiKey, this.userId);
 
         if(projects != null){
             return Response.ok(projects).build();
         }else{
             return Response.ok("No projects found").build();
         }
+
+    }
+
+    @Path("/setProject")
+    @POST
+    public void setProject(@QueryParam("project") String project) {
+        this.pService.setJsonProject(project);
+    }
+
+    @Path("/getProject")
+    @GET
+    public Response getProject() {
+        String jsonProject = pService.getJsonProject();
+
+        if(jsonProject == ""){
+            return Response.ok(null).build();
+        }else{
+            return Response.ok(jsonProject).build();
+        }
+
 
     }
 }
