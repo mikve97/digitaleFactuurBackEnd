@@ -19,6 +19,7 @@ import java.util.List;
 public class ProjectService {
 
     public ProjectService(){}
+    private String jsonProject = "";
 
     private List<TripModel> fetchAllTripsWithProject(){
         TripService ts = new TripService();
@@ -32,6 +33,14 @@ public class ProjectService {
         List<TripModel> projects = ts.fetchAllTripsByProject(projectId);
 
         return projects;
+    }
+
+    public String getJsonProject() {
+        return jsonProject;
+    }
+
+    public void setJsonProject(String jsonProject) {
+        this.jsonProject = jsonProject;
     }
 
     public List<ProjectModel> getProjectsFromApi(String apiKey, String userId){
