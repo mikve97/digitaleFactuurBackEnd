@@ -15,6 +15,9 @@ public class ProjectModel {
     @Length(max = 255)
     private String name;
 
+    /**
+     * Basic model so we can return our projects to our frond-end
+     */
     public ProjectModel() {
         // Jackson deserialization
     }

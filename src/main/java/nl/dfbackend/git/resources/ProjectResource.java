@@ -24,6 +24,10 @@ public class ProjectResource {
         this.userId = userId;
     }
 
+    /**
+     * Gets all valid projects registerd at digitalefactuur, if we have them at our trip table it adds the corresponding trips.
+     * @return Response
+     */
     @Path("/getAllProject")
     @GET
     public Response getAllProjects() {
@@ -39,6 +43,10 @@ public class ProjectResource {
 
     }
 
+    /**
+     * Set a projectmodel in the service layer
+     * @param project
+     */
     @Path("/setProject")
     @POST
     public void setProject(@QueryParam("project") String project) {
@@ -46,6 +54,10 @@ public class ProjectResource {
         this.pService.setJsonProject(project);
     }
 
+    /**
+     * Get method to return the projectmodel if we have any. Returns the projectmodel in JSON format
+     * @return Response
+     */
     @Path("/getProject")
     @GET
     public Response getProject() {

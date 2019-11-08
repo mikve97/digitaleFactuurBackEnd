@@ -16,18 +16,19 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service to handle calls too the DAO layer
+ */
 public class ProjectService {
 
     public ProjectService(){}
     private String jsonProject = "";
 
-    private List<TripModel> fetchAllTripsWithProject(){
-        TripService ts = new TripService();
-        List<TripModel> projects = ts.fetchAllTripsWithProject();
-
-        return projects;
-    }
-
+    /**
+     * Gets the trips based on a given projectId
+     * @param projectId
+     * @return List<TripModel>
+     */
     private List<TripModel> fetchAllTripsByProject(int projectId){
         TripService ts = new TripService();
         List<TripModel> projects = ts.fetchAllTripsByProject(projectId);
@@ -35,14 +36,28 @@ public class ProjectService {
         return projects;
     }
 
+    /**
+     * Returns the projectModel in JSON format
+     * @return String
+     */
     public String getJsonProject() {
         return jsonProject;
     }
 
+    /**
+     * Set a projectmodel in JSON format
+     * @param jsonProject
+     */
     public void setJsonProject(String jsonProject) {
         this.jsonProject = jsonProject;
     }
 
+    /**
+     * Get the projects from the Digitalefactuur server
+     * @param apiKey
+     * @param userId
+     * @return List<ProjectModel>
+     */
     public List<ProjectModel> getProjectsFromApi(String apiKey, String userId){
         InputStream apiResult = httpRequest("https://administratie.digitalefactuur.nl/api/"+userId+"/"+apiKey+"/uren_get_projects_klanten", "GET");
         List<ProjectModel> projects = parseXML(apiResult);
@@ -124,7 +139,12 @@ public class ProjectService {
         return null;
     }
 
-
+    /**
+     * Creates a document file so we can use the XML response from Digitalefactuur
+     * @param apiResult
+     * @return Document
+     * @throws Exception
+     */
     public Document createDocumentFromXML(InputStream apiResult) throws Exception
     {
         try {
