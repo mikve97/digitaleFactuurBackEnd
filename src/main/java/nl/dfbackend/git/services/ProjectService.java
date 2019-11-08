@@ -23,6 +23,7 @@ public class ProjectService {
 
     public ProjectService(){}
     private String jsonProject = "";
+    private TripService ts = new TripService();
 
     /**
      * Gets the trips based on a given projectId
@@ -30,8 +31,8 @@ public class ProjectService {
      * @return List<TripModel>
      */
     private List<TripModel> fetchAllTripsByProject(int projectId){
-        TripService ts = new TripService();
-        List<TripModel> projects = ts.fetchAllTripsByProject(projectId);
+
+        List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
 
         return projects;
     }
