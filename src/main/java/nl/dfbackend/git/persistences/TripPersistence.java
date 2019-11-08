@@ -70,4 +70,24 @@ public interface TripPersistence {
 	List<TripModel> getAllTripsByProject(@Bind("pid") int pid);
 	
 	void close();
+	
+
+	/**
+	 * @author Fifi
+	 *
+	 */
+	
+	//find trips per user
+	@SqlQuery("select count(*) from trips where userid = :userid")
+	int findTripsPerUserID(@Bind("userid") int userid);
+	
+	/**
+	 * @author Fifi
+	 *
+	 */
+	
+	//find trips per user that contain a project
+	@SqlQuery("select count(id) from trips WHERE userid = :userid and projectid  <> 0")
+	int findTripsPerUserIDWithProject(@Bind("userid") int userid);
+	
 }

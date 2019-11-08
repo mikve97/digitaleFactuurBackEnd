@@ -115,4 +115,28 @@ public class TripService {
 
         return fetchedTrips;
     }
+    
+    /**
+	 * @author Fifi
+	 * @return int
+	 *
+	 */
+	
+	public int fetchTripsPerUserWithProject(int userid){
+		tripDAO = dbi.open(TripPersistence.class);
+		int fetchedTripsPerUserWithProject = tripDAO.findTripsPerUserIDWithProject(userid);
+		tripDAO.close();
+		return fetchedTripsPerUserWithProject;
+	}
+	
+	/**
+	 * @author Fifi
+	 *@return int
+	 */
+	public int fetchTripsPerUser(int userid){
+		tripDAO = dbi.open(TripPersistence.class);
+		int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
+		tripDAO.close();
+		return fetchedTripsPerUser;
+	}
 }
