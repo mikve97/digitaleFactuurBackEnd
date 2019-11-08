@@ -74,12 +74,22 @@ public class TripService {
 		return fetchedTrips;
 	}
 	
+	/**
+	 * @author Fifi
+	 *
+	 */
+	
 	public int fetchTripsPerUserWithProject(){
 		tripDAO = dbi.open(TripPersistence.class);
 		int fetchedTripsPerUserWithProject = tripDAO.findTripsPerUserIDWithProject();
 		tripDAO.close();
 		return fetchedTripsPerUserWithProject;
 	}
+	
+	/**
+	 * @author Fifi
+	 *
+	 */
 	
 	public int fetchTripsPerUser(){
 		tripDAO = dbi.open(TripPersistence.class);

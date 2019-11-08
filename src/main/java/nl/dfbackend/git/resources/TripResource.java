@@ -38,7 +38,10 @@ public class TripResource {
 		return tripService.fetchAllTrips();
 	}
 	
-	
+	/**
+	 * @author Fifi
+	 *
+	 */
 	@Path("/user")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
@@ -49,7 +52,10 @@ public class TripResource {
 		
 		}
 
-	
+	/**
+	 * @author Fifi
+	 *
+	 */ 
 	
 	@Path("/user/project")
 	@GET
