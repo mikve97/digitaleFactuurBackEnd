@@ -3,6 +3,10 @@ logging:
   loggers:
     nl.dfbackend.git: DEBUG
 
+apiKey: 79554e2460ae336c07c3eb0208adbb4cc4af184c17b51e0a2373cc0f9bba87b5
+userId: 56840
+
+
 database:
   # the name of your JDBC driver
   driverClass: org.postgresql.Driver

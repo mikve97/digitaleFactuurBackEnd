@@ -15,6 +15,12 @@ public class MainConfiguration extends Configuration {
 	@Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
+
+    @NotNull
+    private String apiKey;
+
+    @NotNull
+    private String userId;
     
 	@JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory factory) {
@@ -24,6 +30,22 @@ public class MainConfiguration extends Configuration {
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
+    }
+
+    public void setApiKey(String apiKey){
+        this.apiKey = apiKey;
+    }
+
+    public String getApiKey(){
+        return this.apiKey;
+    }
+
+    public void setUserId(String userId){
+        this.userId = userId;
+    }
+
+    public String getUserId(){
+        return this.userId;
     }
 
 }
