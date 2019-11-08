@@ -25,5 +25,4 @@ public class VehicleMapper implements ResultSetMapper<VehicleModel> {
                 r.getString("vehicletype")
         );
     }
-
 }
