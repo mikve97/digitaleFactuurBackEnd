@@ -42,6 +42,7 @@ public class ProjectResource {
     @Path("/setProject")
     @POST
     public void setProject(@QueryParam("project") String project) {
+        System.out.println(project);
         this.pService.setJsonProject(project);
     }
 

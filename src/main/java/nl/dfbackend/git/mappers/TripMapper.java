@@ -26,7 +26,12 @@ public class TripMapper implements ResultSetMapper<TripModel> {
 				r.getString("startlocation"),
 				r.getString("endlocation"),
 				r.getDouble("startkilometergauge"),
-				r.getDouble("endkilometergauge")
+				r.getDouble("endkilometergauge"),
+				r.getFloat("startLat"),
+				r.getFloat("endLat"),
+				r.getFloat("startLong"),
+				r.getFloat("endLong")
+
 				);
 	}
 

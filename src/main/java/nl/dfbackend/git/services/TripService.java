@@ -86,6 +86,7 @@ public class TripService {
 	 * @author Mike van Es
 	 */
 	public List<TripModel> fetchAllTripsByProject(int pid) {
+
 		tripDAO = dbi.open(TripPersistence.class);
 		List<TripModel> fetchedTrips = tripDAO.getAllTripsByProject(pid);
 		tripDAO.close();
