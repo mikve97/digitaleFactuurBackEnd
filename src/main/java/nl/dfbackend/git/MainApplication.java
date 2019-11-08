@@ -60,7 +60,7 @@ public class MainApplication extends Application<MainConfiguration> {
     @Override
     public void run(MainConfiguration configuration, Environment environment) throws UnsupportedEncodingException {
         // code to register module
-        final ProjectResource resource = new ProjectResource();
+        final ProjectResource resource = new ProjectResource(configuration.getApiKey(), configuration.getUserId());
         final TripResource tripResource = new TripResource();
         final VehicleResource vehicleResource = new VehicleResource();
 
