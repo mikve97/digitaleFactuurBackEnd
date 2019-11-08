@@ -62,12 +62,29 @@ public class TripService {
 	
 	/**
 	 * @author Oussama Fahchouch
+	 *
+	 *
 	 */
+	
 	public List<TripModel> fetchAllTrips() {
 		tripDAO = dbi.open(TripPersistence.class);
 		List<TripModel> fetchedTrips = tripDAO.findAll();
 		tripDAO.close();
 		
 		return fetchedTrips;
+	}
+	
+	public int fetchTripsPerUserWithProject(){
+		tripDAO = dbi.open(TripPersistence.class);
+		int fetchedTripsPerUserWithProject = tripDAO.findTripsPerUserIDWithProject();
+		tripDAO.close();
+		return fetchedTripsPerUserWithProject;
+	}
+	
+	public int fetchTripsPerUser(){
+		tripDAO = dbi.open(TripPersistence.class);
+		int fetchedTripsPerUser = tripDAO.findTripsPerUserID();
+		tripDAO.close();
+		return fetchedTripsPerUser;
 	}
 }

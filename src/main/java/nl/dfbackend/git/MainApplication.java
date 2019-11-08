@@ -49,6 +49,8 @@ public class MainApplication extends Application<MainConfiguration> {
     	
     	environment.jersey().register(resource);
 	    environment.jersey().register(tripResource);
+        tripResource.readTripsMadeByUser();
+        tripResource.readTripsThatContainAProject();
     }
 
 }

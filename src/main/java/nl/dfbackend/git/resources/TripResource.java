@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.services.TripService;
@@ -24,14 +25,41 @@ public class TripResource {
 	public TripResource() {
 		this.tripService = new TripService();
 	}
+	
+	
 
 	/**
 	 * @author Oussama Fahchouch
 	 */
+	@Path("/trips")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getAllTrips() throws SQLException {
 		return tripService.fetchAllTrips();
+	}
+	
+	
+	@Path("/user")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response readTripsMadeByUser(){
+		
+		int tripsModelListPerUser = tripService.fetchTripsPerUser();
+		return Response.ok(tripsModelListPerUser).build();
+		
+		}
+
+	
+	
+	@Path("/user/project")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response readTripsThatContainAProject(){
+		
+		int tripsModelListPerUserWithProject = tripService.fetchTripsPerUserWithProject();
+		
+		return Response.ok(tripsModelListPerUserWithProject).build();
+		
 	}
 	
 	/**

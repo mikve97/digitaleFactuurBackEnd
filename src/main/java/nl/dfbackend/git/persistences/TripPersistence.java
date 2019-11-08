@@ -21,12 +21,23 @@ public interface TripPersistence {
 	@SqlQuery("select * from trips where id = :id")
 	TripModel findById(@Bind("id") int id);
 	
+	
 	/**
 	 * @author Oussama Fahchouch
 	 */
 	@SqlQuery("select * from trips")
 	List<TripModel> findAll();
 	
+	//find trips per user
+	@SqlQuery("select count(*) from trips where userid = 1")
+	int findTripsPerUserID();
+	
+	//find trips per user that contain a project
+	@SqlQuery("select count(id) from trips WHERE userid = 1 and projectid <> 0")
+	int findTripsPerUserIDWithProject();
+	
+
+
 	/**
 	 * @author Oussama Fahchouch
 	 */
