@@ -10,24 +10,18 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import nl.dfbackend.git.api.User;
 import nl.dfbackend.git.authentication.Authenticator;
-import nl.dfbackend.git.persistences.LoginDAO;
 import nl.dfbackend.git.resources.LoginResource;
 import nl.dfbackend.git.resources.ProjectResource;
 import nl.dfbackend.git.resources.TripResource;
 import nl.dfbackend.git.services.LoginService;
 import nl.dfbackend.git.util.DbConnector;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
-import org.jose4j.jwt.JwtClaims;
-import org.jose4j.jwt.MalformedClaimException;
-import org.jose4j.jwt.NumericDate;
 import org.jose4j.jwt.consumer.JwtConsumer;
 import org.jose4j.jwt.consumer.JwtConsumerBuilder;
-import org.jose4j.jwt.consumer.JwtContext;
 import org.jose4j.keys.HmacKey;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-import java.util.Optional;
 
 
 public class MainApplication extends Application<MainConfiguration> {

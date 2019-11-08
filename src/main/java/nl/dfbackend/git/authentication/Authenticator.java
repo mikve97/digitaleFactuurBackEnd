@@ -1,8 +1,5 @@
 package nl.dfbackend.git.authentication;
 
-import com.sun.javaws.JAuthenticator;
-import io.dropwizard.auth.AuthenticationException;
-import io.dropwizard.auth.basic.BasicCredentials;
 import nl.dfbackend.git.api.User;
 import nl.dfbackend.git.persistences.LoginDAO;
 import org.jose4j.jwt.JwtClaims;
@@ -10,8 +7,13 @@ import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.NumericDate;
 import org.jose4j.jwt.consumer.JwtContext;
 import org.skife.jdbi.v2.DBI;
-
 import java.util.Optional;
+
+/**
+ *
+ * @author Ali Rezaa Ghariebiyan
+ * @version 08-11-2019
+ */
 
 public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContext, User> {
 
@@ -39,13 +41,6 @@ public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContex
             if(NumericDate.now().isAfter(claims.getExpirationTime())) {
                 return Optional.empty();
             }
-
-            Long longId = (Long)claims.getClaimValue("id");
-//                User user = loginDao.getUserById(longId.intValue());
-//
-//                if (user != null) {
-//                    return Optional.of(user);
-//                }
 
             return Optional.empty();
         }
