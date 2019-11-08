@@ -1,9 +1,9 @@
 package nl.dfbackend.git.resources;
 
-
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -32,6 +32,16 @@ public class TripResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getAllTrips() throws SQLException {
 		return tripService.fetchAllTrips();
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/user/{userid}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TripModel> getAllTripsByUser(@PathParam("userid") int userid) throws SQLException {
+		return tripService.fetchAllTripsByUser(userid);
 	}
 	
 	/**
@@ -73,4 +83,14 @@ public class TripResource {
 		
 		return true;
 	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/delete/{id}")
+	@DELETE
+	public void getDel(@PathParam("id") int id) throws SQLException {
+		tripService.deleteTrip(id);
+	}
+	
 }

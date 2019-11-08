@@ -7,41 +7,33 @@ import java.util.Objects;
  *
  */
 public class TripModel {
-    private int tripId;
+    private int id;
     private int projectId;
     private int userId;
-    private String licenseplate;
+    private String licensePlate;
     private String startLocation;
     private String endLocation;
     private double startKilometergauge;
     private double endKilometergauge;
-
-	private float startLat;
-	private float endLat;
-	private float startLong;
-	private float endLong;
     
-    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation, double startKilometergauge, double endKilometergauge, float startLat, float endLat, float startLong, float endLong) {
-		this.tripId = id;
+    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation,
+    		double startKilometergauge, double endKilometergauge) {
+		this.id = id;
 		this.projectId = projectId;
 		this.userId = userId;
-		this.licenseplate = licensePlate;
+		this.licensePlate = licensePlate;
 		this.startLocation = startLocation;
 		this.endLocation = endLocation;
 		this.startKilometergauge = startKilometergauge;
 		this.endKilometergauge = endKilometergauge;
-		this.startLat = startLat;
-		this.endLat = endLat;
-		this.startLong = startLong;
-		this.endLong = endLong;
 	}
 
 	public int getTripId() {
-		return tripId;
+		return id;
 	}
 
 	public void setTripId(int id) {
-		this.tripId = id;
+		this.id = id;
 	}
 
 	public int getProjectId() {
@@ -60,12 +52,12 @@ public class TripModel {
 		this.userId = userId;
 	}
 
-	public String getLicenseplate() {
-		return licenseplate;
+	public String getLicensePlate() {
+		return licensePlate;
 	}
 
-	public void setLicenseplate(String licensePlate) {
-		this.licenseplate = licensePlate;
+	public void setLicensePlate(String licensePlate) {
+		this.licensePlate = licensePlate;
 	}
 
 	public String getStartLocation() {
@@ -99,81 +91,4 @@ public class TripModel {
 	public void setEndKilometergauge(double endKilometergauge) {
 		this.endKilometergauge = endKilometergauge;
 	}
-
-	public void setStartLat(float startLat){this.startLat = startLat;}
-	public float getStartLat(){return this.startLat;}
-
-	public void setEndLat(float endLat){this.endLat = endLat;}
-	public float getEndLat(){return this.endLat;}
-
-	public void setStartLong(float startLong){this.startLong = startLong;}
-	public float getStartLong(){return this.startLong;}
-
-	public void setEndLong(float endLong){this.endLat = endLong;}
-	public float getEndLong(){return this.endLong;}
-	
-    //equals, hashCode, getters and setters for all fields.
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + (int) (this.tripId ^ (this.tripId >>> 32));
-        hash = 59 * hash + Objects.hashCode(this.projectId);
-        hash = 59 * hash + Objects.hashCode(this.userId);
-        hash = 59 * hash + Objects.hashCode(this.licenseplate);
-        hash = 59 * hash + Objects.hashCode(this.startLocation);
-        hash = 59 * hash + Objects.hashCode(this.endLocation);
-        hash = 59 * hash + Objects.hashCode(this.startKilometergauge);
-        hash = 59 * hash + Objects.hashCode(this.endKilometergauge);
-        return hash;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TripModel other = (TripModel) obj;
-        if (this.tripId != other.tripId) {
-            return false;
-        }
-        if (!Objects.equals(this.projectId, other.projectId)) {
-            return false;
-        }
-        if (!Objects.equals(this.userId, other.userId)) {
-            return false;
-        }
-        if (!Objects.equals(this.licenseplate, other.licenseplate)) {
-            return false;
-        }
-        if (!Objects.equals(this.startLocation, other.startLocation)) {
-            return false;
-        }
-        if (!Objects.equals(this.endLocation, other.endLocation)) {
-            return false;
-        }
-        if (!Objects.equals(this.startKilometergauge, other.startKilometergauge)) {
-            return false;
-        }
-        if (!Objects.equals(this.endKilometergauge, other.endKilometergauge)) {
-            return false;
-        }
-        return true;
-    }
-    
-    @Override
-    public String toString() {
-    	return "Trip{" +
-    			"id=" + tripId +
-    			", projectId=" + projectId +
-    			", userId=" + userId +
-    			", licensePlate= '" + licenseplate + '\'' +
-    			", startLocation= '" + startLocation + '\'' +
-    			", endLocation= '" + endLocation + '\'' +
-    			", startKilometergauge=" + startKilometergauge +
-    			", endKilometergauge=" + endKilometergauge +
-    			'}';
-    }
 }

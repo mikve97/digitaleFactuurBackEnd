@@ -24,6 +24,12 @@ public interface TripPersistence {
 	/**
 	 * @author Oussama Fahchouch
 	 */
+	@SqlQuery("select * from trips where userid = :userid")
+	List<TripModel> findByUserId(@Bind("userid") int userid);
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@SqlQuery("select * from trips")
 	List<TripModel> findAll();
 	
@@ -48,7 +54,7 @@ public interface TripPersistence {
 	/**
 	 * @author Oussama Fahchouch
 	 */
-	@SqlUpdate("DELETE FROM trips WHERE ID = :id")
+	@SqlUpdate("DELETE FROM trips WHERE id = :id")
 	void remove(@Bind("id") int id);
 
 

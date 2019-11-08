@@ -7,6 +7,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import nl.dfbackend.git.resources.ProjectResource;
 import nl.dfbackend.git.resources.TripResource;
+import nl.dfbackend.git.resources.VehicleResource;
 
 
 public class MainApplication extends Application<MainConfiguration> {
@@ -46,9 +47,11 @@ public class MainApplication extends Application<MainConfiguration> {
         // code to register module
         final ProjectResource resource = new ProjectResource(configuration.getApiKey(), configuration.getUserId());
         final TripResource tripResource = new TripResource();
+        final VehicleResource vehicleResource = new VehicleResource();
     	
     	environment.jersey().register(resource);
 	    environment.jersey().register(tripResource);
+	    environment.jersey().register(vehicleResource);
     }
 
 }
