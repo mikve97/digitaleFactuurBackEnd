@@ -8,7 +8,7 @@ import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import nl.dfbackend.git.api.User;
+import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.authentication.Authenticator;
 import nl.dfbackend.git.resources.LoginResource;
 import nl.dfbackend.git.resources.ProjectResource;
@@ -79,7 +79,7 @@ public class MainApplication extends Application<MainConfiguration> {
 
 
         environment.jersey().register(new AuthDynamicFeature(
-                new JwtAuthFilter.Builder<User>()
+                new JwtAuthFilter.Builder<UserModel>()
                         .setJwtConsumer(consumer)
                         .setRealm("realm")
                         .setPrefix("Bearer")

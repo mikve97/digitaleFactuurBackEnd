@@ -1,6 +1,6 @@
 package nl.dfbackend.git.resources;
 
-import nl.dfbackend.git.api.Credential;
+import nl.dfbackend.git.models.CredentialModel;
 import nl.dfbackend.git.services.LoginService;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -31,12 +31,14 @@ public class LoginResource {
      *
      * @author Ali Rezaa Ghariebiyan
      * @version 08-11-2019
+     * @param username
+     * @param password
      */
     @Path("/{username}/{password}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     public Response onLogin(@PathParam("username") String username, @PathParam("password") String password){
-        Credential credential = new Credential(username, password);
+        CredentialModel credential = new CredentialModel(username, password);
         return service.onLogin(credential);
     }
 }

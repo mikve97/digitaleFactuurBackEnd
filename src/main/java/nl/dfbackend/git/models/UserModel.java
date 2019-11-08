@@ -1,4 +1,4 @@
-package nl.dfbackend.git.api;
+package nl.dfbackend.git.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -12,7 +12,7 @@ import java.security.Principal;
  * @version 08-11-2019
  */
 
-public class User implements Principal {
+public class UserModel implements Principal {
 
     @JsonProperty
     @NotNull
@@ -27,10 +27,11 @@ public class User implements Principal {
     @NotNull
     private String authToken;
 
+    //constructor
     @JsonCreator
-    public User(@JsonProperty("userId") Integer userId,
-                @JsonProperty("username") String username,
-                @JsonProperty("password") String password){
+    public UserModel(@JsonProperty("userId") Integer userId,
+                     @JsonProperty("username") String username,
+                     @JsonProperty("password") String password){
 
         this.userId = userId;
         this.username = username;
@@ -39,10 +40,6 @@ public class User implements Principal {
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getUsername() {
@@ -66,7 +63,6 @@ public class User implements Principal {
         return authToken;
     }
 
-    @JsonIgnore
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
     }

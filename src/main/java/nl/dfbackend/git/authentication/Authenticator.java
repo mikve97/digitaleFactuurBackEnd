@@ -1,6 +1,6 @@
 package nl.dfbackend.git.authentication;
 
-import nl.dfbackend.git.api.User;
+import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.persistences.LoginDAO;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
@@ -15,7 +15,7 @@ import java.util.Optional;
  * @version 08-11-2019
  */
 
-public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContext, User> {
+public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContext, UserModel> {
 
     private LoginDAO loginDAO;
 
@@ -24,7 +24,7 @@ public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContex
     }
 
     @Override
-    public Optional<User> authenticate(JwtContext context) {
+    public Optional<UserModel> authenticate(JwtContext context) {
         // Provide your own implementation to lookup users based on the principal attribute in the
         // JWT Token. E.g.: lookup users from a database etc.
         // This method will be called once the token's signature has been verified

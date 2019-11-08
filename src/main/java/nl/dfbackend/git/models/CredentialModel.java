@@ -1,4 +1,4 @@
-package nl.dfbackend.git.api;
+package nl.dfbackend.git.models;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * @version 08-11-2019
  */
 
-public class Credential {
+public class CredentialModel {
     @JsonProperty
     @NotNull
     private String username;
@@ -24,8 +24,8 @@ public class Credential {
     private String password;
 
     @JsonCreator
-    public Credential(@JsonProperty("username") String username,
-                      @JsonProperty("password") String password) {
+    public CredentialModel(@JsonProperty("username") String username,
+                           @JsonProperty("password") String password) {
         this.username = username;
         this.password = password;
     }
