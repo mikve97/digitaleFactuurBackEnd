@@ -7,27 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * @author Oussama Fahchouch
  */
 public class MainConfiguration extends Configuration {
-    @NotEmpty
-    private String jwtTokenSecret;
-
-    @JsonProperty("jwt-secret")
-    public byte[] getJwtTokenSecret() throws UnsupportedEncodingException {
-        return jwtTokenSecret.getBytes("UTF-8");
-    }
-
-    @JsonProperty("jwt-secret")
-    public void setJwtTokenSecret(String jwtTokenSecret) {
-        this.jwtTokenSecret = jwtTokenSecret;
-    }
-
 	@Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();

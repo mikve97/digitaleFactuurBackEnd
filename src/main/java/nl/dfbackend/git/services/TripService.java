@@ -76,6 +76,7 @@ public class TripService {
 	
 	/**
 	 * @author Fifi
+	 * @return int
 	 *
 	 */
 	
@@ -88,9 +89,8 @@ public class TripService {
 	
 	/**
 	 * @author Fifi
-	 *
+	 *@return int
 	 */
-	
 	public int fetchTripsPerUser(){
 		tripDAO = dbi.open(TripPersistence.class);
 		int fetchedTripsPerUser = tripDAO.findTripsPerUserID();

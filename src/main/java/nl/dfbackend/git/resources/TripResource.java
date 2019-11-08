@@ -52,11 +52,11 @@ public class TripResource {
 		
 		}
 
+	
 	/**
 	 * @author Fifi
 	 *
-	 */ 
-	
+	 */
 	@Path("/user/project")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
