@@ -80,4 +80,15 @@ public class VehicleResource {
         vehicleService.deleteVehicle(licensePlate);
         return true;
     }
+    
+	/**
+	 * @author Oussama Fahchouch
+	 * @return List<String> allUniqueLicenseplates
+	 */
+	@Path("/fetch/unique-licenseplates")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<String> getAllUniqueLicenseplates() throws SQLException {
+		return vehicleService.fetchAllUniqueLicenseplates();
+	}
 }

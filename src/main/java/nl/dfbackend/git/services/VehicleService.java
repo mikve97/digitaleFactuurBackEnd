@@ -1,6 +1,7 @@
 package nl.dfbackend.git.services;
 
 import nl.dfbackend.git.models.VehicleModel;
+import nl.dfbackend.git.persistences.TripPersistence;
 import nl.dfbackend.git.persistences.VehiclePersistence;
 import nl.dfbackend.git.util.DbConnector;
 import org.skife.jdbi.v2.DBI;
@@ -88,4 +89,16 @@ public class VehicleService {
         vehicleDAO.close();
         return true;
     }
+
+	/**
+	 * @author Oussama Fahchouch
+	 * @return List<String> allUniqueLicenseplates
+	 */
+	public List<String> fetchAllUniqueLicenseplates() {
+		vehicleDAO = dbi.open(VehiclePersistence.class);
+		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates();
+		vehicleDAO.close();
+		
+		return fetchedUniqueLicenseplates;
+	}
 }
