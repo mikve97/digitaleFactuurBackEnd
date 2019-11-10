@@ -94,6 +94,16 @@ public class TripResource {
 		tripService.deleteTrip(id);
 	}
 	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/fetch/unique-projectids")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Integer> getAllUniqueProjectIds() throws SQLException {
+		return tripService.fetchAllUniqueProjectIds();
+	}
+	
 
 	/**
 	 * @author Fifi
@@ -103,11 +113,9 @@ public class TripResource {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response readTripsMadeByUser(@PathParam("userid") int userid) throws SQLException {
-		
 		int tripsModelListPerUseruserId = tripService.fetchTripsPerUser(userid);
 		return Response.ok(tripsModelListPerUseruserId).build();
-		
-		}
+	}
 
 	
 	/**
@@ -118,9 +126,7 @@ public class TripResource {
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response readTripsThatContainAProject(@PathParam("userid") int userid) throws SQLException {
-		
 		int tripsModelListPerUserWithProject = tripService.fetchTripsPerUserWithProject(userid);
-		
 		return Response.ok(tripsModelListPerUserWithProject).build();
-	
-	}}
+	}
+}

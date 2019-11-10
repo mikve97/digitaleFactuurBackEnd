@@ -10,7 +10,9 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
-
+/**
+ * @author Mike van Es
+ */
 @Path("/project")
 @Produces(MediaType.APPLICATION_JSON)
 public class ProjectResource {
@@ -26,13 +28,12 @@ public class ProjectResource {
 
     /**
      * Gets all valid projects registerd at digitalefactuur, if we have them at our trip table it adds the corresponding trips.
+     * @author Mike van Es
      * @return Response
      */
     @Path("/getAllProject")
     @GET
     public Response getAllProjects() {
-
-
         List<ProjectModel> projects = this.pService.getProjectsFromApi(this.apiKey, this.userId);
 
         if(projects != null){
@@ -40,11 +41,11 @@ public class ProjectResource {
         }else{
             return Response.ok("No projects found").build();
         }
-
     }
 
     /**
      * Set a projectmodel in the service layer
+     * @author Mike van Es
      * @param project
      */
     @Path("/setProject")
@@ -56,6 +57,7 @@ public class ProjectResource {
 
     /**
      * Get method to return the projectmodel if we have any. Returns the projectmodel in JSON format
+     * @author Mike van Es
      * @return Response
      */
     @Path("/getProject")
@@ -68,7 +70,5 @@ public class ProjectResource {
         }else{
             return Response.ok(jsonProject).build();
         }
-
-
     }
 }

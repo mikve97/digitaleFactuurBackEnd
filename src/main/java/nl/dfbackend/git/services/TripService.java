@@ -31,6 +31,7 @@ public class TripService {
 		
 		tripDAO = dbi.open(TripPersistence.class);
 		tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
+		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 		tripDAO.close();
 		
 		return true;
@@ -44,6 +45,7 @@ public class TripService {
 		
 		tripDAO = dbi.open(TripPersistence.class);
 		tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
+		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 		tripDAO.close();
 		
 		return true;
@@ -90,6 +92,18 @@ public class TripService {
 		tripDAO = dbi.open(TripPersistence.class);
 		tripDAO.remove(id);
 		tripDAO.close();	
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 * @return List<Integer> uniqueProjects
+	 */
+	public List<Integer> fetchAllUniqueProjectIds() {
+		tripDAO = dbi.open(TripPersistence.class);
+		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects();
+		tripDAO.close();
+		
+		return fetchedUniqueProjectIds;
 	}
 
 
