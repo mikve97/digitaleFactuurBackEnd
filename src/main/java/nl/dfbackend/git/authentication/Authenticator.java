@@ -1,7 +1,7 @@
 package nl.dfbackend.git.authentication;
 
 import nl.dfbackend.git.models.UserModel;
-import nl.dfbackend.git.persistences.LoginDAO;
+import nl.dfbackend.git.persistences.UserPersistence;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.jwt.MalformedClaimException;
 import org.jose4j.jwt.NumericDate;
@@ -16,13 +16,6 @@ import java.util.Optional;
  */
 
 public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContext, UserModel> {
-
-    private LoginDAO loginDAO;
-
-    public Authenticator(DBI dbi) {
-        this.loginDAO = dbi.open(LoginDAO.class);
-    }
-
     @Override
     public Optional<UserModel> authenticate(JwtContext context) {
         // Provide your own implementation to lookup users based on the principal attribute in the

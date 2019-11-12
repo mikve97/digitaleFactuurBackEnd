@@ -1,5 +1,7 @@
 package nl.dfbackend.git.util;
 
+import java.sql.SQLException;
+
 import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
 
@@ -11,32 +13,55 @@ public class DbConnector {
 	private final static String dbName = "kvszgnmq";
 	private final static String username = "kvszgnmq";
 	private final static String password = "HLwhrVFmFDIO5LGAtLNPMghrHhQjEbdK";
-	private static PGPoolingDataSource source = null;
 	private static DbConnector singleInstance = null;
 	
+
 	/**
 	 * @author Oussama Fahchouch
+	 * @return DbConnector singleInstance
 	 */
     public static DbConnector getInstance() 
     { 
-        if (singleInstance == null) 
+        if (singleInstance == null) {
         	singleInstance = new DbConnector();
-        	source  = new PGPoolingDataSource();
-        	getDBI();
+        }
 
         return singleInstance; 
     } 
 	
-    /**
+	/**
      * @author Oussama Fahchouch
+     * @return PGPoolingDataSource source
      */
-	public static DBI getDBI() {
+	public static PGPoolingDataSource getSource() {
+		PGPoolingDataSource source = new PGPoolingDataSource();
+
 		source.setServerName(url);
 		source.setDatabaseName(dbName);
 		source.setUser(username);
 		source.setPassword(password);
-		source.setMaxConnections(10);
+		source.setMaxConnections(5);
 		
-		return new DBI(source);
+		return source;
+	}
+
+    /**
+     * @author Oussama Fahchouch
+     * @param PGPoolingDataSource source
+     * @return DBI
+     * @throws SQLException 
+     */
+	public static DBI getDBI(PGPoolingDataSource source) throws SQLException {
+		source.getConnection();
+		DBI dbi = new DBI(source);
+		return dbi;
+	}
+    
+	/**
+	 * @author Oussama Fahchouch
+	 * @param PGPoolingDataSource source
+	 */
+	public static void closeSource(PGPoolingDataSource source) {
+		source.close();
 	}
 }

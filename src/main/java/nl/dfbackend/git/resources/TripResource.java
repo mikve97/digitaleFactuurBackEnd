@@ -103,7 +103,6 @@ public class TripResource {
 	public List<Integer> getAllUniqueProjectIds() throws SQLException {
 		return tripService.fetchAllUniqueProjectIds();
 	}
-	
 
 	/**
 	 * @author Fifi

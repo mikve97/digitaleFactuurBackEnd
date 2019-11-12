@@ -1,12 +1,14 @@
 package nl.dfbackend.git.services;
 
-import nl.dfbackend.git.models.VehicleModel;
-import nl.dfbackend.git.persistences.TripPersistence;
-import nl.dfbackend.git.persistences.VehiclePersistence;
-import nl.dfbackend.git.util.DbConnector;
+import java.sql.SQLException;
+import java.util.List;
+
+import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
 
-import java.util.List;
+import nl.dfbackend.git.models.VehicleModel;
+import nl.dfbackend.git.persistences.VehiclePersistence;
+import nl.dfbackend.git.util.DbConnector;
 
 /**
  * @author Bram de Jong
@@ -20,7 +22,6 @@ public class VehicleService {
      */
     public VehicleService() {
         DbConnector.getInstance();
-        this.dbi = DbConnector.getDBI();
     }
 
     /**
@@ -31,25 +32,33 @@ public class VehicleService {
      * @param vehicleName
      * @param vehicleType
      * @return boolean
+     * @throws SQLException 
      */
-    public boolean addVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) {
-        System.out.println(userId);
-        vehicleDAO = dbi.open(VehiclePersistence.class);
+    public boolean addVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+		vehicleDAO = dbi.open(VehiclePersistence.class);
         vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips);
-        vehicleDAO.close();
+
+        source.close();
 
         return true;
     }
 
     /**
      * @author Bram de Jong
+     * @throws SQLException 
      */
-    public boolean alterVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) {
-
-        vehicleDAO = dbi.open(VehiclePersistence.class);
+    public boolean alterVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+		vehicleDAO = dbi.open(VehiclePersistence.class);
         vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips);
-        vehicleDAO.close();
 
+        source.close();
+        
         return true;
     }
 
@@ -57,11 +66,16 @@ public class VehicleService {
      * @author Bram de Jong
      * @param licenseplate
      * @return fetchedVehicle
+     * @throws SQLException 
      */
-    public VehicleModel fetchVehicle(String licenseplate) {
-        vehicleDAO = dbi.open(VehiclePersistence.class);
+    public VehicleModel fetchVehicle(String licenseplate) throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+		vehicleDAO = dbi.open(VehiclePersistence.class);
         VehicleModel fetchedVehicle = vehicleDAO.findByLicensePlate(licenseplate);
-        vehicleDAO.close();
+
+        source.close();
 
         return fetchedVehicle;
     }
@@ -69,11 +83,16 @@ public class VehicleService {
     /**
      * @author Bram de Jong
      * @return fetchedVehicles
+     * @throws SQLException 
      */
-    public List<VehicleModel> fetchAllVehicles() {
-        vehicleDAO = dbi.open(VehiclePersistence.class);
+    public List<VehicleModel> fetchAllVehicles() throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+		vehicleDAO = dbi.open(VehiclePersistence.class);
         List<VehicleModel> fetchedVehicles = vehicleDAO.findAll();
-        vehicleDAO.close();
+
+        source.close();
 
         return fetchedVehicles;
     }
@@ -82,23 +101,34 @@ public class VehicleService {
      * @author Bram de Jong
      * @param licensePlate
      * @return boolean
+     * @throws SQLException 
      */
-    public boolean deleteVehicle(String licensePlate) {
-        vehicleDAO = dbi.open(VehiclePersistence.class);
+    public boolean deleteVehicle(String licensePlate) throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+		vehicleDAO = dbi.open(VehiclePersistence.class);
         vehicleDAO.remove(licensePlate);
-        vehicleDAO.close();
+
+        source.close();
+
         return true;
     }
 
 	/**
 	 * @author Oussama Fahchouch
 	 * @return List<String> allUniqueLicenseplates
+	 * @throws SQLException 
 	 */
-	public List<String> fetchAllUniqueLicenseplates() {
+	public List<String> fetchAllUniqueLicenseplates() throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
 		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates();
-		vehicleDAO.close();
 		
+        source.close();
+
 		return fetchedUniqueLicenseplates;
 	}
 }

@@ -13,7 +13,7 @@ import nl.dfbackend.git.authentication.Authenticator;
 import nl.dfbackend.git.resources.LoginResource;
 import nl.dfbackend.git.resources.ProjectResource;
 import nl.dfbackend.git.resources.TripResource;
-import nl.dfbackend.git.services.LoginService;
+import nl.dfbackend.git.services.AuthService;
 import nl.dfbackend.git.util.DbConnector;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.jose4j.jwt.consumer.JwtConsumer;
@@ -83,13 +83,13 @@ public class MainApplication extends Application<MainConfiguration> {
                         .setJwtConsumer(consumer)
                         .setRealm("realm")
                         .setPrefix("Bearer")
-                        .setAuthenticator(new Authenticator(DbConnector.getDBI()))
+                        .setAuthenticator(new Authenticator())
                         .buildAuthFilter()));
 
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         // code to register module
-        final LoginResource loginResource = new LoginResource(new LoginService(key));
+        final LoginResource loginResource = new LoginResource(new AuthService(key));
         environment.jersey().register(resource);
         environment.jersey().register(loginResource);
 	    environment.jersey().register(vehicleResource);

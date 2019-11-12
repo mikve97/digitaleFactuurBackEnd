@@ -14,7 +14,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
  */
 
 @RegisterMapper(UserMapper.class)
-public interface LoginDAO {
+public interface UserPersistence {
     @SqlQuery("SELECT * FROM df_user WHERE username = :username ")
     UserModel getUserByUsername(@Bind("username") String username);
 

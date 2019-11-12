@@ -1,7 +1,5 @@
 package nl.dfbackend.git.models;
 
-import java.util.Objects;
-
 /**
  * @author Oussamam Fahchouch
  *

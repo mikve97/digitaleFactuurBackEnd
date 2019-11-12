@@ -1,6 +1,5 @@
 package nl.dfbackend.git.persistences;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.skife.jdbi.v2.sqlobject.Bind;
@@ -73,6 +72,7 @@ public interface TripPersistence {
 	 */
 	@SqlQuery("SELECT DISTINCT projectid FROM trips;")
 	List<Integer> findAllUniqueProjects();
+	
 
 	/**
 	 * @author Mike van Es
@@ -101,6 +101,6 @@ public interface TripPersistence {
 	 * @author Fifi
 	 *
 	 */
-	@SqlQuery("select count(id) from trips WHERE userid = :userid and projectid  <> 0")
+	@SqlQuery("select count (distinct projectid) from trips where userid = :userid")
 	int findTripsPerUserIDWithProject(@Bind("userid") int userid);	
 }

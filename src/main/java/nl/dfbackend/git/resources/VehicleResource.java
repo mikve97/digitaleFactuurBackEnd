@@ -1,13 +1,19 @@
 package nl.dfbackend.git.resources;
 
 
-import nl.dfbackend.git.models.VehicleModel;
-import nl.dfbackend.git.services.VehicleService;
-
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+import nl.dfbackend.git.models.VehicleModel;
+import nl.dfbackend.git.services.VehicleService;
 
 /**
  * @author Bram de Jong
@@ -72,11 +78,12 @@ public class VehicleResource {
      * @author Bram de Jong
      * @param licensePlate
      * @return boolean
+     * @throws SQLException 
      */
     @Path("/delete/{licensePlate}")
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean deleteVehicleByUser (@PathParam("licensePlate") String licensePlate) {
+    public boolean deleteVehicleByUser (@PathParam("licensePlate") String licensePlate) throws SQLException {
         vehicleService.deleteVehicle(licensePlate);
         return true;
     }

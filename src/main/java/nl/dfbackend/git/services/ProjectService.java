@@ -1,26 +1,32 @@
 package nl.dfbackend.git.services;
 
-import nl.dfbackend.git.models.ProjectModel;
-import nl.dfbackend.git.models.TripModel;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import nl.dfbackend.git.models.ProjectModel;
+import nl.dfbackend.git.models.TripModel;
 
 /**
  * Service to handle calls too the DAO layer
  */
 public class ProjectService {
-
     public ProjectService(){}
     private String jsonProject = "";
     private TripService ts = new TripService();
@@ -29,11 +35,10 @@ public class ProjectService {
      * Gets the trips based on a given projectId
      * @param projectId
      * @return List<TripModel>
+     * @throws SQLException 
      */
-    private List<TripModel> fetchAllTripsByProject(int projectId){
-
+    private List<TripModel> fetchAllTripsByProject(int projectId) throws SQLException{
         List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
-
         return projects;
     }
 

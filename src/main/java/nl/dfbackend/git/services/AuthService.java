@@ -1,16 +1,22 @@
 package nl.dfbackend.git.services;
 
-import nl.dfbackend.git.models.CredentialModel;
-import nl.dfbackend.git.models.UserModel;
-import nl.dfbackend.git.persistences.LoginDAO;
-import nl.dfbackend.git.util.DbConnector;
+import static org.jose4j.jws.AlgorithmIdentifiers.HMAC_SHA256;
+
+import java.sql.SQLException;
+
+import javax.ws.rs.core.Response;
+
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.keys.HmacKey;
 import org.jose4j.lang.JoseException;
+import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
-import javax.ws.rs.core.Response;
-import static org.jose4j.jws.AlgorithmIdentifiers.HMAC_SHA256;
+
+import nl.dfbackend.git.models.CredentialModel;
+import nl.dfbackend.git.models.UserModel;
+import nl.dfbackend.git.persistences.UserPersistence;
+import nl.dfbackend.git.util.DbConnector;
 
 /**
  * All functions are performed in this service.
@@ -21,15 +27,14 @@ import static org.jose4j.jws.AlgorithmIdentifiers.HMAC_SHA256;
  * @version 08-11-2019
  */
 
-public class LoginService {
+public class AuthService {
     private final byte[] tokenSecret;
     private DBI dbi;
-    private LoginDAO loginDAO;
+    private UserPersistence loginDAO;
 
-    public LoginService(byte[] token){
+    public AuthService(byte[] token){
         this.tokenSecret = token;
         DbConnector.getInstance();
-        this.dbi = DbConnector.getDBI();
     }
 
     /**
@@ -41,11 +46,17 @@ public class LoginService {
      * @author Ali Rezaa Ghariebiyan
      * @version 08-11-2019
      * @return Response status
+     * @throws SQLException 
      */
-    public Response onLogin(CredentialModel credential) {
-        loginDAO = dbi.open(LoginDAO.class);
+    public Response onLogin(CredentialModel credential) throws SQLException {
+		PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+        loginDAO = dbi.open(UserPersistence.class);
+        
         UserModel user = loginDAO.getUserByUsername(credential.getUsername());
-        loginDAO.close();
+
+        source.close();
 
         if(user == null) {
             //unauthorized unknown username

@@ -1,15 +1,17 @@
 package nl.dfbackend.git.resources;
 
-import io.dropwizard.auth.Auth;
-import nl.dfbackend.git.models.ProjectModel;
-import nl.dfbackend.git.models.TripModel;
-import nl.dfbackend.git.services.ProjectService;
-import org.eclipse.jetty.server.Authentication;
+import java.util.List;
 
-import javax.ws.rs.*;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.util.List;
+
+import nl.dfbackend.git.models.ProjectModel;
+import nl.dfbackend.git.services.ProjectService;
 /**
  * @author Mike van Es
  */

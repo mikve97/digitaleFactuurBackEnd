@@ -1,10 +1,17 @@
 package nl.dfbackend.git.resources;
 
-import nl.dfbackend.git.models.CredentialModel;
-import nl.dfbackend.git.services.LoginService;
-import javax.ws.rs.*;
+import java.sql.SQLException;
+
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import nl.dfbackend.git.models.CredentialModel;
+import nl.dfbackend.git.services.AuthService;
 
 /**
  * When navigating to the /login from the front-end. the LoginResource will be called.
@@ -17,9 +24,9 @@ import javax.ws.rs.core.Response;
 @Path("/login")
 @Produces(MediaType.APPLICATION_JSON)
 public class LoginResource {
-    private LoginService service;
+    private AuthService service;
 
-    public LoginResource(LoginService service) {
+    public LoginResource(AuthService service) {
         this.service = service;
     }
 
@@ -33,11 +40,12 @@ public class LoginResource {
      * @version 08-11-2019
      * @param username
      * @param password
+     * @throws SQLException 
      */
     @Path("/{username}/{password}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response onLogin(@PathParam("username") String username, @PathParam("password") String password){
+    public Response onLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
         CredentialModel credential = new CredentialModel(username, password);
         return service.onLogin(credential);
     }
