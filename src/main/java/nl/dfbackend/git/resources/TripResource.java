@@ -111,9 +111,9 @@ public class TripResource {
 	@Path("/amount-of-trips/user/{userid}")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response readTripsMadeByUser(@PathParam("userid") int userid) throws SQLException {
+	public int readTripsMadeByUser(@PathParam("userid") int userid) throws SQLException {
 		int tripsModelListPerUseruserId = tripService.fetchTripsPerUser(userid);
-		return Response.ok(tripsModelListPerUseruserId).build();
+		return tripsModelListPerUseruserId;
 	}
 
 	
@@ -124,8 +124,8 @@ public class TripResource {
 	@Path("/amount-of-projects/user/{userid}")
 	@GET
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response readTripsThatContainAProject(@PathParam("userid") int userid) throws SQLException {
+	public int readTripsThatContainAProject(@PathParam("userid") int userid) throws SQLException {
 		int tripsModelListPerUserWithProject = tripService.fetchTripsPerUserWithProject(userid);
-		return Response.ok(tripsModelListPerUserWithProject).build();
+		return tripsModelListPerUserWithProject;
 	}
 }
