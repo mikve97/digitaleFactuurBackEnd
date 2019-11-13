@@ -1,9 +1,11 @@
 nl.dfbackend.git
 nl.dfbackend.git.api
+nl.dfbackend.git.authentication
 nl.dfbackend.git.health
 nl.dfbackend.git.mappers
 nl.dfbackend.git.models
 nl.dfbackend.git.persistences
 nl.dfbackend.git.resources
 nl.dfbackend.git.services
+nl.dfbackend.git.unittests
 nl.dfbackend.git.util
