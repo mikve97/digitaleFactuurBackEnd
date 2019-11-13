@@ -15,9 +15,9 @@ import nl.dfbackend.git.services.TripService;
 public class DashboardTest {
 	@Test
 	public void totalProjectsTest() throws SQLException {
-		int userid = 1;
+		int userid = 4;
 		TripService t1 = new TripService();
-		int expectedResult = 2;
+		int expectedResult = 1;
 		int result = t1.fetchTripsPerUserWithProject(userid);
 		assertEquals(expectedResult,result);
 		
@@ -25,9 +25,9 @@ public class DashboardTest {
 	
 	@Test
 	public void totalTripsTest() throws SQLException{
-		int userid = 1;
+		int userid = 4;
 		TripService t1 = new TripService();
-		int expectedResult = 4;
+		int expectedResult = 2;
 		int result = t1.fetchTripsPerUser(userid);
 		assertEquals(expectedResult,result);		
 	}
