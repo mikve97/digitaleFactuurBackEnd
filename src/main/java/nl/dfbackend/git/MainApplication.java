@@ -35,7 +35,6 @@ public class MainApplication extends Application<MainConfiguration> {
          new MainApplication().run(new String[] {"server", "config.yml"});
     }
     
-    
     /**
      * @author Oussama Fahchouch
      */

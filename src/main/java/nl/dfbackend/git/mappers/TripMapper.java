@@ -31,5 +31,4 @@ public class TripMapper implements ResultSetMapper<TripModel> {
 				r.getDouble("endkilometergauge")
 				);
 	}
-
 }

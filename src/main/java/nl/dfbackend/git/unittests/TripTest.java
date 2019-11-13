@@ -13,6 +13,9 @@ import org.junit.Test;
  * @author Oussama Fahchouch
  */
 public class TripTest {
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@Test
 	public void fetchATrip() {
 		TripService tripService = new TripService();
@@ -25,6 +28,9 @@ public class TripTest {
 		}
 	}
 	
+	/**
+	 * @author Oussama Fahchouch
+	 */
 	@Test
 	public void addATripByUser() {
 		TripService tripService = new TripService();

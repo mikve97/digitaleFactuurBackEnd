@@ -14,7 +14,6 @@ public class DbConnector {
 	private final static String username = "kvszgnmq";
 	private final static String password = "HLwhrVFmFDIO5LGAtLNPMghrHhQjEbdK";
 	private static DbConnector singleInstance = null;
-	
 
 	/**
 	 * @author Oussama Fahchouch
@@ -27,7 +26,19 @@ public class DbConnector {
         }
 
         return singleInstance; 
-    } 
+    }
+
+    /**
+     * @author Oussama Fahchouch
+     * @param PGPoolingDataSource source
+     * @return DBI
+     * @throws SQLException 
+     */
+	public static DBI getDBI(PGPoolingDataSource source) throws SQLException {
+		source.getConnection();
+		DBI dbi = new DBI(source);
+		return dbi;
+	}
 	
 	/**
      * @author Oussama Fahchouch
@@ -43,18 +54,6 @@ public class DbConnector {
 		source.setMaxConnections(5);
 		
 		return source;
-	}
-
-    /**
-     * @author Oussama Fahchouch
-     * @param PGPoolingDataSource source
-     * @return DBI
-     * @throws SQLException 
-     */
-	public static DBI getDBI(PGPoolingDataSource source) throws SQLException {
-		source.getConnection();
-		DBI dbi = new DBI(source);
-		return dbi;
 	}
     
 	/**

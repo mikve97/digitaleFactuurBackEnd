@@ -88,7 +88,6 @@ public interface TripPersistence {
 	
 	void close();
 	
-	//find trips per user
 	/**
 	 * @author Fifi
 	 *
@@ -96,7 +95,6 @@ public interface TripPersistence {
 	@SqlQuery("select count(*) from trips where userid = :userid")
 	int findTripsPerUserID(@Bind("userid") int userid);
 	
-	//find trips per user that contain a project
 	/**
 	 * @author Fifi
 	 *
