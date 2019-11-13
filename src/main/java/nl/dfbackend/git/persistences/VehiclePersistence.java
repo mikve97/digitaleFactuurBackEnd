@@ -57,10 +57,19 @@ public interface VehiclePersistence {
 
 	/**
 	 * @author Oussama Fahchouch
-	 * @return List<String> uniqueProjectIds
+	 * @return List<String> uniqueLicenseplates
 	 */
-	@SqlQuery("SELECT DISTINCT licenseplate FROM vehicle;")
-	List<String> findAllUniqueLicenseplates();
+	@SqlQuery("SELECT DISTINCT licenseplate FROM vehicle WHERE userid = :userid")
+	List<String> findAllUniqueLicenseplates(@Bind("userid") int userid);
+	
+	/**
+	 * @author Oussama Fahchouch
+	 * @return List<String> allVehiclesRegisteredByUser
+	 */
+	@SqlQuery("SELECT * FROM vehicle WHERE userid = :userid")
+	List<VehicleModel> findRegisteredByUser(@Bind("userid") int userid);
 	
 	void close();
+
+
 }

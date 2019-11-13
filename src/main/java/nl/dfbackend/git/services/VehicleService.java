@@ -120,15 +120,32 @@ public class VehicleService {
 	 * @return List<String> allUniqueLicenseplates
 	 * @throws SQLException 
 	 */
-	public List<String> fetchAllUniqueLicenseplates() throws SQLException {
+	public List<String> fetchAllUniqueLicenseplates(int userid) throws SQLException {
     	PGPoolingDataSource source = DbConnector.getSource();
 		dbi = DbConnector.getDBI(source);
 		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
-		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates();
+		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates(userid);
 		
         source.close();
 
 		return fetchedUniqueLicenseplates;
 	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 * @param userid
+	 * @return allVehiclesRegisteredByUser
+	 */
+	public List<VehicleModel> fetchAllVehiclesRegisteredByUser(int userid) throws SQLException {
+    	PGPoolingDataSource source = DbConnector.getSource();
+		dbi = DbConnector.getDBI(source);
+		
+		vehicleDAO = dbi.open(VehiclePersistence.class);
+        List<VehicleModel> allVehiclesRegisteredByUser = vehicleDAO.findRegisteredByUser(userid);
+
+        source.close();
+
+        return allVehiclesRegisteredByUser;
+    }
 }

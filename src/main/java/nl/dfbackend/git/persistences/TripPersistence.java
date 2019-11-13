@@ -70,8 +70,8 @@ public interface TripPersistence {
 	 * @author Oussama Fahchouch
 	 * @return List<Integer> uniqueProjectIds
 	 */
-	@SqlQuery("SELECT DISTINCT projectid FROM trips;")
-	List<Integer> findAllUniqueProjects();
+	@SqlQuery("SELECT DISTINCT projectid FROM trips WHERE userid = :userid AND projectid != 0")
+	List<Integer> findAllUniqueProjects(@Bind("userid") int userid);
 	
 
 	/**
@@ -101,6 +101,6 @@ public interface TripPersistence {
 	 * @author Fifi
 	 *
 	 */
-	@SqlQuery("select count (distinct projectid) from trips where userid = :userid")
+	@SqlQuery("select count (distinct projectid) from trips where userid = :userid AND projectid != 0")
 	int findTripsPerUserIDWithProject(@Bind("userid") int userid);	
 }

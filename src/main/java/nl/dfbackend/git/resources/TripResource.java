@@ -97,11 +97,11 @@ public class TripResource {
 	/**
 	 * @author Oussama Fahchouch
 	 */
-	@Path("/fetch/unique-projectids")
+	@Path("/fetch/unique-projectids/{userid}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Integer> getAllUniqueProjectIds() throws SQLException {
-		return tripService.fetchAllUniqueProjectIds();
+	public List<Integer> getAllUniqueProjectIds(@PathParam("userid") int userid) throws SQLException {
+		return tripService.fetchAllUniqueProjectIds(userid);
 	}
 
 	/**

@@ -133,13 +133,13 @@ public class TripService {
 	 * @return List<Integer> uniqueProjects
 	 * @throws SQLException 
 	 */
-	public List<Integer> fetchAllUniqueProjectIds() throws SQLException {
+	public List<Integer> fetchAllUniqueProjectIds(int userid) throws SQLException {
 		PGPoolingDataSource source = DbConnector.getSource();
 		dbi = DbConnector.getDBI(source);
 		
 		tripDAO = dbi.open(TripPersistence.class);
 
-		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects();
+		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
 		
 		source.close();
 

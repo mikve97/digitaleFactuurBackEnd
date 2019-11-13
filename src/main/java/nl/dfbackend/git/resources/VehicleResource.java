@@ -90,12 +90,22 @@ public class VehicleResource {
     
 	/**
 	 * @author Oussama Fahchouch
-	 * @return List<String> allUniqueLicenseplates
+	 * @return List<String> allUniqueLicenseplates which were registered by a certain user
 	 */
-	@Path("/fetch/unique-licenseplates")
+	@Path("/fetch/unique-licenseplates/{userid}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<String> getAllUniqueLicenseplates() throws SQLException {
-		return vehicleService.fetchAllUniqueLicenseplates();
+	public List<String> getAllUniqueLicenseplates(@PathParam("userid") int userid) throws SQLException {
+		return vehicleService.fetchAllUniqueLicenseplates(userid);
 	}
+	
+	/**
+     * @author Oussama Fahchouch
+     */
+	@Path("/user/{userid}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<VehicleModel> getAllVehiclesMadeByUser(@PathParam("userid") int userid) throws SQLException {
+        return vehicleService.fetchAllVehiclesRegisteredByUser(userid);
+    }
 }
