@@ -157,22 +157,6 @@ public class TripService {
         return fetchedTrips;
     }
     
-    /**
-	 * @author Fifi
-	 * @return int
-     * @throws SQLException 
-	 *
-	 */
-	public int fetchTripsPerUserWithProject(int userid) throws SQLException{
-		tripDAO = dbi.open(TripPersistence.class);
-
-		int fetchedTripsPerUserWithProject = tripDAO.findTripsPerUserIDWithProject(userid);
-
-		tripDAO.close();
-
-		return fetchedTripsPerUserWithProject;
-	}
-	
 	/**
 	 * @author Fifi
 	 *@return int

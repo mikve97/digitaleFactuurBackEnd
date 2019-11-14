@@ -95,10 +95,4 @@ public interface TripPersistence {
 	@SqlQuery("SELECT COUNT(*) FROM trips WHERE userid = :userid")
 	int findTripsPerUserID(@Bind("userid") int userid);
 	
-	/**
-	 * @author Fifi
-	 *
-	 */
-	@SqlQuery("SELECT COUNT (distinct projectid) FROM trips WHERE userid = :userid AND projectid != 0")
-	int findTripsPerUserIDWithProject(@Bind("userid") int userid);	
 }

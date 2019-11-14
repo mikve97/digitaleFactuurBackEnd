@@ -116,15 +116,5 @@ public class TripResource {
 	}
 
 	
-	/**
-	 * @author Fifi
-	 *
-	 */
-	@Path("/amount-of-projects/user/{userid}")
-	@GET
-	@Produces(MediaType.TEXT_PLAIN)
-	public int readTripsThatContainAProject(@PathParam("userid") int userid) throws SQLException {
-		int tripsModelListPerUserWithProject = tripService.fetchTripsPerUserWithProject(userid);
-		return tripsModelListPerUserWithProject;
-	}
+	
 }
