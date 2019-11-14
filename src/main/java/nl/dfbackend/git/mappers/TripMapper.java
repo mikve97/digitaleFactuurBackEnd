@@ -15,6 +15,8 @@ public class TripMapper implements ResultSetMapper<TripModel> {
 	
 	/**
 	 * @author Oussama Fahchouch
+	 * @param index, resultset, statement
+	 * @return TripModel fetchedTrip
 	 */
 	@Override
 	public TripModel map(int index, ResultSet r, StatementContext ctx) throws SQLException {
@@ -29,5 +31,4 @@ public class TripMapper implements ResultSetMapper<TripModel> {
 				r.getDouble("endkilometergauge")
 				);
 	}
-
 }

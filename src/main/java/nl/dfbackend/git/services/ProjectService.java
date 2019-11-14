@@ -1,39 +1,72 @@
 package nl.dfbackend.git.services;
 
-import nl.dfbackend.git.models.ProjectModel;
-import nl.dfbackend.git.models.TripModel;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.StringReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import nl.dfbackend.git.models.ProjectModel;
+import nl.dfbackend.git.models.TripModel;
 
+/**
+ * Service to handle calls too the DAO layer
+ */
 public class ProjectService {
+    private String jsonProject = "";
+    private TripService ts;
+    
+    public ProjectService() throws SQLException {
+    	ts = new TripService();
+    }
 
-    public ProjectService(){}
-
-    private List<TripModel> fetchAllTripsWithProject(){
-        TripService ts = new TripService();
-        List<TripModel> projects = ts.fetchAllTripsWithProject();
-
+    /**
+     * Gets the trips based on a given projectId
+     * @param projectId
+     * @return List<TripModel>
+     * @throws SQLException 
+     */
+    private List<TripModel> fetchAllTripsByProject(int projectId) throws SQLException{
+        List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
         return projects;
     }
 
-    private List<TripModel> fetchAllTripsByProject(int projectId){
-        TripService ts = new TripService();
-        List<TripModel> projects = ts.fetchAllTripsByProject(projectId);
-
-        return projects;
+    /**
+     * Returns the projectModel in JSON format
+     * @return String
+     */
+    public String getJsonProject() {
+        return jsonProject;
     }
 
+    /**
+     * Set a projectmodel in JSON format
+     * @param jsonProject
+     */
+    public void setJsonProject(String jsonProject) {
+        this.jsonProject = jsonProject;
+    }
+
+    /**
+     * Get the projects from the Digitalefactuur server
+     * @param apiKey
+     * @param userId
+     * @return List<ProjectModel>
+     */
     public List<ProjectModel> getProjectsFromApi(String apiKey, String userId){
         InputStream apiResult = httpRequest("https://administratie.digitalefactuur.nl/api/"+userId+"/"+apiKey+"/uren_get_projects_klanten", "GET");
         List<ProjectModel> projects = parseXML(apiResult);
@@ -115,7 +148,12 @@ public class ProjectService {
         return null;
     }
 
-
+    /**
+     * Creates a document file so we can use the XML response from Digitalefactuur
+     * @param apiResult
+     * @return Document
+     * @throws Exception
+     */
     public Document createDocumentFromXML(InputStream apiResult) throws Exception
     {
         try {

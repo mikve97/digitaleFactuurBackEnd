@@ -1,9 +1,9 @@
 package nl.dfbackend.git.resources;
 
-
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -21,7 +21,7 @@ import nl.dfbackend.git.services.TripService;
 public class TripResource {
 	private TripService tripService;
 	
-	public TripResource() {
+	public TripResource() throws SQLException {
 		this.tripService = new TripService();
 	}
 
@@ -32,6 +32,16 @@ public class TripResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getAllTrips() throws SQLException {
 		return tripService.fetchAllTrips();
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/user/{userid}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TripModel> getAllTripsByUser(@PathParam("userid") int userid) throws SQLException {
+		return tripService.fetchAllTripsByUser(userid);
 	}
 	
 	/**
@@ -73,4 +83,38 @@ public class TripResource {
 		
 		return true;
 	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/delete/{id}")
+	@DELETE
+	public void getDel(@PathParam("id") int id) throws SQLException {
+		tripService.deleteTrip(id);
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/fetch/unique-projectids/{userid}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Integer> getAllUniqueProjectIds(@PathParam("userid") int userid) throws SQLException {
+		return tripService.fetchAllUniqueProjectIds(userid);
+	}
+
+	/**
+	 * @author Fifi
+	 *
+	 */
+	@Path("/amount-of-trips/user/{userid}")
+	@GET
+	@Produces(MediaType.TEXT_PLAIN)
+	public int readTripsMadeByUser(@PathParam("userid") int userid) throws SQLException {
+		int tripsModelListPerUseruserId = tripService.fetchTripsPerUser(userid);
+		return tripsModelListPerUseruserId;
+	}
+
+	
+	
 }

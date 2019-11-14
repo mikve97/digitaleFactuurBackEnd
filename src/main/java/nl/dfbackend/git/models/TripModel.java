@@ -1,7 +1,5 @@
 package nl.dfbackend.git.models;
 
-import java.util.Objects;
-
 /**
  * @author Oussamam Fahchouch
  *
@@ -90,69 +88,4 @@ public class TripModel {
 	public void setEndKilometergauge(double endKilometergauge) {
 		this.endKilometergauge = endKilometergauge;
 	}
-	
-    //equals, hashCode, getters and setters for all fields.
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 59 * hash + (int) (this.id ^ (this.id >>> 32));
-        hash = 59 * hash + Objects.hashCode(this.projectId);
-        hash = 59 * hash + Objects.hashCode(this.userId);
-        hash = 59 * hash + Objects.hashCode(this.licensePlate);
-        hash = 59 * hash + Objects.hashCode(this.startLocation);
-        hash = 59 * hash + Objects.hashCode(this.endLocation);
-        hash = 59 * hash + Objects.hashCode(this.startKilometergauge);
-        hash = 59 * hash + Objects.hashCode(this.endKilometergauge);
-        return hash;
-    }
-    
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final TripModel other = (TripModel) obj;
-        if (this.id != other.id) {
-            return false;
-        }
-        if (!Objects.equals(this.projectId, other.projectId)) {
-            return false;
-        }
-        if (!Objects.equals(this.userId, other.userId)) {
-            return false;
-        }
-        if (!Objects.equals(this.licensePlate, other.licensePlate)) {
-            return false;
-        }
-        if (!Objects.equals(this.startLocation, other.startLocation)) {
-            return false;
-        }
-        if (!Objects.equals(this.endLocation, other.endLocation)) {
-            return false;
-        }
-        if (!Objects.equals(this.startKilometergauge, other.startKilometergauge)) {
-            return false;
-        }
-        if (!Objects.equals(this.endKilometergauge, other.endKilometergauge)) {
-            return false;
-        }
-        return true;
-    }
-    
-    @Override
-    public String toString() {
-    	return "Trip{" +
-    			"id=" + id +
-    			", projectId=" + projectId +
-    			", userId=" + userId +
-    			", licensePlate= '" + licensePlate + '\'' +
-    			", startLocation= '" + startLocation + '\'' +
-    			", endLocation= '" + endLocation + '\'' +
-    			", startKilometergauge=" + startKilometergauge +
-    			", endKilometergauge=" + endKilometergauge +
-    			'}';
-    }
 }
