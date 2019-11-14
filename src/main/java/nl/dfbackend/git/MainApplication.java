@@ -22,6 +22,8 @@ import org.jose4j.keys.HmacKey;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
+import java.sql.SQLException;
+
 import nl.dfbackend.git.resources.VehicleResource;
 
 
@@ -57,7 +59,7 @@ public class MainApplication extends Application<MainConfiguration> {
     }
 
     @Override
-    public void run(MainConfiguration configuration, Environment environment) throws UnsupportedEncodingException {
+    public void run(MainConfiguration configuration, Environment environment) throws UnsupportedEncodingException, SQLException {
         // code to register module
         final ProjectResource resource = new ProjectResource(configuration.getApiKey(), configuration.getUserId());
         final TripResource tripResource = new TripResource();

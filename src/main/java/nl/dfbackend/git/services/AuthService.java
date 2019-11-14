@@ -10,7 +10,6 @@ import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.keys.HmacKey;
 import org.jose4j.lang.JoseException;
-import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.CredentialModel;
@@ -32,9 +31,10 @@ public class AuthService {
     private DBI dbi;
     private UserPersistence loginDAO;
 
-    public AuthService(byte[] token){
+    public AuthService(byte[] token) throws SQLException{
         this.tokenSecret = token;
         DbConnector.getInstance();
+		dbi = DbConnector.getDBI();
     }
 
     /**
@@ -49,14 +49,11 @@ public class AuthService {
      * @throws SQLException 
      */
     public Response onLogin(CredentialModel credential) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
         loginDAO = dbi.open(UserPersistence.class);
         
         UserModel user = loginDAO.getUserByUsername(credential.getUsername());
 
-        source.close();
+        loginDAO.close();
 
         if(user == null) {
             //unauthorized unknown username

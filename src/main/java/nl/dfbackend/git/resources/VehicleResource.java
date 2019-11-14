@@ -22,7 +22,7 @@ import nl.dfbackend.git.services.VehicleService;
 public class VehicleResource {
     private VehicleService vehicleService;
 
-    public VehicleResource() {
+    public VehicleResource() throws SQLException {
         this.vehicleService = new VehicleService();
     }
 

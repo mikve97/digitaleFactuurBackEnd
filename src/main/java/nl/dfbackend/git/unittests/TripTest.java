@@ -15,9 +15,10 @@ import org.junit.Test;
 public class TripTest {
 	/**
 	 * @author Oussama Fahchouch
+	 * @throws SQLException 
 	 */
 	@Test
-	public void fetchATrip() {
+	public void fetchATrip() throws SQLException {
 		TripService tripService = new TripService();
 		TripModel trip = new TripModel(45, 96718, 3, "ZZ-BB-11", "Amsterdam", "Rotterdam", 0, 0);
 		
@@ -30,11 +31,12 @@ public class TripTest {
 	
 	/**
 	 * @author Oussama Fahchouch
+	 * @throws SQLException 
 	 */
 	@Test
-	public void addATripByUser() {
+	public void addATripByUser() throws SQLException {
 		TripService tripService = new TripService();
-		int lastTripIdInDB = 57;
+		int lastTripIdInDB = 75;
 		TripModel trip = new TripModel(lastTripIdInDB + 1, 0, 1, "HH-VC-12", "Utrecht", "Den-Haag", 0, 0);
 		
 		try {

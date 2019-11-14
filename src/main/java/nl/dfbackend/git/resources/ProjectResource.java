@@ -1,5 +1,6 @@
 package nl.dfbackend.git.resources;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.ws.rs.GET;
@@ -21,11 +22,12 @@ public class ProjectResource {
 
     private final String apiKey;
     private final String userId;
-    ProjectService pService = new ProjectService();
+    ProjectService pService;
 
-    public ProjectResource(String apiKey, String userId) {
+    public ProjectResource(String apiKey, String userId) throws SQLException {
         this.apiKey = apiKey;
         this.userId = userId;
+        this.pService = new ProjectService();
     }
 
     /**

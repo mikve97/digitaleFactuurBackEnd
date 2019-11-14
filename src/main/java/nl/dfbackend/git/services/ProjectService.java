@@ -27,9 +27,12 @@ import nl.dfbackend.git.models.TripModel;
  * Service to handle calls too the DAO layer
  */
 public class ProjectService {
-    public ProjectService(){}
     private String jsonProject = "";
-    private TripService ts = new TripService();
+    private TripService ts;
+    
+    public ProjectService() throws SQLException {
+    	ts = new TripService();
+    }
 
     /**
      * Gets the trips based on a given projectId

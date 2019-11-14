@@ -3,7 +3,6 @@ package nl.dfbackend.git.services;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.TripModel;
@@ -19,9 +18,11 @@ public class TripService {
 	
 	/**
 	 * @author Oussama Fahchouch
+	 * @throws SQLException 
 	 */
-	public TripService() {
+	public TripService() throws SQLException {
 		DbConnector.getInstance();
+		dbi = DbConnector.getDBI();
 	}
 
 	/**
@@ -30,14 +31,12 @@ public class TripService {
 	 */
 	public boolean addTripByUser(int userId, String licensePlate, String startLocation, 
 			String endLocation, double startKilometergauge, double endKilometergauge) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
 		
 		tripDAO = dbi.open(TripPersistence.class);
 		tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
 		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 		
-		source.close();
+		tripDAO.close();
 		
 		return true;
 	}
@@ -48,15 +47,13 @@ public class TripService {
 	 */
 	public boolean addTripForProject(int projectId, int userId, String licensePlate, String startLocation, 
 			String endLocation, double startKilometergauge, double endKilometergauge) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
 		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
 		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 		
-		source.close();
+		tripDAO.close();
 
 		return true;
 	}
@@ -66,14 +63,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public TripModel fetchTrip(int id) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		TripModel fetchedTrip = tripDAO.findById(id);
 		
-		source.close();
+		tripDAO.close();
 
 		return fetchedTrip;
 	}
@@ -83,14 +77,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public List<TripModel> fetchAllTrips() throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		List<TripModel> fetchedTrips = tripDAO.findAll();
 		
-		source.close();
+		tripDAO.close();
 
 		return fetchedTrips;
 	}
@@ -100,14 +91,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public List<TripModel> fetchAllTripsByUser(int userId) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		List<TripModel> fetchedTrips = tripDAO.findByUserId(userId);
 		
-		source.close();
+		tripDAO.close();
 
 		return fetchedTrips;
 	}
@@ -118,14 +106,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public void deleteTrip(int id) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		tripDAO.remove(id);
 
-		source.close();
+		tripDAO.close();
 	}
 	
 	/**
@@ -134,14 +119,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public List<Integer> fetchAllUniqueProjectIds(int userid) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
 		
-		source.close();
+		tripDAO.close();
 
 		return fetchedUniqueProjectIds;
 	}
@@ -152,14 +134,11 @@ public class TripService {
      * @throws SQLException 
      */
     public List<TripModel> fetchAllTripsWithProject() throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
-		tripDAO = dbi.open(TripPersistence.class);
+    	tripDAO = dbi.open(TripPersistence.class);
 
         List<TripModel> fetchedTrips = tripDAO.getAllTripsWithProject();
         
-        source.close();
+        tripDAO.close();
         
         return fetchedTrips;
     }
@@ -169,14 +148,11 @@ public class TripService {
      * @throws SQLException 
      */
     public List<TripModel> fetchAllTripsByProject(int pid) throws SQLException {
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
         List<TripModel> fetchedTrips = tripDAO.getAllTripsByProject(pid);
 
-        source.close();
+        tripDAO.close();
 
         return fetchedTrips;
     }
@@ -188,14 +164,11 @@ public class TripService {
 	 *
 	 */
 	public int fetchTripsPerUserWithProject(int userid) throws SQLException{
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		int fetchedTripsPerUserWithProject = tripDAO.findTripsPerUserIDWithProject(userid);
 
-		source.close();
+		tripDAO.close();
 
 		return fetchedTripsPerUserWithProject;
 	}
@@ -206,14 +179,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public int fetchTripsPerUser(int userid) throws SQLException{
-		PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		tripDAO = dbi.open(TripPersistence.class);
 
 		int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
 
-		source.close();
+		tripDAO.close();
 
 		return fetchedTripsPerUser;
 	}

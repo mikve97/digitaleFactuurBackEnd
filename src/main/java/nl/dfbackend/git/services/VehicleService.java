@@ -3,7 +3,6 @@ package nl.dfbackend.git.services;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.postgresql.ds.PGPoolingDataSource;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.VehicleModel;
@@ -19,9 +18,11 @@ public class VehicleService {
 
     /**
      * @author Bram de Jong
+     * @throws SQLException 
      */
-    public VehicleService() {
-        DbConnector.getInstance();
+    public VehicleService() throws SQLException {
+    	DbConnector.getInstance();
+        dbi = DbConnector.getDBI();
     }
 
     /**
@@ -35,13 +36,11 @@ public class VehicleService {
      * @throws SQLException 
      */
     public boolean addVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
+
 		vehicleDAO = dbi.open(VehiclePersistence.class);
         vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips);
 
-        source.close();
+        vehicleDAO.close();
 
         return true;
     }
@@ -51,13 +50,11 @@ public class VehicleService {
      * @throws SQLException 
      */
     public boolean alterVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
+
 		vehicleDAO = dbi.open(VehiclePersistence.class);
         vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips);
 
-        source.close();
+        vehicleDAO.close();
         
         return true;
     }
@@ -69,13 +66,10 @@ public class VehicleService {
      * @throws SQLException 
      */
     public VehicleModel fetchVehicle(String licenseplate) throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
         VehicleModel fetchedVehicle = vehicleDAO.findByLicensePlate(licenseplate);
 
-        source.close();
+        vehicleDAO.close();
 
         return fetchedVehicle;
     }
@@ -86,13 +80,10 @@ public class VehicleService {
      * @throws SQLException 
      */
     public List<VehicleModel> fetchAllVehicles() throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
         List<VehicleModel> fetchedVehicles = vehicleDAO.findAll();
 
-        source.close();
+        vehicleDAO.close();
 
         return fetchedVehicles;
     }
@@ -104,13 +95,10 @@ public class VehicleService {
      * @throws SQLException 
      */
     public boolean deleteVehicle(String licensePlate) throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
         vehicleDAO.remove(licensePlate);
 
-        source.close();
+        vehicleDAO.close();
 
         return true;
     }
@@ -121,13 +109,10 @@ public class VehicleService {
 	 * @throws SQLException 
 	 */
 	public List<String> fetchAllUniqueLicenseplates(int userid) throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
 		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates(userid);
 		
-        source.close();
+		vehicleDAO.close();
 
 		return fetchedUniqueLicenseplates;
 	}
@@ -138,13 +123,10 @@ public class VehicleService {
 	 * @return allVehiclesRegisteredByUser
 	 */
 	public List<VehicleModel> fetchAllVehiclesRegisteredByUser(int userid) throws SQLException {
-    	PGPoolingDataSource source = DbConnector.getSource();
-		dbi = DbConnector.getDBI(source);
-		
 		vehicleDAO = dbi.open(VehiclePersistence.class);
         List<VehicleModel> allVehiclesRegisteredByUser = vehicleDAO.findRegisteredByUser(userid);
 
-        source.close();
+        vehicleDAO.close();
 
         return allVehiclesRegisteredByUser;
     }

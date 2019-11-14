@@ -11,7 +11,7 @@ import nl.dfbackend.git.services.VehicleService;
 
 public class VehicleTest {
     @Test
-    public void fetchAVehicle() {
+    public void fetchAVehicle() throws SQLException {
         VehicleService vehicleService = new VehicleService();
         VehicleModel vehicleModel = new VehicleModel(5, 0,"ZZ-11-BB","VW T-Cross","SUV");
 
@@ -23,7 +23,7 @@ public class VehicleTest {
     }
 
     @Test
-    public void addAVehicleByUser() {
+    public void addAVehicleByUser() throws SQLException {
         VehicleService vehicleService = new VehicleService();
         String licenseplate = "TE-12-ST";
         VehicleModel vehicleModel = new VehicleModel(5, 0, licenseplate, "BMW x6", "SUV");
