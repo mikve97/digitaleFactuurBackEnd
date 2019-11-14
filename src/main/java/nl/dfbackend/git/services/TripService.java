@@ -60,7 +60,8 @@ public class TripService {
 
 	/**
 	 * @author Oussama Fahchouch
-	 * @throws SQLException 
+	 * @throws SQLException
+	 * @return TripModel fetchedTrip
 	 */
 	public TripModel fetchTrip(int id) throws SQLException {
 		tripDAO = dbi.open(TripPersistence.class);
@@ -74,7 +75,8 @@ public class TripService {
 	
 	/**
 	 * @author Oussama Fahchouch
-	 * @throws SQLException 
+	 * @throws SQLException
+	 * @return List<TripModel> fetchedTrips 
 	 */
 	public List<TripModel> fetchAllTrips() throws SQLException {
 		tripDAO = dbi.open(TripPersistence.class);
@@ -99,7 +101,6 @@ public class TripService {
 
 		return fetchedTrips;
 	}
-
 	
 	/**
 	 * @author Oussama Fahchouch
@@ -127,7 +128,21 @@ public class TripService {
 
 		return fetchedUniqueProjectIds;
 	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 * @throws SQLException
+	 * @return TripModel fetchedTrip
+	 */
+	public TripModel fetchLastTrip() throws SQLException {
+		tripDAO = dbi.open(TripPersistence.class);
 
+		TripModel fetchedTrip = tripDAO.findLastTrip();
+		
+		tripDAO.close();
+
+		return fetchedTrip;
+	}
 
     /**
      * @author Mike van Es

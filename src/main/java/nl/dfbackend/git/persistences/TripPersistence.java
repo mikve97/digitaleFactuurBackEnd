@@ -62,18 +62,24 @@ public interface TripPersistence {
 	
 	/**
 	 * @author Oussama Fahchouch
-	 */
-	@SqlUpdate("DELETE FROM trips WHERE id = :id")
-	void remove(@Bind("id") int id);
-	
-	/**
-	 * @author Oussama Fahchouch
 	 * @return List<Integer> uniqueProjectIds
 	 */
 	@SqlQuery("SELECT DISTINCT projectid FROM trips WHERE userid = :userid AND projectid != 0")
 	List<Integer> findAllUniqueProjects(@Bind("userid") int userid);
 	
-
+	/**
+	 * @author Oussama Fahchouch
+	 * @return int lastTripId
+	 */
+	@SqlQuery("SELECT * FROM trips ORDER BY id DESC LIMIT 1")
+	TripModel findLastTrip();
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@SqlUpdate("DELETE FROM trips WHERE id = :id")
+	void remove(@Bind("id") int id);
+	
 	/**
 	 * @author Mike van Es
 	 */

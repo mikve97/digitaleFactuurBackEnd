@@ -36,12 +36,13 @@ public class TripTest {
 	@Test
 	public void addATripByUser() throws SQLException {
 		TripService tripService = new TripService();
-		int lastTripIdInDB = 75;
-		TripModel trip = new TripModel(lastTripIdInDB + 1, 0, 1, "HH-VC-12", "Utrecht", "Den-Haag", 0, 0);
+		TripModel trip = tripService.fetchLastTrip();
 		
 		try {
-			tripService.addTripByUser(1, "HH-VC-12", "Utrecht", "Den-Haag", 0, 0);
-			assertEquals(tripService.fetchTrip(lastTripIdInDB + 1).getTripId(), trip.getTripId());
+			tripService.addTripByUser(2, "HH-VC-12", "Utrecht", "Den-Haag", 0, 0);
+			System.out.println(tripService.fetchLastTrip().getTripId());
+			System.out.println(trip.getTripId());
+			assertEquals(tripService.fetchLastTrip().getTripId(), trip.getTripId() + 1);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
