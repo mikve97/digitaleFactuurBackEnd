@@ -19,21 +19,21 @@ public interface TripPersistence {
 	 * @author Oussama Fahchouch
 	 * @return TripModel trip
 	 */
-	@SqlQuery("select * from trips where id = :id")
+	@SqlQuery("SELECT * FROM trips WHERE id = :id")
 	TripModel findById(@Bind("id") int id);
 	
 	/**
 	 * @author Oussama Fahchouch
 	 * @return List<TripModel> trips
 	 */
-	@SqlQuery("select * from trips where userid = :userid")
+	@SqlQuery("SELECT * FROM trips WHERE userid = :userid")
 	List<TripModel> findByUserId(@Bind("userid") int userid);
 	
 	/**
 	 * @author Oussama Fahchouch
 	 * @return List<TripModel> trips
 	 */
-	@SqlQuery("select * from trips")
+	@SqlQuery("SELECT * FROM trips")
 	List<TripModel> findAll();
 	
 	/**
@@ -92,13 +92,13 @@ public interface TripPersistence {
 	 * @author Fifi
 	 *
 	 */
-	@SqlQuery("select count(*) from trips where userid = :userid")
+	@SqlQuery("SELECT COUNT(*) FROM trips WHERE userid = :userid")
 	int findTripsPerUserID(@Bind("userid") int userid);
 	
 	/**
 	 * @author Fifi
 	 *
 	 */
-	@SqlQuery("select count (distinct projectid) from trips where userid = :userid AND projectid != 0")
+	@SqlQuery("SELECT COUNT (distinct projectid) FROM trips WHERE userid = :userid AND projectid != 0")
 	int findTripsPerUserIDWithProject(@Bind("userid") int userid);	
 }
