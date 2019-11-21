@@ -1,11 +1,14 @@
 package nl.dfbackend.git.services;
 
+import static java.util.Collections.singletonMap;
 import static org.jose4j.jws.AlgorithmIdentifiers.HMAC_SHA256;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.ws.rs.core.Response;
 
+import com.google.common.base.Throwables;
 import org.jose4j.jws.JsonWebSignature;
 import org.jose4j.jwt.JwtClaims;
 import org.jose4j.keys.HmacKey;
@@ -68,7 +71,7 @@ public class AuthService {
         }
 
         // create token
-        String token = generateToken(user.getUserId());
+        Map token = generateToken(user.getUsername());
         user.setAuthToken(token);
 
         // user is returned. next to the response.
@@ -81,13 +84,12 @@ public class AuthService {
      *
      * @author Ali Rezaa Ghariebiyan
      * @version 08-11-2019
-     * @param userId
      */
 
-    private String generateToken(int userId) {
+    private Map<String, String> generateToken(String username) {
         final JwtClaims claims = new JwtClaims();
-        claims.setExpirationTimeMinutesInTheFuture(-20);
-        claims.setClaim("id", userId);
+        claims.setSubject(username);
+        claims.setExpirationTimeMinutesInTheFuture(30);
 
         final JsonWebSignature jws = new JsonWebSignature();
         jws.setPayload(claims.toJson());
@@ -95,10 +97,22 @@ public class AuthService {
         jws.setKey(new HmacKey(tokenSecret));
 
         try {
-            return jws.getCompactSerialization();
-        } catch (JoseException e) {
-            e.printStackTrace();
+            return singletonMap("token", jws.getCompactSerialization());
         }
-        return null;
+        catch (JoseException e) { throw Throwables.propagate(e); }
+//        claims.setExpirationTimeMinutesInTheFuture(30);
+//        claims.setClaim("id", userId);
+//
+//        final JsonWebSignature jws = new JsonWebSignature();
+//        jws.setPayload(claims.toJson());
+//        jws.setAlgorithmHeaderValue(HMAC_SHA256);
+//        jws.setKey(new HmacKey(tokenSecret));
+//
+//        try {
+//            return jws.getCompactSerialization();
+//        } catch (JoseException e) {
+//            e.printStackTrace();
+//        }
+//        return null;
     }
 }

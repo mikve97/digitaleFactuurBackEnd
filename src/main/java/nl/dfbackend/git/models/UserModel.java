@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import java.security.Principal;
+import java.util.Map;
 
 /**
  *
@@ -25,7 +26,7 @@ public class UserModel implements Principal {
     private String password;
     @JsonProperty
     @NotNull
-    private String authToken;
+    private Map authToken;
 
     //constructor
     @JsonCreator
@@ -59,11 +60,11 @@ public class UserModel implements Principal {
         password = password;
     }
 
-    public String getAuthToken() {
+    public Map getAuthToken() {
         return authToken;
     }
 
-    public void setAuthToken(String authToken) {
+    public void setAuthToken(Map authToken) {
         this.authToken = authToken;
     }
 

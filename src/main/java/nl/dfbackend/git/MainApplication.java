@@ -65,8 +65,7 @@ public class MainApplication extends Application<MainConfiguration> {
         final TripResource tripResource = new TripResource();
         final VehicleResource vehicleResource = new VehicleResource();
 
-    	environment.jersey().register(resource);
-	    environment.jersey().register(tripResource);
+
 
         final byte[] key = configuration.getJwtTokenSecret();
 
@@ -94,6 +93,7 @@ public class MainApplication extends Application<MainConfiguration> {
         environment.jersey().register(resource);
         environment.jersey().register(loginResource);
 	    environment.jersey().register(vehicleResource);
+        environment.jersey().register(tripResource);
     }
 
 }

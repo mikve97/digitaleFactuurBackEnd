@@ -1,5 +1,6 @@
 package nl.dfbackend.git.resources;
 
+import java.security.Principal;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,7 +12,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import io.dropwizard.auth.Auth;
+import io.dropwizard.auth.Authenticator;
 import nl.dfbackend.git.models.TripModel;
+import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.services.TripService;
 
 /**
@@ -40,7 +44,7 @@ public class TripResource {
 	@Path("/user/{userid}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<TripModel> getAllTripsByUser(@PathParam("userid") int userid) throws SQLException {
+	public List<TripModel> getAllTripsByUser(@Auth Principal user, @PathParam("userid") int userid) throws SQLException {
 		return tripService.fetchAllTripsByUser(userid);
 	}
 	
