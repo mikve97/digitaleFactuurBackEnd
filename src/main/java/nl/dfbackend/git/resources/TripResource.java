@@ -34,15 +34,6 @@ public class TripResource {
 		return tripService.fetchAllTrips();
 	}
 	
-	/**
-	 * @author Oussama Fahchouch
-	 */
-	@Path("/user/{userid}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<TripModel> getAllTripsByUser(@PathParam("userid") int userid) throws SQLException {
-		return tripService.fetchAllTripsByUser(userid);
-	}
 	
 	/**
 	 * @author Oussama Fahchouch
