@@ -93,6 +93,17 @@ public class TripResource {
 	public List<Integer> getAllUniqueProjectIds(@PathParam("userid") int userid) throws SQLException {
 		return tripService.fetchAllUniqueProjectIds(userid);
 	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/user/{userid}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<TripModel> getTripsMadeByUser(@PathParam("userid") int userid) throws SQLException {
+		return tripService.fetchAllTripsByUser(userid);
+	}
+	
 
 	/**
 	 * @author Fifi
