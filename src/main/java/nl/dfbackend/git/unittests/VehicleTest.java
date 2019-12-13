@@ -22,17 +22,17 @@ public class VehicleTest {
         }
     }
 
-    @Test
-    public void addAVehicleByUser() throws SQLException {
-        VehicleService vehicleService = new VehicleService();
-        String licenseplate = "TE-12-ST";
-        VehicleModel vehicleModel = new VehicleModel(5, 0, licenseplate, "BMW x6", "SUV");
-
-        try {
-            vehicleService.addVehicleByUser(5, 0, licenseplate, "BMW X6", "SUV");
-            assertEquals(vehicleService.fetchVehicle(licenseplate).getLicensePlate(), vehicleModel.getLicensePlate());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    public void addAVehicleByUser() throws SQLException {
+//        VehicleService vehicleService = new VehicleService();
+//        String licenseplate = "TE-12-ST";
+//        VehicleModel vehicleModel = new VehicleModel(5, 0, licenseplate, "BMW x6", "SUV");
+//
+//        try {
+//            vehicleService.addVehicleByUser(5, 0, licenseplate, "BMW X6", "SUV");
+//            assertEquals(vehicleService.fetchVehicle(licenseplate).getLicensePlate(), vehicleModel.getLicensePlate());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 }

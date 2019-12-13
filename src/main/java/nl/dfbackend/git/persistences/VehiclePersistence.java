@@ -36,10 +36,14 @@ public interface VehiclePersistence {
 	 * @param vehicleType
 	 * @param totalTrips
 	 */
-	@SqlUpdate("INSERT INTO vehicle (licenseplate, userid, vehiclename, vehicletype, totaltrips)\nVALUES (:licensePlate, :userId, :vehicleName, :vehicleType, :totalTrips);")
+	@SqlUpdate("INSERT INTO vehicle (licenseplate, userid, vehiclename, vehicletype, totaltrips, fuel, vehiclebody)\nVALUES (:licensePlate, :userId, :vehicleName, :vehicleType, :totalTrips, :fuel, :vehicleBody);")
 	void createVehicleByUser(@Bind("licensePlate") String licensePlate,
-							 @Bind("userId") int userId, @Bind("vehicleName") String vehicleName,
-							 @Bind("vehicleType") String vehicleType, @Bind("totalTrips") int totalTrips);
+							 @Bind("userId") int userId,
+							 @Bind("vehicleName") String vehicleName,
+							 @Bind("vehicleType") String vehicleType,
+							 @Bind("totalTrips") int totalTrips,
+							 @Bind("fuel") String fuel,
+							 @Bind("vehicleBody") String vehicleBody);
 
 	/**
 	 * @author Bram de Jong

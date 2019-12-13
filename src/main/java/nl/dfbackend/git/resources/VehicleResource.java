@@ -63,13 +63,13 @@ public class VehicleResource {
     /**
      * @author Bram de Jong
      */
-    @Path("/vehicle/add/for-user/{userId}/{totalTrips}/{licensePlate}/{vehicleName}/{vehicleType}")
+    @Path("/vehicle/add/for-user/{userId}/{totalTrips}/{licensePlate}/{vehicleName}/{vehicleType}/{fuel}/{vehicleBody}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public boolean postVehicleByUser(@PathParam("userId") int userId,
                                      @PathParam("licensePlate")String licensePlate,@PathParam("vehicleName") String vehicleName,@PathParam("vehicleType") String vehicleType,
-                                     @PathParam("totalTrips") int totalTrips) throws SQLException {
-        vehicleService.addVehicleByUser(userId, totalTrips, licensePlate, vehicleName, vehicleType);
+                                     @PathParam("totalTrips") int totalTrips,@PathParam("fuel") String fuel,@PathParam("vehicleBody") String vehicleBody) throws SQLException {
+        vehicleService.addVehicleByUser(userId, totalTrips, licensePlate, vehicleName, vehicleType, fuel, vehicleBody);
 
         return true;
     }

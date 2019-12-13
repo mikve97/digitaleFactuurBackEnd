@@ -35,10 +35,10 @@ public class VehicleService {
      * @return boolean
      * @throws SQLException 
      */
-    public boolean addVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) throws SQLException {
+    public boolean addVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType, String fuel, String vehicleBody) throws SQLException {
 
 		vehicleDAO = dbi.open(VehiclePersistence.class);
-        vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips);
+        vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips, fuel, vehicleBody);
 
         vehicleDAO.close();
 

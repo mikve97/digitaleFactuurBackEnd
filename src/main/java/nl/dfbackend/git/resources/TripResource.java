@@ -48,14 +48,14 @@ public class TripResource {
 	/**
 	 * @author Oussama Fahchouch
 	 */
-	@Path("/trip/add/for-project/{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}")
+	@Path("/trip/add/for-project/{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}/{drivenKm}")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean postTripForProject(@PathParam("projectId") int projectId,@PathParam("userId") int userId,
 			@PathParam("licensePlate")String licensePlate,@PathParam("startLocation") String startLocation,@PathParam("endLocation") String endLocation,
-			@PathParam("startKilometergauge") double startKilometergauge,@PathParam("endKilometergauge") double endKilometergauge) throws SQLException {
+			@PathParam("startKilometergauge") double startKilometergauge,@PathParam("endKilometergauge") double endKilometergauge, @PathParam("drivenKm") float drivenKm) throws SQLException {
 		
-		tripService.addTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
+		tripService.addTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
 		
 		return true;
 	}

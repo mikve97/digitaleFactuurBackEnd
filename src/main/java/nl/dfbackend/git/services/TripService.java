@@ -46,11 +46,11 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public boolean addTripForProject(int projectId, int userId, String licensePlate, String startLocation, 
-			String endLocation, double startKilometergauge, double endKilometergauge) throws SQLException {
+			String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm) throws SQLException {
 		
 		tripDAO = dbi.open(TripPersistence.class);
 
-		tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
+		tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
 		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 		
 		tripDAO.close();

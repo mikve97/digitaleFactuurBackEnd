@@ -48,11 +48,11 @@ public interface TripPersistence {
 	/**
 	 * @author Oussama Fahchouch
 	 */
-	@SqlUpdate("INSERT INTO trips (projectid, userid, licenseplate, startlocation, endlocation, startkilometergauge, endkilometergauge)\n" + "VALUES (:projectId, :userId, :licensePlate, :startLocation, :endLocation, :startKilometergauge, :endKilometergauge);")
+	@SqlUpdate("INSERT INTO trips (projectid, userid, licenseplate, startlocation, endlocation, startkilometergauge, endkilometergauge, drivenkm)\n" + "VALUES (:projectId, :userId, :licensePlate, :startLocation, :endLocation, :startKilometergauge, :endKilometergauge, :drivenKm);")
 	void createTripForProject(@Bind("projectId") int projectId, @Bind("userId") int userId,
 			@Bind("licensePlate") String licensePlate, @Bind("startLocation") String startLocation,
 			@Bind("endLocation") String endLocation, @Bind("startKilometergauge") double startKilometergauge,
-			@Bind("endKilometergauge") double endKilometergauge);
+			@Bind("endKilometergauge") double endKilometergauge, @Bind("drivenKm") float drivenKm);
 	
 	/**
 	 * @author Oussama Fahchouch
