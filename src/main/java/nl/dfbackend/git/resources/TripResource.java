@@ -104,7 +104,16 @@ public class TripResource {
 		return tripService.fetchAllTripsByUser(userid);
 	}
 	
-
+	/**
+	 * @author Oussama Fahchouch
+	 */
+	@Path("/fetch/unique-projectids-and-trips-amount/{userid}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Integer> getAllUniqueProjectIdsAndTripsAmount(@PathParam("userid") int userid) throws SQLException {
+		return tripService.fetchTripsAndProjectsPerUser(userid);
+	}
+	
 	/**
 	 * @author Fifi
 	 *

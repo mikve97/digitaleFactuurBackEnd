@@ -1,6 +1,7 @@
 package nl.dfbackend.git.services;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.skife.jdbi.v2.DBI;
@@ -142,6 +143,28 @@ public class TripService {
 		tripDAO.close();
 
 		return fetchedTrip;
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 * @throws SQLException
+	 * @return List<integer> listWithCountTripsPerUserAndProjects
+	 */
+	public List<Integer> fetchTripsAndProjectsPerUser(int userid) throws SQLException {
+		List<Integer> fetchTripsAndProjectsPerUser = new ArrayList();
+		
+		tripDAO = dbi.open(TripPersistence.class);
+
+		int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
+		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
+		int fetchedAmountProjectsPerUser = fetchedUniqueProjectIds.size();
+		
+		fetchTripsAndProjectsPerUser.add(fetchedTripsPerUser);
+		fetchTripsAndProjectsPerUser.add(fetchedAmountProjectsPerUser);
+		
+		tripDAO.close();
+
+		return fetchTripsAndProjectsPerUser;
 	}
 
     /**
