@@ -3,13 +3,9 @@ package nl.dfbackend.git.resources;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.services.TripService;
@@ -124,6 +120,21 @@ public class TripResource {
 	public int readTripsMadeByUser(@PathParam("userid") int userid) throws SQLException {
 		int tripsModelListPerUseruserId = tripService.fetchTripsPerUser(userid);
 		return tripsModelListPerUseruserId;
+	}
+
+	/**
+	 * @author Mike van Es
+	 */
+	@Path("/getByLicensePlate")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLastKnownTripFromVehicle(@QueryParam("licensePlate") String licensePlate) throws SQLException {
+		TripModel tripModel = tripService.getTripByLicensePlate(licensePlate);
+		if(tripModel != null) {
+			return Response.ok(tripModel).build();
+		}else{
+			return Response.ok(null).build();
+		}
 	}
 
 	

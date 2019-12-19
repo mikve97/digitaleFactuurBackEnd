@@ -9,7 +9,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,6 +31,7 @@ import nl.dfbackend.git.models.TripModel;
 public class ProjectService {
     private String jsonProject = "";
     private TripService ts;
+    private Map<Integer, ProjectModel> projectList = new HashMap<Integer, ProjectModel>();
     
     public ProjectService() throws SQLException {
     	ts = new TripService();
@@ -43,6 +46,14 @@ public class ProjectService {
     private List<TripModel> fetchAllTripsByProject(int projectId) throws SQLException{
         List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
         return projects;
+    }
+
+    public ProjectModel getProjectById(int pId){
+        if(this.projectList.containsKey(pId)){
+            return this.projectList.get(pId);
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -135,6 +146,7 @@ public class ProjectService {
                     List<TripModel> tripsFromProject = this.fetchAllTripsByProject(projectId);
                     //Create new projectModel from trip
                     ProjectModel tempProjectModel = new ProjectModel(projectId, projectName, tripsFromProject);
+                    this.projectList.put(tempProjectModel.getId(), tempProjectModel);
                     projectList.add(tempProjectModel);
                 }
             }

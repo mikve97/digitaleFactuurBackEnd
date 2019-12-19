@@ -91,7 +91,15 @@ public interface TripPersistence {
 	 */
 	@SqlQuery("SELECT * FROM trips WHERE projectid = :pid ")
 	List<TripModel> getAllTripsByProject(@Bind("pid") int pid);
-	
+
+	/**
+	 * @author Mike van Es
+	 * @return TripModel
+	 */
+	@SqlQuery("SELECT * FROM trips WHERE licenseplate = :licensePlate ORDER BY ID DESC LIMIT 1")
+	TripModel findLastTripByLicensePlate(@Bind("licensePlate") String licensePlate);
+
+
 	void close();
 	
 	/**

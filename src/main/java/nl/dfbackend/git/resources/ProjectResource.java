@@ -55,7 +55,6 @@ public class ProjectResource {
     @Path("/setProject")
     @POST
     public void setProject(@QueryParam("project") String project) {
-        System.out.println(project);
         this.pService.setJsonProject(project);
     }
 
@@ -73,6 +72,30 @@ public class ProjectResource {
             return Response.ok(null).build();
         }else{
             return Response.ok(jsonProject).build();
+        }
+    }
+
+    /**
+     * Return a project based on a given projectID
+     * @author Mike van Es
+     * @return Response
+     */
+    @Path("/getProjectById")
+    @GET
+    public Response getProjectById(@QueryParam("projectId") int projectId) {
+        ProjectModel projectModel = pService.getProjectById(projectId);
+        if(projectModel == null){
+            this.pService.getProjectsFromApi(this.apiKey, this.userId);
+            // Refetch the projects
+            projectModel = pService.getProjectById(projectId);
+            // If the projects remain null the project simply didnt exist else we return the new project.
+            if(projectModel == null){
+                return Response.ok(null).build();
+            }else{
+                return Response.ok(projectModel).build();
+            }
+        }else{
+            return Response.ok(projectModel).build();
         }
     }
 }

@@ -1,6 +1,7 @@
 package nl.dfbackend.git.persistences;
 
 import nl.dfbackend.git.mappers.VehicleMapper;
+import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.models.VehicleModel;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
@@ -72,8 +73,10 @@ public interface VehiclePersistence {
 	 */
 	@SqlQuery("SELECT * FROM vehicle WHERE userid = :userid")
 	List<VehicleModel> findRegisteredByUser(@Bind("userid") int userid);
-	
+
 	void close();
+
+
 
 
 }

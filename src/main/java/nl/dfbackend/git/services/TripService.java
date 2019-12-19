@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import nl.dfbackend.git.persistences.VehiclePersistence;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.TripModel;
@@ -209,4 +210,15 @@ public class TripService {
 
 		return fetchedTripsPerUser;
 	}
+
+	public TripModel getTripByLicensePlate(String licensePlate){
+		tripDAO = dbi.open(TripPersistence.class);
+
+		TripModel lastKnownTrip = tripDAO.findLastTripByLicensePlate(licensePlate);
+
+		tripDAO.close();
+
+		return lastKnownTrip;
+	};
+
 }

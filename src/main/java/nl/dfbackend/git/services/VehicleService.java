@@ -3,6 +3,7 @@ package nl.dfbackend.git.services;
 import java.sql.SQLException;
 import java.util.List;
 
+import nl.dfbackend.git.models.TripModel;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.VehicleModel;
@@ -130,4 +131,6 @@ public class VehicleService {
 
         return allVehiclesRegisteredByUser;
     }
+
+
 }
