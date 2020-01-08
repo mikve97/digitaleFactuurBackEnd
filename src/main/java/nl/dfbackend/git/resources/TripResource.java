@@ -2,11 +2,13 @@ package nl.dfbackend.git.resources;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Random;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import io.jsonwebtoken.Jwts;
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.services.TripService;
 
@@ -27,6 +29,15 @@ public class TripResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getAllTrips() throws SQLException {
+		String jwt = Jwts.builder()
+			.setSubject("Ous")
+			.setAudience("school")
+			.claim("1d20", new Random().nextInt(20) + 1)
+			.compact();
+				
+			System.out.println("-----------------------------------");
+			System.out.println(jwt);
+			System.out.println("-----------------------------------");
 		return tripService.fetchAllTrips();
 	}
 	
