@@ -28,8 +28,5 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/s1c4r1us/Downloads/jjwt-api-0.10.7.jar"/>
-	<classpathentry kind="lib" path="/home/s1c4r1us/Downloads/jjwt-impl-0.10.7.jar"/>
-	<classpathentry kind="lib" path="/home/s1c4r1us/Downloads/jjwt-jackson-0.10.7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
