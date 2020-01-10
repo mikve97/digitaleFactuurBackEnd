@@ -17,6 +17,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import nl.dfbackend.git.models.TripModel;
+import nl.dfbackend.git.services.AuthorisationService;
 import nl.dfbackend.git.services.TripService;
 
 /**
@@ -36,29 +37,9 @@ public class TripResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getAllTrips() throws SQLException {
+		AuthorisationService aS = new AuthorisationService();
 		
-		//encode
-		Instant now = Instant.now();
-		byte[] secret = Base64.getDecoder().decode("uidupQNPG1sBZZNA34U9eTgECs6BVfhAIOZtWi/BR0Y=");
-		
-		String jwt = Jwts.builder()
-			.setSubject("Ous")
-			.setAudience("school")
-			.claim("1d20", new Random().nextInt(20) + 1)
-			.setIssuedAt(Date.from(now))
-			.setExpiration(Date.from(now.plus(1, ChronoUnit.MINUTES)))
-			.signWith(Keys.hmacShaKeyFor(secret))
-			.compact();
-		
-		System.out.println(jwt);
-		
-		
-		//decode
-		Jws<Claims> result = Jwts.parser()
-				.setSigningKey(Keys.hmacShaKeyFor(secret))
-				.parseClaimsJws(jwt);
-		
-		System.out.println(result);
+		aS.decodeJWToken(aS.encodeJWToken("Ous"));
 		
 		return tripService.fetchAllTrips();
 	}
