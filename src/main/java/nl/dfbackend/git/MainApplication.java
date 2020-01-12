@@ -11,7 +11,7 @@ import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.authentication.AuthenticatorOld;
-import nl.dfbackend.git.resources.LoginResource;
+import nl.dfbackend.git.resources.AuthResource;
 import nl.dfbackend.git.resources.ProjectResource;
 import nl.dfbackend.git.resources.TripResource;
 import nl.dfbackend.git.services.AuthServiceOld;
@@ -105,11 +105,12 @@ public class MainApplication extends Application<MainConfiguration> {
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         // code to register module
-        final LoginResource loginResource = new LoginResource(new AuthServiceOld(key));
+        final AuthResource loginResource = new AuthResource();
         environment.jersey().register(resource);
         environment.jersey().register(loginResource);
 	    environment.jersey().register(vehicleResource);
 	    
+	    //toevoegen van de OAuth2 authenticator
 	    environment.jersey().register(new AuthDynamicFeature(
 	    		new OAuthCredentialAuthFilter.Builder<UserModel>()
 	    		.setAuthenticator(new AuthenticationService())
