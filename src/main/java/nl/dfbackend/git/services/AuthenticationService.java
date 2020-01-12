@@ -3,8 +3,6 @@ package nl.dfbackend.git.services;
 import java.sql.SQLException;
 import java.util.Optional;
 
-import javax.ws.rs.core.Response;
-
 import org.skife.jdbi.v2.DBI;
 
 import io.dropwizard.auth.AuthenticationException;
@@ -14,6 +12,9 @@ import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.persistences.UserPersistence;
 import nl.dfbackend.git.util.DbConnector;
 
+/**
+ * @author Oussama Fahchouch
+ */
 public class AuthenticationService implements Authenticator<String, UserModel> {
 	private AuthorisationService authorisationService;
     private DBI dbi;
@@ -26,23 +27,37 @@ public class AuthenticationService implements Authenticator<String, UserModel> {
 	}
 
 	@Override
-	public Optional<UserModel> authenticate(String credentials) throws AuthenticationException {
+	public Optional<UserModel> authenticate(String jwtoken) throws AuthenticationException {
 		try {
-			// Authenticate jwtoken inplaats van usercheck
+			UserModel user = null;
 			
-			UserModel user = new UserModel(null, credentials, credentials);
+			if(this.authorisationService.decodeJWToken(jwtoken)) {
+				userDAO = dbi.open(UserPersistence.class);
+		        
+		        user = userDAO.getUserByUsername(this.authorisationService.retrieveUsernameFromJWToken(jwtoken));
+		        
+		        userDAO.close();
+			}
+			
+			// ifPresent() runnen voor bij elke request
 			return Optional.of(user);
 		} catch (Exception e) {
-			throw new AuthenticationException("The user is unauthorised.");
+			throw new AuthenticationException("The user is not authenticated.");
 		}
 	}
 	
+	/**
+	 * @param credential
+	 * @return Optional<UserModel>
+	 * @throws SQLException
+	 */
 	public Optional<UserModel> authenticateUser(CredentialModel credential) throws SQLException {
         userDAO = dbi.open(UserPersistence.class);
         
         UserModel user = userDAO.getUserByUsername(credential.getUsername());
-        user.setAuthToken(authorisationService.encodeJWToken(user.getUsername()));
-
+		 
+		user.setAuthToken(authorisationService.encodeJWToken(user.getUsername()));
+      
         userDAO.close();
         
         return Optional.of(user);

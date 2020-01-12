@@ -15,6 +15,7 @@ import io.jsonwebtoken.security.Keys;
  * @author Oussama Fahchouch
  */
 public class AuthorisationService {
+	//deze kan nog uit de code en in een map voor de beveiliging
 	byte[] secret = Base64.getDecoder().decode("uidupQNPG1sBZZNA34U9eTgECs6BVfhAIOZtWi/BR0Y=");
 	
 	/**
@@ -24,11 +25,11 @@ public class AuthorisationService {
 		Instant now = Instant.now();
 		
 		String jwt = Jwts.builder()
-			.setSubject(username)
+			.setSubject("Rittenregistratie")
 			.setAudience("DigitaleFactuur")
-			.claim("1d20", new Random().nextInt(20) + 1)
+			.claim("username", username)
 			.setIssuedAt(Date.from(now))
-			.setExpiration(Date.from(now.plus(1, ChronoUnit.MINUTES)))
+			.setExpiration(Date.from(now.plus(60, ChronoUnit.MINUTES)))
 			.signWith(Keys.hmacShaKeyFor(this.secret))
 			.compact();
 		
@@ -43,8 +44,7 @@ public class AuthorisationService {
 		boolean validation = false;
 		
 		try {
-			Jws<Claims> result = Jwts.parser()
-//				.requireAudience("school")	
+			Jws<Claims> result = Jwts.parser()	
 				.setSigningKey(Keys.hmacShaKeyFor(this.secret))
 				.parseClaimsJws(jwtoken);
 			
@@ -54,5 +54,21 @@ public class AuthorisationService {
 	    }
 		
 		return validation;
+	}
+	
+	/**
+	 * @param jwtoken
+	 * @return String with username from jwtoken
+	 */
+	public String retrieveUsernameFromJWToken(String jwtoken) {
+		String username = "";
+		
+		Jws<Claims> result = Jwts.parser()	
+				.setSigningKey(Keys.hmacShaKeyFor(this.secret))
+				.parseClaimsJws(jwtoken);
+			
+		username = result.getBody().get("username").toString();
+		
+		return username;
 	}
 }

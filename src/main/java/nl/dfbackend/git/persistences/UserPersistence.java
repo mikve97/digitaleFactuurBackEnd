@@ -17,6 +17,9 @@ import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 public interface UserPersistence {
     @SqlQuery("SELECT * FROM df_user WHERE username = :username ")
     UserModel getUserByUsername(@Bind("username") String username);
+    
+    @SqlQuery("SELECT * FROM df_user WHERE user_id = :user_id ")
+    UserModel getUserById(@Bind("user_id") int user_id);
 
     void close();
 }
