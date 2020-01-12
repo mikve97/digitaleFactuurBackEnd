@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import nl.dfbackend.git.models.CredentialModel;
-import nl.dfbackend.git.services.AuthService;
+import nl.dfbackend.git.services.AuthServiceOld;
 
 /**
  * When navigating to the /login from the front-end. the LoginResource will be called.
@@ -24,9 +24,9 @@ import nl.dfbackend.git.services.AuthService;
 @Path("/login")
 @Produces(MediaType.APPLICATION_JSON)
 public class LoginResource {
-    private AuthService service;
+    private AuthServiceOld service;
 
-    public LoginResource(AuthService service) {
+    public LoginResource(AuthServiceOld service) {
         this.service = service;
     }
 

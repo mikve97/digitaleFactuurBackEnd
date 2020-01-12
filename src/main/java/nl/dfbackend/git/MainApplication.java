@@ -4,16 +4,18 @@ import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import nl.dfbackend.git.models.UserModel;
-import nl.dfbackend.git.authentication.Authenticator;
+import nl.dfbackend.git.authentication.AuthenticatorOld;
 import nl.dfbackend.git.resources.LoginResource;
 import nl.dfbackend.git.resources.ProjectResource;
 import nl.dfbackend.git.resources.TripResource;
-import nl.dfbackend.git.services.AuthService;
+import nl.dfbackend.git.services.AuthServiceOld;
+import nl.dfbackend.git.services.AuthenticationService;
 import nl.dfbackend.git.util.DbConnector;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.jose4j.jwt.consumer.JwtConsumer;
@@ -97,16 +99,22 @@ public class MainApplication extends Application<MainConfiguration> {
                         .setJwtConsumer(consumer)
                         .setRealm("realm")
                         .setPrefix("Bearer")
-                        .setAuthenticator(new Authenticator())
+                        .setAuthenticator(new AuthenticatorOld())
                         .buildAuthFilter()));
 
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         // code to register module
-        final LoginResource loginResource = new LoginResource(new AuthService(key));
+        final LoginResource loginResource = new LoginResource(new AuthServiceOld(key));
         environment.jersey().register(resource);
         environment.jersey().register(loginResource);
 	    environment.jersey().register(vehicleResource);
+	    
+	    environment.jersey().register(new AuthDynamicFeature(
+	    		new OAuthCredentialAuthFilter.Builder<UserModel>()
+	    		.setAuthenticator(new AuthenticationService())
+	    		.buildAuthFilter()
+	    		));
     }
 
 }

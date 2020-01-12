@@ -26,12 +26,12 @@ import nl.dfbackend.git.util.DbConnector;
  * @version 08-11-2019
  */
 
-public class AuthService {
+public class AuthServiceOld {
     private final byte[] tokenSecret;
     private DBI dbi;
     private UserPersistence loginDAO;
 
-    public AuthService(byte[] token) throws SQLException{
+    public AuthServiceOld(byte[] token) throws SQLException{
         this.tokenSecret = token;
         DbConnector.getInstance();
 		dbi = DbConnector.getDBI();

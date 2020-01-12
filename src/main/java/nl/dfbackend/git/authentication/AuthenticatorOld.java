@@ -15,7 +15,7 @@ import java.util.Optional;
  * @version 08-11-2019
  */
 
-public class Authenticator implements io.dropwizard.auth.Authenticator<JwtContext, UserModel> {
+public class AuthenticatorOld implements io.dropwizard.auth.Authenticator<JwtContext, UserModel> {
     @Override
     public Optional<UserModel> authenticate(JwtContext context) {
         // Provide your own implementation to lookup users based on the principal attribute in the
