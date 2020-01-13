@@ -13,22 +13,36 @@ import javax.ws.rs.core.MediaType;
 import nl.dfbackend.git.models.CredentialModel;
 import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.services.AuthenticationService;
+import nl.dfbackend.git.services.AuthorisationService;
 
 
-@Path("/login")
+@Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
 public class AuthResource {
 	private AuthenticationService authenticationService;
+	private AuthorisationService authorisationService;
 	
     public AuthResource() throws SQLException{
     	this.authenticationService = new AuthenticationService();
+    	this.authorisationService = new AuthorisationService();
     }
 
-    @Path("/{username}/{password}")
+    @Path("/login/{username}/{password}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Optional<UserModel> onLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
+    @Produces(MediaType.APPLICATION_JSON)
+    public Optional<UserModel> postLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
         CredentialModel credential = new CredentialModel(username, password);
         return this.authenticationService.authenticateUser(credential);
+    }
+    
+    @Path("/logout/{username}/{password}")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public boolean putLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
+        CredentialModel credential = new CredentialModel(username, password);
+        //moet nog de jwt uit de header halen
+        return this.authorisationService.destroyJWToken(username);
     }
 }

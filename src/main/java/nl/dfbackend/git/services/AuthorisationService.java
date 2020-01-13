@@ -71,4 +71,14 @@ public class AuthorisationService {
 		
 		return username;
 	}
+	
+	/**
+	 * @param jwtoken
+	 * @return boolean true after destroying jwtoken
+	 */
+	public boolean destroyJWToken(String jwtoken) {
+		jwtoken = null;
+		
+		return true;
+	}
 }

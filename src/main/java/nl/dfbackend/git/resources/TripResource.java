@@ -154,7 +154,4 @@ public class TripResource {
 			return Response.ok(null).build();
 		}
 	}
-
-	
-	
 }
