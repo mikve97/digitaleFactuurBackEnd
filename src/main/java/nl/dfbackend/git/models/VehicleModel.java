@@ -7,20 +7,27 @@ import java.util.Objects;
  *
  */
 public class VehicleModel {
+    private int vehicle_id;
     private int userId;
-    private int totalTrips;
     private String licensePlate;
     private String vehicleName;
     private String vehicleType;
 
-    public VehicleModel(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) {
+    public VehicleModel(int vehicle_id, int userId, String licensePlate, String vehicleName, String vehicleType) {
+        this.vehicle_id = vehicle_id;
         this.userId = userId;
         this.licensePlate = licensePlate;
         this.vehicleName = vehicleName;
         this.vehicleType = vehicleType;
-        this.totalTrips = totalTrips;
     }
 
+    public int getVehicle_id() {
+        return vehicle_id;
+    }
+
+    public void setVehicle_id(int vehicle_id) {
+        this.vehicle_id = vehicle_id;
+    }
 
     public int getUserId() {
         return userId;
@@ -36,14 +43,6 @@ public class VehicleModel {
 
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
-    }
-
-    public int getTotalTrips() {
-        return totalTrips;
-    }
-
-    public void setTotalTrips(int totalTrips) {
-        this.totalTrips++;
     }
 
     public String getVehicleName() { return vehicleName; }
@@ -64,7 +63,6 @@ public class VehicleModel {
         hash = 59 * hash + Objects.hashCode(this.licensePlate);
         hash = 59 * hash + Objects.hashCode(this.vehicleName);
         hash = 59 * hash + Objects.hashCode(this.vehicleType);
-        hash = 59 * hash + Objects.hashCode(this.totalTrips);
         return hash;
     }
 
@@ -89,9 +87,6 @@ public class VehicleModel {
         if (!Objects.equals(this.vehicleType, other.vehicleType)) {
             return false;
         }
-        if (!Objects.equals(this.totalTrips, other.totalTrips)) {
-            return false;
-        }
         return true;
     }
 
@@ -101,8 +96,6 @@ public class VehicleModel {
                 ", userId=" + userId +
                 ", licensePlate= '" + licensePlate + '\'' +
                 ", vehicleName= '" + vehicleName + '\'' +
-                ", vehicleType= '" + vehicleType + '\'' +
-                ", totalTrips=" + totalTrips +
-                '}';
+                ", vehicleType= '" + vehicleType + '}';
     }
 }

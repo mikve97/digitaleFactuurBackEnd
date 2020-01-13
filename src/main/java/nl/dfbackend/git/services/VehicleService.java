@@ -3,7 +3,6 @@ package nl.dfbackend.git.services;
 import java.sql.SQLException;
 import java.util.List;
 
-import nl.dfbackend.git.models.TripModel;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.VehicleModel;
@@ -36,10 +35,10 @@ public class VehicleService {
      * @return boolean
      * @throws SQLException 
      */
-    public boolean addVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType,  String vehicleBody) throws SQLException {
+    public boolean addVehicleByUser(int userId,String licensePlate, String vehicleName, String vehicleType,  String vehicleBody) throws SQLException {
 
 		vehicleDAO = dbi.open(VehiclePersistence.class);
-        vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips, vehicleBody);
+        vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, vehicleBody);
 
         vehicleDAO.close();
 
@@ -50,10 +49,10 @@ public class VehicleService {
      * @author Bram de Jong
      * @throws SQLException 
      */
-    public boolean alterVehicleByUser(int userId, int totalTrips, String licensePlate, String vehicleName, String vehicleType) throws SQLException {
+    public boolean alterVehicleByUser(String licensePlate, int userId, String vehicleName, String vehicleType, String fuel, String vehiclebody) throws SQLException {
 
 		vehicleDAO = dbi.open(VehiclePersistence.class);
-        vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, totalTrips);
+        vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, fuel, vehiclebody);
 
         vehicleDAO.close();
         
@@ -61,14 +60,29 @@ public class VehicleService {
     }
 
     /**
-     * @author Bram de Jong
-     * @param licenseplate
+     * @author Ali Rezaa Ghariebiyan
+     * @param vehicle_id
      * @return fetchedVehicle
      * @throws SQLException 
      */
-    public VehicleModel fetchVehicle(String licenseplate) throws SQLException {
+    public VehicleModel fetchVehicle(int vehicle_id) throws SQLException {
 		vehicleDAO = dbi.open(VehiclePersistence.class);
-        VehicleModel fetchedVehicle = vehicleDAO.findByLicensePlate(licenseplate);
+        VehicleModel fetchedVehicle = vehicleDAO.findByVehicleId(vehicle_id);
+
+        vehicleDAO.close();
+
+        return fetchedVehicle;
+    }
+
+    /**
+     * @author Ali Rezaa Ghariebiyan
+     * @param licenseplate
+     * @return fetchedVehicle
+     * @throws SQLException
+     */
+    public VehicleModel fetchVehicleByLicensePlate(String licenseplate) throws SQLException {
+        vehicleDAO = dbi.open(VehiclePersistence.class);
+        VehicleModel fetchedVehicle = vehicleDAO.findByVehicleLicenseplate(licenseplate);
 
         vehicleDAO.close();
 

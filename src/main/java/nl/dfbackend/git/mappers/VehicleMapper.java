@@ -18,8 +18,8 @@ public class VehicleMapper implements ResultSetMapper<VehicleModel> {
     @Override
     public VehicleModel map(int index, ResultSet r, StatementContext ctx) throws SQLException {
         return new VehicleModel(
+                r.getInt("vehicle_id"),
                 r.getInt("userid"),
-                r.getInt("totaltrips"),
                 r.getString("licenseplate"),
                 r.getString("vehiclename"),
                 r.getString("vehicletype")

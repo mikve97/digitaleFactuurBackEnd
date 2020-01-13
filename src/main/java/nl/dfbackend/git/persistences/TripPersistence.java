@@ -53,6 +53,22 @@ public interface TripPersistence {
 			@Bind("licensePlate") String licensePlate, @Bind("startLocation") String startLocation,
 			@Bind("endLocation") String endLocation, @Bind("startKilometergauge") double startKilometergauge,
 			@Bind("endKilometergauge") double endKilometergauge, @Bind("drivenKm") float drivenKm);
+
+	/**
+	 * @author Ali Rezaa Ghariebiyan
+	 */
+
+	@SqlUpdate("UPDATE trips\nSET projectid =:projectid, userid = :userId, licenseplate = :licenseplate, startlocation = :startlocation, endlocation = :endlocation, startkilometergauge = :startkilometergauge, endkilometergauge = :endkilometergauge, drivenkm = :drivenkm\nWHERE id = :tripId")
+	void updateTripForProject(@Bind("tripId") int tripId,
+							  @Bind("projectId") int projectId,
+							  @Bind("userId") int userId,
+							  @Bind("licensePlate") String licensePlate,
+							  @Bind("startLocation") String startLocation,
+							  @Bind("endLocation") String endLocation,
+							  @Bind("startKilometergauge") double startKilometergauge,
+							  @Bind("endKilometergauge") double endKilometergauge,
+							  @Bind("drivenKm") float drivenKm
+							  );
 	
 	/**
 	 * @author Oussama Fahchouch

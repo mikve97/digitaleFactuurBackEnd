@@ -61,6 +61,23 @@ public class TripService {
 	}
 
 	/**
+	 * @author Ali Rezaa Ghariebiyan
+	 * @throws SQLException
+	 */
+	public boolean updateTripForProject(int tripId, int projectId, int userId, String licensePlate, String startLocation,
+									 String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm) throws SQLException {
+
+		tripDAO = dbi.open(TripPersistence.class);
+
+		tripDAO.updateTripForProject(tripId, projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
+		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
+
+		tripDAO.close();
+
+		return true;
+	}
+
+	/**
 	 * @author Oussama Fahchouch
 	 * @throws SQLException
 	 * @return TripModel fetchedTrip

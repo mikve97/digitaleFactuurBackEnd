@@ -10,17 +10,17 @@ import nl.dfbackend.git.models.VehicleModel;
 import nl.dfbackend.git.services.VehicleService;
 
 public class VehicleTest {
-    @Test
-    public void fetchAVehicle() throws SQLException {
-        VehicleService vehicleService = new VehicleService();
-        VehicleModel vehicleModel = new VehicleModel(5, 0,"ZZ-11-BB","VW T-Cross","SUV");
-
-        try {
-            assertEquals(vehicleService.fetchVehicle("ZZ-11-BB"), vehicleModel.getLicensePlate());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    public void fetchAVehicle() throws SQLException {
+//        VehicleService vehicleService = new VehicleService();
+//        VehicleModel vehicleModel = new VehicleModel(1, 0,"GH-422-H","VW T-Cross","SUV");
+//
+//        try {
+//            assertEquals(vehicleService.fetchVehicle(1), vehicleModel.getLicensePlate());
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 //    @Test
 //    public void addAVehicleByUser() throws SQLException {

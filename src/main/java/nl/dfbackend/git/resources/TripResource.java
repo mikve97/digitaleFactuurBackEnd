@@ -55,6 +55,21 @@ public class TripResource {
 		
 		return true;
 	}
+
+	/**
+	 * @author Ali Rezaa Ghariebiyan
+	 */
+	@Path("/trip/update/for-project/{tripId}{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}/{drivenKm}")
+	@PUT
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean putTripForProject(@PathParam("tripId") int tripId,@PathParam("projectId") int projectId,@PathParam("userId") int userId,
+									  @PathParam("licensePlate")String licensePlate,@PathParam("startLocation") String startLocation,@PathParam("endLocation") String endLocation,
+									  @PathParam("startKilometergauge") double startKilometergauge,@PathParam("endKilometergauge") double endKilometergauge, @PathParam("drivenKm") float drivenKm) throws SQLException {
+
+		tripService.updateTripForProject(tripId, projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
+
+		return true;
+	}
 	
 	/**
 	 * @author Oussama Fahchouch

@@ -34,40 +34,49 @@ public class VehicleResource {
     }
 
     /**
-     * @author Bram de Jong
+     * @author Ali Rezaa Ghariebiyan
      */
-    @Path("/vehicle/{licensePlate}")
+    @Path("/vehicle/id/{vehicle_id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public VehicleModel getVehicle(@PathParam("licensePlate") String licensePlate) throws SQLException {
-        return vehicleService.fetchVehicle(licensePlate);
+    public VehicleModel getVehicle(@PathParam("vehicle_id") int vehicle_id) throws SQLException {
+        return vehicleService.fetchVehicle(vehicle_id);
     }
 
     /**
-     * @author Bram de Jong
+     * @author Ali Rezaa Ghariebiyan
      */
-    @Path("/vehicle/alter/for-user/{userId}/{totalTrips}/{licensePlate}/{vehicleName}/{vehicleType}")
-    @POST
+    @Path("/vehicle/{licenseplate}")
+    @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean postAlterVehicleByUser(@PathParam("userId") int userId,
-                                          @PathParam("licensePlate")String licensePlate,@PathParam("vehicleName") String vehicleName,@PathParam("vehicleType") String vehicleType,
-                                          @PathParam("totalTrips") int totalTrips) throws SQLException {
-
-        vehicleService.alterVehicleByUser(userId, totalTrips, licensePlate, vehicleName, vehicleType);
-
-        return true;
+    public VehicleModel getVehicleByLicenseplate(@PathParam("licenseplate") String licenseplate) throws SQLException {
+        return vehicleService.fetchVehicleByLicensePlate(licenseplate);
     }
 
     /**
      * @author Bram de Jong
      */
-    @Path("/vehicle/add/for-user/{userId}/{totalTrips}/{licensePlate}/{vehicleName}/{vehicleType}/{vehicleBody}")
+//    @Path("/vehicle/alter/for-user/{userId}/{licensePlate}/{vehicleName}/{vehicleType}")
+//    @POST
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public boolean postAlterVehicleByUser(@PathParam("userId") int userId,
+//                                          @PathParam("licensePlate")String licensePlate,@PathParam("vehicleName") String vehicleName,@PathParam("vehicleType") String vehicleType) throws SQLException {
+//
+//        vehicleService.alterVehicleByUser(userId, licensePlate, vehicleName, vehicleType);
+//
+//        return true;
+//    }
+
+    /**
+     * @author Bram de Jong
+     */
+    @Path("/vehicle/add/for-user/{userId}/{licensePlate}/{vehicleName}/{vehicleType}/{vehicleBody}")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public boolean postVehicleByUser(@PathParam("userId") int userId,
                                      @PathParam("licensePlate")String licensePlate,@PathParam("vehicleName") String vehicleName,@PathParam("vehicleType") String vehicleType,
-                                     @PathParam("totalTrips") int totalTrips, @PathParam("vehicleBody") String vehicleBody) throws SQLException {
-        vehicleService.addVehicleByUser(userId, totalTrips, licensePlate, vehicleName, vehicleType, vehicleBody);
+                                     @PathParam("vehicleBody") String vehicleBody) throws SQLException {
+        vehicleService.addVehicleByUser(userId, licensePlate, vehicleName, vehicleType, vehicleBody);
 
         return true;
     }
