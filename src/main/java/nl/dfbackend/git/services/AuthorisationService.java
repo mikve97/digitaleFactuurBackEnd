@@ -15,7 +15,6 @@ import io.jsonwebtoken.security.Keys;
  * @author Oussama Fahchouch
  */
 public class AuthorisationService {
-	//deze kan nog uit de code en in een map voor de beveiliging
 	byte[] secret = Base64.getDecoder().decode("uidupQNPG1sBZZNA34U9eTgECs6BVfhAIOZtWi/BR0Y=");
 	
 	/**

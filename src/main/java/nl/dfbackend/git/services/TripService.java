@@ -17,6 +17,7 @@ import nl.dfbackend.git.util.DbConnector;
 public class TripService {
 	private DBI dbi;
 	private TripPersistence tripDAO;
+	private AuthorisationService authorisationService;
 	
 	/**
 	 * @author Oussama Fahchouch
@@ -25,6 +26,7 @@ public class TripService {
 	public TripService() throws SQLException {
 		DbConnector.getInstance();
 		dbi = DbConnector.getDBI();
+		this.authorisationService = new AuthorisationService();
 	}
 
 	/**
@@ -34,13 +36,17 @@ public class TripService {
 	public boolean addTripByUser(int userId, String licensePlate, String startLocation, 
 			String endLocation, double startKilometergauge, double endKilometergauge) throws SQLException {
 		
-		tripDAO = dbi.open(TripPersistence.class);
-		tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
-		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
-		
-		tripDAO.close();
-		
-		return true;
+		if (this.authorisationService.decodeJWToken("hier moet nog het token komen")) {
+			tripDAO = dbi.open(TripPersistence.class);
+			tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
+			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
+			
+			tripDAO.close();
+			
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
@@ -49,15 +55,18 @@ public class TripService {
 	 */
 	public boolean addTripForProject(int projectId, int userId, String licensePlate, String startLocation, 
 			String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm) throws SQLException {
-		
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
-		tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
-		
-		tripDAO.close();
+			tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
+			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
+			
+			tripDAO.close();
 
-		return true;
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -66,13 +75,17 @@ public class TripService {
 	 * @return TripModel fetchedTrip
 	 */
 	public TripModel fetchTrip(int id) throws SQLException {
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		TripModel fetchedTrip = tripDAO.findById(id);
-		
-		tripDAO.close();
+			TripModel fetchedTrip = tripDAO.findById(id);
+			
+			tripDAO.close();
 
-		return fetchedTrip;
+			return fetchedTrip;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -81,13 +94,17 @@ public class TripService {
 	 * @return List<TripModel> fetchedTrips 
 	 */
 	public List<TripModel> fetchAllTrips() throws SQLException {
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		List<TripModel> fetchedTrips = tripDAO.findAll();
-		
-		tripDAO.close();
+			List<TripModel> fetchedTrips = tripDAO.findAll();
+			
+			tripDAO.close();
 
-		return fetchedTrips;
+			return fetchedTrips;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -95,13 +112,17 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public List<TripModel> fetchAllTripsByUser(int userId) throws SQLException {
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		List<TripModel> fetchedTrips = tripDAO.findByUserId(userId);
-		
-		tripDAO.close();
+			List<TripModel> fetchedTrips = tripDAO.findByUserId(userId);
+			
+			tripDAO.close();
 
-		return fetchedTrips;
+			return fetchedTrips;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -109,11 +130,13 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public void deleteTrip(int id) throws SQLException {
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		tripDAO.remove(id);
+			tripDAO.remove(id);
 
-		tripDAO.close();
+			tripDAO.close();
+		} 
 	}
 	
 	/**
@@ -123,12 +146,15 @@ public class TripService {
 	 */
 	public List<Integer> fetchAllUniqueProjectIds(int userid) throws SQLException {
 		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
+			
+			tripDAO.close();
 
-		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
-		
-		tripDAO.close();
-
-		return fetchedUniqueProjectIds;
+			return fetchedUniqueProjectIds;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -138,12 +164,15 @@ public class TripService {
 	 */
 	public TripModel fetchLastTrip() throws SQLException {
 		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			TripModel fetchedTrip = tripDAO.findLastTrip();
+			
+			tripDAO.close();
 
-		TripModel fetchedTrip = tripDAO.findLastTrip();
-		
-		tripDAO.close();
-
-		return fetchedTrip;
+			return fetchedTrip;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -152,20 +181,24 @@ public class TripService {
 	 * @return List<integer> listWithCountTripsPerUserAndProjects
 	 */
 	public List<Integer> fetchTripsAndProjectsPerUser(int userid) throws SQLException {
-		List<Integer> fetchTripsAndProjectsPerUser = new ArrayList();
-		
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			List<Integer> fetchTripsAndProjectsPerUser = new ArrayList();
+			
+			tripDAO = dbi.open(TripPersistence.class);
 
-		int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
-		List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
-		int fetchedAmountProjectsPerUser = fetchedUniqueProjectIds.size();
-		
-		fetchTripsAndProjectsPerUser.add(fetchedTripsPerUser);
-		fetchTripsAndProjectsPerUser.add(fetchedAmountProjectsPerUser);
-		
-		tripDAO.close();
+			int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
+			List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
+			int fetchedAmountProjectsPerUser = fetchedUniqueProjectIds.size();
+			
+			fetchTripsAndProjectsPerUser.add(fetchedTripsPerUser);
+			fetchTripsAndProjectsPerUser.add(fetchedAmountProjectsPerUser);
+			
+			tripDAO.close();
 
-		return fetchTripsAndProjectsPerUser;
+			return fetchTripsAndProjectsPerUser;
+		} else {
+			return null;
+		}
 	}
 
     /**
@@ -173,13 +206,17 @@ public class TripService {
      * @throws SQLException 
      */
     public List<TripModel> fetchAllTripsWithProject() throws SQLException {
-    	tripDAO = dbi.open(TripPersistence.class);
+    	if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+    		tripDAO = dbi.open(TripPersistence.class);
 
-        List<TripModel> fetchedTrips = tripDAO.getAllTripsWithProject();
-        
-        tripDAO.close();
-        
-        return fetchedTrips;
+            List<TripModel> fetchedTrips = tripDAO.getAllTripsWithProject();
+            
+            tripDAO.close();
+            
+            return fetchedTrips;
+    	} else {
+			return null;
+		}
     }
 
     /**
@@ -187,13 +224,17 @@ public class TripService {
      * @throws SQLException 
      */
     public List<TripModel> fetchAllTripsByProject(int pid) throws SQLException {
-		tripDAO = dbi.open(TripPersistence.class);
+    	if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+    		tripDAO = dbi.open(TripPersistence.class);
 
-        List<TripModel> fetchedTrips = tripDAO.getAllTripsByProject(pid);
+            List<TripModel> fetchedTrips = tripDAO.getAllTripsByProject(pid);
 
-        tripDAO.close();
+            tripDAO.close();
 
-        return fetchedTrips;
+            return fetchedTrips;
+    	} else {
+			return null;
+		}
     }
     
 	/**
@@ -202,23 +243,31 @@ public class TripService {
 	 * @throws SQLException 
 	 */
 	public int fetchTripsPerUser(int userid) throws SQLException{
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
+			int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
 
-		tripDAO.close();
+			tripDAO.close();
 
-		return fetchedTripsPerUser;
+			return fetchedTripsPerUser;
+		} else {
+			return 0;
+		}
 	}
 
 	public TripModel getTripByLicensePlate(String licensePlate){
-		tripDAO = dbi.open(TripPersistence.class);
+		if (this.authorisationService.decodeJWToken("hier komt straks een JWT in")) {
+			tripDAO = dbi.open(TripPersistence.class);
 
-		TripModel lastKnownTrip = tripDAO.findLastTripByLicensePlate(licensePlate);
+			TripModel lastKnownTrip = tripDAO.findLastTripByLicensePlate(licensePlate);
 
-		tripDAO.close();
+			tripDAO.close();
 
-		return lastKnownTrip;
+			return lastKnownTrip;
+		} else {
+			return null;
+		}
 	};
 
 }

@@ -39,7 +39,7 @@ public class AuthenticationService implements Authenticator<String, UserModel> {
 		        userDAO.close();
 			}
 			
-			// ifPresent() runnen voor bij elke request
+			// nog ifPresent() runnen voor bij elke request, fetch jwtoken en geef die mee aan authorisationService/Services 
 			return Optional.of(user);
 		} catch (Exception e) {
 			throw new AuthenticationException("The user is not authenticated.");
