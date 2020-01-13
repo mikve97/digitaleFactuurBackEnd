@@ -24,6 +24,8 @@ import org.xml.sax.InputSource;
 
 import nl.dfbackend.git.models.ProjectModel;
 import nl.dfbackend.git.models.TripModel;
+import nl.dfbackend.git.models.VehicleModel;
+import nl.dfbackend.git.persistences.VehiclePersistence;
 
 /**
  * Service to handle calls too the DAO layer
@@ -32,9 +34,11 @@ public class ProjectService {
     private String jsonProject = "";
     private TripService ts;
     private Map<Integer, ProjectModel> projectList = new HashMap<Integer, ProjectModel>();
+    private AuthorisationService authorisationService;
     
     public ProjectService() throws SQLException {
     	ts = new TripService();
+    	this.authorisationService = new AuthorisationService();
     }
 
     /**
@@ -44,16 +48,24 @@ public class ProjectService {
      * @throws SQLException 
      */
     private List<TripModel> fetchAllTripsByProject(int projectId) throws SQLException{
-        List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
-        return projects;
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		 List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
+	        return projects;
+		} else {
+			return null;
+		}
     }
 
     public ProjectModel getProjectById(int pId){
-        if(this.projectList.containsKey(pId)){
-            return this.projectList.get(pId);
-        }else{
-            return null;
-        }
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		if(this.projectList.containsKey(pId)){
+                return this.projectList.get(pId);
+            }else{
+                return null;
+            }
+		} else {
+			return null;
+		}
     }
 
     /**
@@ -61,7 +73,12 @@ public class ProjectService {
      * @return String
      */
     public String getJsonProject() {
-        return jsonProject;
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		return jsonProject;
+		} else {
+			return null;
+		}
+        
     }
 
     /**
@@ -69,7 +86,9 @@ public class ProjectService {
      * @param jsonProject
      */
     public void setJsonProject(String jsonProject) {
-        this.jsonProject = jsonProject;
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		this.jsonProject = jsonProject;
+		}
     }
 
     /**
@@ -79,10 +98,14 @@ public class ProjectService {
      * @return List<ProjectModel>
      */
     public List<ProjectModel> getProjectsFromApi(String apiKey, String userId){
-        InputStream apiResult = httpRequest("https://administratie.digitalefactuur.nl/api/"+userId+"/"+apiKey+"/uren_get_projects_klanten", "GET");
-        List<ProjectModel> projects = parseXML(apiResult);
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		InputStream apiResult = httpRequest("https://administratie.digitalefactuur.nl/api/"+userId+"/"+apiKey+"/uren_get_projects_klanten", "GET");
+            List<ProjectModel> projects = parseXML(apiResult);
 
-        return projects;
+            return projects;
+		} else {
+			return null;
+		}
     }
 
     /**
@@ -127,7 +150,6 @@ public class ProjectService {
      * @return List<ProjectModel>
      */
     public List<ProjectModel> parseXML(InputStream stream ) {
-
         try {
             Document doc = createDocumentFromXML(stream);
             //optional, but recommended

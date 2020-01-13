@@ -6,6 +6,7 @@ import java.util.List;
 import org.skife.jdbi.v2.DBI;
 
 import nl.dfbackend.git.models.VehicleModel;
+import nl.dfbackend.git.persistences.TripPersistence;
 import nl.dfbackend.git.persistences.VehiclePersistence;
 import nl.dfbackend.git.util.DbConnector;
 
@@ -15,6 +16,7 @@ import nl.dfbackend.git.util.DbConnector;
 public class VehicleService {
     private DBI dbi;
     private VehiclePersistence vehicleDAO;
+    private AuthorisationService authorisationService;
 
     /**
      * @author Bram de Jong
@@ -23,6 +25,7 @@ public class VehicleService {
     public VehicleService() throws SQLException {
     	DbConnector.getInstance();
         dbi = DbConnector.getDBI();
+        this.authorisationService = new AuthorisationService();
     }
 
     /**
@@ -36,13 +39,17 @@ public class VehicleService {
      * @throws SQLException 
      */
     public boolean addVehicleByUser(int userId,String licensePlate, String vehicleName, String vehicleType,  String vehicleBody) throws SQLException {
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, vehicleBody);
 
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-        vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, vehicleBody);
+            vehicleDAO.close();
 
-        vehicleDAO.close();
-
-        return true;
+            return true;
+		} else {
+			return false;
+		}
+		
     }
 
     /**
@@ -50,13 +57,17 @@ public class VehicleService {
      * @throws SQLException 
      */
     public boolean alterVehicleByUser(String licensePlate, int userId, String vehicleName, String vehicleType, String fuel, String vehiclebody) throws SQLException {
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, fuel, vehiclebody);
 
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-        vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, fuel, vehiclebody);
-
-        vehicleDAO.close();
-        
-        return true;
+            vehicleDAO.close();
+            
+            return true;
+		} else {
+			return false;
+		}
+		
     }
 
     /**
@@ -66,12 +77,17 @@ public class VehicleService {
      * @throws SQLException 
      */
     public VehicleModel fetchVehicle(int vehicle_id) throws SQLException {
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-        VehicleModel fetchedVehicle = vehicleDAO.findByVehicleId(vehicle_id);
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            VehicleModel fetchedVehicle = vehicleDAO.findByVehicleId(vehicle_id);
 
-        vehicleDAO.close();
+            vehicleDAO.close();
 
-        return fetchedVehicle;
+            return fetchedVehicle;
+		} else {
+			return null;
+		}
+		
     }
 
     /**
@@ -81,12 +97,17 @@ public class VehicleService {
      * @throws SQLException
      */
     public VehicleModel fetchVehicleByLicensePlate(String licenseplate) throws SQLException {
-        vehicleDAO = dbi.open(VehiclePersistence.class);
-        VehicleModel fetchedVehicle = vehicleDAO.findByVehicleLicenseplate(licenseplate);
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            VehicleModel fetchedVehicle = vehicleDAO.findByVehicleLicenseplate(licenseplate);
 
-        vehicleDAO.close();
+            vehicleDAO.close();
 
-        return fetchedVehicle;
+            return fetchedVehicle;
+		} else {
+			return null;
+		}
+        
     }
 
     /**
@@ -95,12 +116,17 @@ public class VehicleService {
      * @throws SQLException 
      */
     public List<VehicleModel> fetchAllVehicles() throws SQLException {
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-        List<VehicleModel> fetchedVehicles = vehicleDAO.findAll();
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            List<VehicleModel> fetchedVehicles = vehicleDAO.findAll();
 
-        vehicleDAO.close();
+            vehicleDAO.close();
 
-        return fetchedVehicles;
+            return fetchedVehicles;
+		} else {
+			return null;
+		}
+		
     }
 
     /**
@@ -110,12 +136,17 @@ public class VehicleService {
      * @throws SQLException 
      */
     public boolean deleteVehicle(String licensePlate) throws SQLException {
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-        vehicleDAO.remove(licensePlate);
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            vehicleDAO.remove(licensePlate);
 
-        vehicleDAO.close();
+            vehicleDAO.close();
 
-        return true;
+            return true;
+		} else {
+			return false;
+		}
+		
     }
 
 	/**
@@ -124,12 +155,17 @@ public class VehicleService {
 	 * @throws SQLException 
 	 */
 	public List<String> fetchAllUniqueLicenseplates(int userid) throws SQLException {
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates(userid);
-		
-		vehicleDAO.close();
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+    		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates(userid);
+    		
+    		vehicleDAO.close();
 
-		return fetchedUniqueLicenseplates;
+    		return fetchedUniqueLicenseplates;
+		} else {
+			return null;
+		}
+		
 	}
 	
 	/**
@@ -138,13 +174,15 @@ public class VehicleService {
 	 * @return allVehiclesRegisteredByUser
 	 */
 	public List<VehicleModel> fetchAllVehiclesRegisteredByUser(int userid) throws SQLException {
-		vehicleDAO = dbi.open(VehiclePersistence.class);
-        List<VehicleModel> allVehiclesRegisteredByUser = vehicleDAO.findRegisteredByUser(userid);
+    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    		vehicleDAO = dbi.open(VehiclePersistence.class);
+            List<VehicleModel> allVehiclesRegisteredByUser = vehicleDAO.findRegisteredByUser(userid);
 
-        vehicleDAO.close();
+            vehicleDAO.close();
 
-        return allVehiclesRegisteredByUser;
+            return allVehiclesRegisteredByUser;
+		} else {
+			return null;
+		}
     }
-
-
 }

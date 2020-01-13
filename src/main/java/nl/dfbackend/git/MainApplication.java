@@ -4,6 +4,7 @@ import com.github.toastshaman.dropwizard.auth.jwt.JwtAuthFilter;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -14,6 +15,7 @@ import nl.dfbackend.git.resources.LoginResource;
 import nl.dfbackend.git.resources.ProjectResource;
 import nl.dfbackend.git.resources.TripResource;
 import nl.dfbackend.git.services.AuthService;
+import nl.dfbackend.git.services.AuthenticationService;
 import nl.dfbackend.git.util.DbConnector;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.jose4j.jwt.consumer.JwtConsumer;
@@ -107,6 +109,13 @@ public class MainApplication extends Application<MainConfiguration> {
         environment.jersey().register(resource);
         environment.jersey().register(loginResource);
 	    environment.jersey().register(vehicleResource);
+	    
+	    //toevoegen van de OAuth2 authenticator
+	    environment.jersey().register(new AuthDynamicFeature(
+	    		new OAuthCredentialAuthFilter.Builder<UserModel>()
+	    		.setAuthenticator(new AuthenticationService())
+	    		.buildAuthFilter()
+	    		));
     }
 
 }
