@@ -119,7 +119,7 @@ public class ProjectService {
 
         return null;
     }
-
+    
     /**
      * Parses the given XML file from Digitalefactuur. Returns a list of projects with trips.
      * @author Mike van Es

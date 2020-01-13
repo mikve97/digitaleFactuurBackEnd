@@ -1,22 +1,19 @@
 package nl.dfbackend.git.resources;
 
 import java.sql.SQLException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Base64;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
-import javax.ws.rs.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import io.dropwizard.auth.AuthenticationException;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.services.AuthenticationService;
 import nl.dfbackend.git.services.AuthorisationService;
