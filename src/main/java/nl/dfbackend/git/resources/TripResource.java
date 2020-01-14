@@ -59,7 +59,7 @@ public class TripResource {
 	/**
 	 * @author Ali Rezaa Ghariebiyan
 	 */
-	@Path("/trip/update/for-project/{tripId}{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}/{drivenKm}")
+	@Path("/trip/update/for-project/{tripId}/{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}/{drivenKm}")
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	public boolean putTripForProject(@PathParam("tripId") int tripId,@PathParam("projectId") int projectId,@PathParam("userId") int userId,

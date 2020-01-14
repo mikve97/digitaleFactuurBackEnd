@@ -20,7 +20,7 @@ public class TripTest {
 	@Test
 	public void fetchATrip() throws SQLException {
 		TripService tripService = new TripService();
-		TripModel trip = new TripModel(45, 96718, 3, "ZZ-BB-11", "Amsterdam", "Rotterdam", 0, 0);
+		TripModel trip = new TripModel(45, 96718, 3, "ZZ-BB-11", "Amsterdam", "Rotterdam", 0, 0, 0);
 		
 		try {
 			assertEquals(tripService.fetchTrip(45).getTripId(), trip.getTripId());

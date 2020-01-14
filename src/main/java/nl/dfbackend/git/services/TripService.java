@@ -38,7 +38,7 @@ public class TripService {
 		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
 			tripDAO = dbi.open(TripPersistence.class);
 			tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
-			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
+//			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 			
 			tripDAO.close();
 			
@@ -58,7 +58,7 @@ public class TripService {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
-			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
+//			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 			
 			tripDAO.close();
 
@@ -78,7 +78,7 @@ public class TripService {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			tripDAO.updateTripForProject(tripId, projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
-			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
+//			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 
 			tripDAO.close();
 

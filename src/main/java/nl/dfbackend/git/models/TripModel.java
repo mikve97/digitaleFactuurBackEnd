@@ -13,8 +13,9 @@ public class TripModel {
     private String endLocation;
     private double startKilometergauge;
     private double endKilometergauge;
-    
-    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation, double startKilometergauge, double endKilometergauge) {
+	private double drivenKm;
+
+    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation, double startKilometergauge, double endKilometergauge, double drivenKm) {
 		this.id = id;
 		this.projectId = projectId;
 		this.userId = userId;
@@ -23,6 +24,7 @@ public class TripModel {
 		this.endLocation = endLocation;
 		this.startKilometergauge = startKilometergauge;
 		this.endKilometergauge = endKilometergauge;
+		this.drivenKm = drivenKm;
 	}
 
 	public int getTripId() {
@@ -87,5 +89,13 @@ public class TripModel {
 
 	public void setEndKilometergauge(double endKilometergauge) {
 		this.endKilometergauge = endKilometergauge;
+	}
+
+	public double getDrivenKm() {
+		return this.drivenKm;
+	}
+
+	public void setDrivenKm(double drivenKm) {
+		this.drivenKm = drivenKm;
 	}
 }

@@ -58,7 +58,7 @@ public interface TripPersistence {
 	 * @author Ali Rezaa Ghariebiyan
 	 */
 
-	@SqlUpdate("UPDATE trips\nSET projectid =:projectid, userid = :userId, licenseplate = :licenseplate, startlocation = :startlocation, endlocation = :endlocation, startkilometergauge = :startkilometergauge, endkilometergauge = :endkilometergauge, drivenkm = :drivenkm\nWHERE id = :tripId")
+	@SqlUpdate("UPDATE trips\nSET projectid =:projectId, userid = :userId, licenseplate = :licensePlate, startlocation = :startLocation, endlocation = :endLocation, startkilometergauge = :startKilometergauge, endkilometergauge = :endKilometergauge, drivenkm = :drivenKm\nWHERE id = :tripId")
 	void updateTripForProject(@Bind("tripId") int tripId,
 							  @Bind("projectId") int projectId,
 							  @Bind("userId") int userId,
@@ -73,8 +73,7 @@ public interface TripPersistence {
 	/**
 	 * @author Oussama Fahchouch
 	 */
-	@SqlUpdate("UPDATE vehicle \n" + "   SET totaltrips = totaltrips + 1\n" + "WHERE licenseplate = :licenseplate;")
-	void incrementAmountOfTripsMadeWithVehicle(@Bind("licenseplate") String licenseplate);
+
 	
 	/**
 	 * @author Oussama Fahchouch
