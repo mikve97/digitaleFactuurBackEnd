@@ -30,12 +30,13 @@ public class TripResource {
 		return tripService.fetchAllTrips();
 	}
 	
-//	@POST
-//	@Path("/testingPOST")
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	public void testingBody(List<String> entity) {
-//		System.out.println(entity);
-//	}
+	@POST
+	@Path("/testingPOST")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void testingBody(List<String> entity, @HeaderParam("Token") String TokenHeaderParam) {
+		System.out.println("body list param: " + entity);
+		System.out.println("header token param: " + TokenHeaderParam);
+	}
 	
 	/**
 	 * @author Oussama Fahchouch
