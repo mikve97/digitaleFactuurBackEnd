@@ -30,6 +30,12 @@ public class TripResource {
 		return tripService.fetchAllTrips();
 	}
 	
+//	@POST
+//	@Path("/testingPOST")
+//	@Consumes(MediaType.APPLICATION_JSON)
+//	public void testingBody(List<String> entity) {
+//		System.out.println(entity);
+//	}
 	
 	/**
 	 * @author Oussama Fahchouch
