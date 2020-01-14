@@ -83,31 +83,10 @@ public class MainApplication extends Application<MainConfiguration> {
     	environment.jersey().register(resource);
 	    environment.jersey().register(tripResource);
 
-        final byte[] key = configuration.getJwtTokenSecret();
-
-        final JwtConsumer consumer = new JwtConsumerBuilder()
-                .setAllowedClockSkewInSeconds(30) // allow some leeway in validating time based claims to account for clock skew
-                .setRequireExpirationTime() // the JWT must have an expiration time
-                .setRequireSubject() // the JWT must have a subject claim
-                .setVerificationKey(new HmacKey(key)) // verify the signature with the public key
-                .setRelaxVerificationKeyValidation() // relaxes key length requirement
-                .build(); // create the JwtConsumer instance
-
-
-        environment.jersey().register(new AuthDynamicFeature(
-                new JwtAuthFilter.Builder<UserModel>()
-                        .setJwtConsumer(consumer)
-                        .setRealm("realm")
-                        .setPrefix("Bearer")
-                        .setAuthenticator(new Authenticator())
-                        .buildAuthFilter()));
-
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Principal.class));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         // code to register module
-        final LoginResource loginResource = new LoginResource(new AuthService(key));
         environment.jersey().register(resource);
-        environment.jersey().register(loginResource);
 	    environment.jersey().register(vehicleResource);
 	    
 	    //toevoegen van de OAuth2 authenticator
@@ -115,7 +94,7 @@ public class MainApplication extends Application<MainConfiguration> {
 	    		new OAuthCredentialAuthFilter.Builder<UserModel>()
 	    		.setAuthenticator(new AuthenticationService())
 	    		.buildAuthFilter()
-	    		));
+		));
     }
 
 }
