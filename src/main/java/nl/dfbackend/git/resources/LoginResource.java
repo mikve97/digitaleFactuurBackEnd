@@ -1,6 +1,7 @@
 package nl.dfbackend.git.resources;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -11,7 +12,9 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import nl.dfbackend.git.models.CredentialModel;
+import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.services.AuthService;
+import nl.dfbackend.git.services.AuthenticationService;
 
 /**
  * When navigating to the /login from the front-end. the LoginResource will be called.
@@ -25,9 +28,11 @@ import nl.dfbackend.git.services.AuthService;
 @Produces(MediaType.APPLICATION_JSON)
 public class LoginResource {
     private AuthService service;
+    private AuthenticationService authenticationService;
 
-    public LoginResource(AuthService service) {
+    public LoginResource(AuthService service) throws SQLException {
         this.service = service;
+        this.authenticationService = new AuthenticationService();
     }
 
     /**
@@ -45,8 +50,8 @@ public class LoginResource {
     @Path("/{username}/{password}")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response onLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
+    public Optional<UserModel> onLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
         CredentialModel credential = new CredentialModel(username, password);
-        return service.onLogin(credential);
+        return authenticationService.authenticateUser(credential);
     }
 }
