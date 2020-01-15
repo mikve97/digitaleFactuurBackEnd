@@ -56,6 +56,9 @@ public class AuthenticationService implements Authenticator<String, UserModel> {
         UserModel user = userDAO.getUserByUsername(credential.getUsername());
 		 
 		user.setAuthToken(authorisationService.encodeJWToken(user.getUsername()));
+		
+        System.out.println(user.getAuthToken());
+        
       
         userDAO.close();
         

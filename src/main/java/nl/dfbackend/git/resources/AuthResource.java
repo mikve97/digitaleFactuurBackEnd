@@ -29,6 +29,7 @@ public class AuthResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Optional<UserModel> onLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
         CredentialModel credential = new CredentialModel(username, password);
+
         return authenticationService.authenticateUser(credential);
     }
 }
