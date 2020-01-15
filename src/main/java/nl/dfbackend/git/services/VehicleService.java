@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.skife.jdbi.v2.DBI;
 
+import io.dropwizard.auth.AuthenticationException;
 import nl.dfbackend.git.models.VehicleModel;
 import nl.dfbackend.git.persistences.TripPersistence;
 import nl.dfbackend.git.persistences.VehiclePersistence;
@@ -16,7 +17,7 @@ import nl.dfbackend.git.util.DbConnector;
 public class VehicleService {
     private DBI dbi;
     private VehiclePersistence vehicleDAO;
-    private AuthorisationService authorisationService;
+    private AuthenticationService authenticationService;
 
     /**
      * @author Bram de Jong
@@ -25,7 +26,7 @@ public class VehicleService {
     public VehicleService() throws SQLException {
     	DbConnector.getInstance();
         dbi = DbConnector.getDBI();
-        this.authorisationService = new AuthorisationService();
+        this.authenticationService = new AuthenticationService();
     }
 
     /**
@@ -35,11 +36,13 @@ public class VehicleService {
      * @param licensePlate
      * @param vehicleName
      * @param vehicleType
+     * @param tokenHeaderParam 
      * @return boolean
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    public boolean addVehicleByUser(int userId,String licensePlate, String vehicleName, String vehicleType,  String vehicleBody) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public boolean addVehicleByUser(int userId,String licensePlate, String vehicleName, String vehicleType,  String vehicleBody, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
             vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, vehicleBody);
 
@@ -52,32 +55,34 @@ public class VehicleService {
 		
     }
 
-    /**
-     * @author Bram de Jong
-     * @throws SQLException 
-     */
-    public boolean alterVehicleByUser(String licensePlate, int userId, String vehicleName, String vehicleType, String fuel, String vehiclebody) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
-    		vehicleDAO = dbi.open(VehiclePersistence.class);
-            vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, fuel, vehiclebody);
-
-            vehicleDAO.close();
-            
-            return true;
-		} else {
-			return false;
-		}
-		
-    }
+//    /**
+//     * @author Bram de Jong
+//     * @throws SQLException 
+//     */
+//    public boolean alterVehicleByUser(String licensePlate, int userId, String vehicleName, String vehicleType, String fuel, String vehiclebody) throws SQLException {
+//    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
+//    		vehicleDAO = dbi.open(VehiclePersistence.class);
+//            vehicleDAO.updateVehicleByUser(licensePlate, userId, vehicleName, vehicleType, fuel, vehiclebody);
+//
+//            vehicleDAO.close();
+//            
+//            return true;
+//		} else {
+//			return false;
+//		}
+//		
+//    }
 
     /**
      * @author Ali Rezaa Ghariebiyan
      * @param vehicle_id
+     * @param tokenHeaderParam 
      * @return fetchedVehicle
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    public VehicleModel fetchVehicle(int vehicle_id) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public VehicleModel fetchVehicle(int vehicle_id, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
             VehicleModel fetchedVehicle = vehicleDAO.findByVehicleId(vehicle_id);
 
@@ -93,11 +98,13 @@ public class VehicleService {
     /**
      * @author Ali Rezaa Ghariebiyan
      * @param licenseplate
+     * @param tokenHeaderParam 
      * @return fetchedVehicle
      * @throws SQLException
+     * @throws AuthenticationException 
      */
-    public VehicleModel fetchVehicleByLicensePlate(String licenseplate) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public VehicleModel fetchVehicleByLicensePlate(String licenseplate, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
             VehicleModel fetchedVehicle = vehicleDAO.findByVehicleLicenseplate(licenseplate);
 
@@ -112,11 +119,13 @@ public class VehicleService {
 
     /**
      * @author Bram de Jong
+     * @param tokenHeaderParam 
      * @return fetchedVehicles
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    public List<VehicleModel> fetchAllVehicles() throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public List<VehicleModel> fetchAllVehicles(String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
             List<VehicleModel> fetchedVehicles = vehicleDAO.findAll();
 
@@ -132,11 +141,13 @@ public class VehicleService {
     /**
      * @author Bram de Jong
      * @param licensePlate
+     * @param tokenHeaderParam 
      * @return boolean
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    public boolean deleteVehicle(String licensePlate) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public boolean deleteVehicle(String licensePlate, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
             vehicleDAO.remove(licensePlate);
 
@@ -151,11 +162,13 @@ public class VehicleService {
 
 	/**
 	 * @author Oussama Fahchouch
+	 * @param tokenHeaderParam 
 	 * @return List<String> allUniqueLicenseplates
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
-	public List<String> fetchAllUniqueLicenseplates(int userid) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public List<String> fetchAllUniqueLicenseplates(int userid, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
     		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates(userid);
     		
@@ -171,10 +184,12 @@ public class VehicleService {
 	/**
 	 * @author Oussama Fahchouch
 	 * @param userid
+	 * @param tokenHeaderParam 
 	 * @return allVehiclesRegisteredByUser
+	 * @throws AuthenticationException 
 	 */
-	public List<VehicleModel> fetchAllVehiclesRegisteredByUser(int userid) throws SQLException {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public List<VehicleModel> fetchAllVehiclesRegisteredByUser(int userid, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
             List<VehicleModel> allVehiclesRegisteredByUser = vehicleDAO.findRegisteredByUser(userid);
 

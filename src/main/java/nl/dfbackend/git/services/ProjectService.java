@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import io.dropwizard.auth.AuthenticationException;
 import nl.dfbackend.git.models.ProjectModel;
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.models.VehicleModel;
@@ -34,11 +35,11 @@ public class ProjectService {
     private String jsonProject = "";
     private TripService ts;
     private Map<Integer, ProjectModel> projectList = new HashMap<Integer, ProjectModel>();
-    private AuthorisationService authorisationService;
+    private AuthenticationService authenticationService;
     
     public ProjectService() throws SQLException {
     	ts = new TripService();
-    	this.authorisationService = new AuthorisationService();
+    	this.authenticationService = new AuthenticationService();
     }
 
     /**
@@ -46,18 +47,15 @@ public class ProjectService {
      * @param projectId
      * @return List<TripModel>
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    private List<TripModel> fetchAllTripsByProject(int projectId) throws SQLException{
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
-    		 List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
-	        return projects;
-		} else {
-			return null;
-		}
+    private List<TripModel> fetchAllTripsByProject(int projectId) throws SQLException, AuthenticationException{
+    	List<TripModel> projects = this.ts.fetchAllTripsByProject(projectId);
+        return projects;
     }
 
-    public ProjectModel getProjectById(int pId){
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public ProjectModel getProjectById(int pId, String tokenHeaderParam) throws AuthenticationException{
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		if(this.projectList.containsKey(pId)){
                 return this.projectList.get(pId);
             }else{
@@ -70,10 +68,12 @@ public class ProjectService {
 
     /**
      * Returns the projectModel in JSON format
+     * @param tokenHeaderParam 
      * @return String
+     * @throws AuthenticationException 
      */
-    public String getJsonProject() {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public String getJsonProject(String tokenHeaderParam) throws AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		return jsonProject;
 		} else {
 			return null;
@@ -84,9 +84,11 @@ public class ProjectService {
     /**
      * Set a projectmodel in JSON format
      * @param jsonProject
+     * @param tokenHeaderParam 
+     * @throws AuthenticationException 
      */
-    public void setJsonProject(String jsonProject) {
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public void setJsonProject(String jsonProject, String tokenHeaderParam) throws AuthenticationException {
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		this.jsonProject = jsonProject;
 		}
     }
@@ -95,10 +97,12 @@ public class ProjectService {
      * Get the projects from the Digitalefactuur server
      * @param apiKey
      * @param userId
+     * @param tokenHeaderParam 
      * @return List<ProjectModel>
+     * @throws AuthenticationException 
      */
-    public List<ProjectModel> getProjectsFromApi(String apiKey, String userId){
-    	if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public List<ProjectModel> getProjectsFromApi(String apiKey, String userId, String tokenHeaderParam) throws AuthenticationException{
+    	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		InputStream apiResult = httpRequest("https://administratie.digitalefactuur.nl/api/"+userId+"/"+apiKey+"/uren_get_projects_klanten", "GET");
             List<ProjectModel> projects = parseXML(apiResult);
 

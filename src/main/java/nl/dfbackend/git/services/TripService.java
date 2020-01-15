@@ -7,6 +7,7 @@ import java.util.List;
 import nl.dfbackend.git.persistences.VehiclePersistence;
 import org.skife.jdbi.v2.DBI;
 
+import io.dropwizard.auth.AuthenticationException;
 import nl.dfbackend.git.models.TripModel;
 import nl.dfbackend.git.persistences.TripPersistence;
 import nl.dfbackend.git.util.DbConnector;
@@ -17,7 +18,7 @@ import nl.dfbackend.git.util.DbConnector;
 public class TripService {
 	private DBI dbi;
 	private TripPersistence tripDAO;
-	private AuthorisationService authorisationService;
+	private AuthenticationService authenticationService;
 	
 	/**
 	 * @author Oussama Fahchouch
@@ -26,16 +27,17 @@ public class TripService {
 	public TripService() throws SQLException {
 		DbConnector.getInstance();
 		dbi = DbConnector.getDBI();
-		this.authorisationService = new AuthorisationService();
+		this.authenticationService = new AuthenticationService();
 	}
 
 	/**
 	 * @author Oussama Fahchouch
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
 	public boolean addTripByUser(int userId, String licensePlate, String startLocation, 
-			String endLocation, double startKilometergauge, double endKilometergauge) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+			String endLocation, double startKilometergauge, double endKilometergauge, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 			tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
 //			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
@@ -51,10 +53,11 @@ public class TripService {
 	/**
 	 * @author Oussama Fahchouch
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
 	public boolean addTripForProject(int projectId, int userId, String licensePlate, String startLocation, 
-			String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+			String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
@@ -71,10 +74,11 @@ public class TripService {
 	/**
 	 * @author Ali Rezaa Ghariebiyan
 	 * @throws SQLException
+	 * @throws AuthenticationException 
 	 */
 	public boolean updateTripForProject(int tripId, int projectId, int userId, String licensePlate, String startLocation,
-									 String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+									 String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			tripDAO.updateTripForProject(tripId, projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
@@ -90,11 +94,13 @@ public class TripService {
 
 	/**
 	 * @author Oussama Fahchouch
+	 * @param tokenHeaderParam 
 	 * @throws SQLException
 	 * @return TripModel fetchedTrip
+	 * @throws AuthenticationException 
 	 */
-	public TripModel fetchTrip(int id) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public TripModel fetchTrip(int id, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			TripModel fetchedTrip = tripDAO.findById(id);
@@ -111,9 +117,10 @@ public class TripService {
 	 * @author Oussama Fahchouch
 	 * @throws SQLException
 	 * @return List<TripModel> fetchedTrips 
+	 * @throws AuthenticationException 
 	 */
-	public List<TripModel> fetchAllTrips() throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public List<TripModel> fetchAllTrips(String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			List<TripModel> fetchedTrips = tripDAO.findAll();
@@ -129,9 +136,10 @@ public class TripService {
 	/**
 	 * @author Oussama Fahchouch
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
-	public List<TripModel> fetchAllTripsByUser(int userId) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public List<TripModel> fetchAllTripsByUser(int userId, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			List<TripModel> fetchedTrips = tripDAO.findByUserId(userId);
@@ -147,9 +155,10 @@ public class TripService {
 	/**
 	 * @author Oussama Fahchouch
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
-	public void deleteTrip(int id) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public void deleteTrip(int id, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			tripDAO.remove(id);
@@ -162,9 +171,10 @@ public class TripService {
 	 * @author Oussama Fahchouch
 	 * @return List<Integer> uniqueProjects
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
-	public List<Integer> fetchAllUniqueProjectIds(int userid) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public List<Integer> fetchAllUniqueProjectIds(int userid, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
@@ -181,9 +191,10 @@ public class TripService {
 	 * @author Oussama Fahchouch
 	 * @throws SQLException
 	 * @return TripModel fetchedTrip
+	 * @throws AuthenticationException 
 	 */
-	public TripModel fetchLastTrip() throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public TripModel fetchLastTrip(String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			TripModel fetchedTrip = tripDAO.findLastTrip();
@@ -200,9 +211,10 @@ public class TripService {
 	 * @author Oussama Fahchouch
 	 * @throws SQLException
 	 * @return List<integer> listWithCountTripsPerUserAndProjects
+	 * @throws AuthenticationException 
 	 */
-	public List<Integer> fetchTripsAndProjectsPerUser(int userid) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public List<Integer> fetchTripsAndProjectsPerUser(int userid, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			List<Integer> fetchTripsAndProjectsPerUser = new ArrayList();
 			
 			tripDAO = dbi.open(TripPersistence.class);
@@ -225,9 +237,10 @@ public class TripService {
     /**
      * @author Mike van Es
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    public List<TripModel> fetchAllTripsWithProject() throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+    public List<TripModel> fetchAllTripsWithProject(String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 	        List<TripModel> fetchedTrips = tripDAO.getAllTripsWithProject();
@@ -243,28 +256,26 @@ public class TripService {
     /**
      * @author Mike van Es
      * @throws SQLException 
+     * @throws AuthenticationException 
      */
-    public List<TripModel> fetchAllTripsByProject(int pid) throws SQLException {
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
-			tripDAO = dbi.open(TripPersistence.class);
+    public List<TripModel> fetchAllTripsByProject(int pid) throws SQLException, AuthenticationException {
+    	tripDAO = dbi.open(TripPersistence.class);
 
-	        List<TripModel> fetchedTrips = tripDAO.getAllTripsByProject(pid);
+        List<TripModel> fetchedTrips = tripDAO.getAllTripsByProject(pid);
 
-	        tripDAO.close();
+        tripDAO.close();
 
-	        return fetchedTrips;
-		} else {
-			return null;
-		}
+        return fetchedTrips;
     }
     
 	/**
 	 * @author Fifi
 	 *@return int
 	 * @throws SQLException 
+	 * @throws AuthenticationException 
 	 */
-	public int fetchTripsPerUser(int userid) throws SQLException{
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public int fetchTripsPerUser(int userid, String tokenHeaderParam) throws SQLException, AuthenticationException{
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
@@ -277,8 +288,8 @@ public class TripService {
 		}
 	}
 
-	public TripModel getTripByLicensePlate(String licensePlate){
-		if (this.authorisationService.decodeJWToken(this.authorisationService.encodeJWToken("test_user"))) {
+	public TripModel getTripByLicensePlate(String licensePlate, String tokenHeaderParam) throws AuthenticationException{
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
 			TripModel lastKnownTrip = tripDAO.findLastTripByLicensePlate(licensePlate);
