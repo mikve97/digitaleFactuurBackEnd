@@ -32,7 +32,6 @@ public class VehicleService {
     /**
      * @author Bram de Jong
      * @param userId
-     * @param totalTrips
      * @param licensePlate
      * @param vehicleName
      * @param vehicleType
@@ -160,6 +159,20 @@ public class VehicleService {
 		
     }
 
+	public boolean deleteVehicleById(int vehicleID, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
+			vehicleDAO = dbi.open(VehiclePersistence.class);
+			vehicleDAO.removeById(vehicleID);
+
+			vehicleDAO.close();
+
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	/**
 	 * @author Oussama Fahchouch
 	 * @param tokenHeaderParam 
@@ -171,7 +184,7 @@ public class VehicleService {
     	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
     		List<String> fetchedUniqueLicenseplates = vehicleDAO.findAllUniqueLicenseplates(userid);
-    		
+
     		vehicleDAO.close();
 
     		return fetchedUniqueLicenseplates;
