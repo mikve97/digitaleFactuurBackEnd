@@ -126,7 +126,7 @@ public class TripResource {
 	 * @throws AuthenticationException 
 	 */
 	@Path("/delete")
-	@DELETE
+	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void onDel(int[] tripsToDelete, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
 		tripService.onDeleteTrip(tripsToDelete, TokenHeaderParam);
