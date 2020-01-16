@@ -125,6 +125,17 @@ public class TripResource {
 	 * @author Oussama Fahchouch
 	 * @throws AuthenticationException 
 	 */
+	@Path("/delete")
+	@DELETE
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void onDel(int[] tripsToDelete, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+		tripService.onDeleteTrip(tripsToDelete, TokenHeaderParam);
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
+	 * @throws AuthenticationException 
+	 */
 	@Path("/fetch/unique-projectids/{userid}")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

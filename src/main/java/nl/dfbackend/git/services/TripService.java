@@ -169,6 +169,23 @@ public class TripService {
 	
 	/**
 	 * @author Oussama Fahchouch
+	 * @throws SQLException 
+	 * @throws AuthenticationException 
+	 */
+	public void onDeleteTrip(int[] tripsToDelete, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
+			tripDAO = dbi.open(TripPersistence.class);
+			
+			for(int id : tripsToDelete) {
+				tripDAO.remove(id);
+			}
+			
+			tripDAO.close();
+		}
+	}
+	
+	/**
+	 * @author Oussama Fahchouch
 	 * @return List<Integer> uniqueProjects
 	 * @throws SQLException 
 	 * @throws AuthenticationException 
