@@ -165,6 +165,7 @@ public class TripResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public List<Integer> getAllUniqueProjectIdsAndTripsAmount(@PathParam("userid") int userid, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+		
 		return tripService.fetchTripsAndProjectsPerUser(userid, TokenHeaderParam);
 	}
 	

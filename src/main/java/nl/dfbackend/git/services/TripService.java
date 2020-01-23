@@ -235,9 +235,10 @@ public class TripService {
 			List<Integer> fetchTripsAndProjectsPerUser = new ArrayList();
 			
 			tripDAO = dbi.open(TripPersistence.class);
-
+			System.out.println("userid to use: " + userid);
 			int fetchedTripsPerUser = tripDAO.findTripsPerUserID(userid);
 			List<Integer> fetchedUniqueProjectIds = tripDAO.findAllUniqueProjects(userid);
+			
 			int fetchedAmountProjectsPerUser = fetchedUniqueProjectIds.size();
 			
 			fetchTripsAndProjectsPerUser.add(fetchedTripsPerUser);
