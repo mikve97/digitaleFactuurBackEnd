@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/digitaleFactuurBackEnd.iml" filepath="$PROJECT_DIR$/digitaleFactuurBackEnd.iml" />
+      <module fileurl="file://$PROJECT_DIR$/nl.dfbackend.git.iml" filepath="$PROJECT_DIR$/nl.dfbackend.git.iml" />
+    </modules>
+  </component>
+</project>

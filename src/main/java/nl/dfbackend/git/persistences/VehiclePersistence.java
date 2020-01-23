@@ -68,9 +68,14 @@ public interface VehiclePersistence {
 	 */
 	@SqlUpdate("DELETE FROM vehicle WHERE licenseplate = :licensePlate")
 	void remove(@Bind("licensePlate") String licensePlate);
+	
 
-	@SqlUpdate("DELETE FROM vehicle WHERE vehicleId = :vehicleId")
-	void removeById(@Bind("vehicleId") int licensePlate);
+	/**
+	 * @author Fifi Halley
+	 */
+
+	@SqlUpdate("DELETE FROM vehicle WHERE vehicle_id = :vehicleId")
+	void removeById(@Bind("vehicleId") int vehicleId);
 
 	/**
 	 * @author Oussama Fahchouch

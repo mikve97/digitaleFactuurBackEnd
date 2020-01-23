@@ -30,6 +30,13 @@ public interface TripPersistence {
 	List<TripModel> findByUserId(@Bind("userid") int userid);
 	
 	/**
+	 * @author Fifi Halley & Wietse Nicolaas
+	 * @return  List<TripModel> trips
+	 */
+	@SqlQuery("SELECT * FROM trips where licenseplate = :licensePlate")
+	List<TripModel> findTripsByLicensePlate(@Bind("licensePlate") String licensePlate);
+	
+	/**
 	 * @author Oussama Fahchouch
 	 * @return List<TripModel> trips
 	 */
@@ -88,6 +95,9 @@ public interface TripPersistence {
 	 */
 	@SqlQuery("SELECT * FROM trips ORDER BY id DESC LIMIT 1")
 	TripModel findLastTrip();
+	
+
+	
 	
 	/**
 	 * @author Oussama Fahchouch

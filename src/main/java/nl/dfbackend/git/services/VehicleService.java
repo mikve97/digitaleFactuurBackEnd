@@ -115,6 +115,23 @@ public class VehicleService {
 		}
         
     }
+    
+	/**
+	 * @author Fifi Halley
+	 * @throws SQLException 
+	 * @throws AuthenticationException 
+	 */
+	public void onDeleteVehicle(int[] vehiclesToDelete, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
+			vehicleDAO = dbi.open(VehiclePersistence.class);
+			
+			for(int id : vehiclesToDelete) {
+				vehicleDAO.removeById(id);
+			}
+			
+			vehicleDAO.close();
+		}
+	}
 
     /**
      * @author Bram de Jong

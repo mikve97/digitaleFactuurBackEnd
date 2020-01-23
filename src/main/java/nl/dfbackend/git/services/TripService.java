@@ -122,8 +122,10 @@ public class TripService {
 	public List<TripModel> fetchAllTrips(String tokenHeaderParam) throws SQLException, AuthenticationException {
 		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
+			
 
 			List<TripModel> fetchedTrips = tripDAO.findAll();
+			System.out.println("--Test--" + fetchedTrips);
 			
 			tripDAO.close();
 
@@ -153,6 +155,24 @@ public class TripService {
 	}
 	
 	/**
+	 * @author Fifi Halley & Wietse Nicolaas
+	 * @throws SQLException 
+	 * @throws AuthenticationException 
+	 */
+	public List<TripModel> fetchTripsByLicensePlate(String licensePlate, String tokenHeaderParam) throws SQLException, AuthenticationException {
+		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
+			tripDAO = dbi.open(TripPersistence.class);
+
+			List<TripModel> fetchedTrips = tripDAO.findTripsByLicensePlate(licensePlate);
+			tripDAO.close();
+
+			return fetchedTrips;
+		} else {
+			return null;
+		}
+	}
+	
+	/**
 	 * @author Oussama Fahchouch
 	 * @throws SQLException 
 	 * @throws AuthenticationException 
@@ -168,7 +188,7 @@ public class TripService {
 	}
 	
 	/**
-	 * @author Oussama Fahchouch
+	 * @author Fifi Halley
 	 * @throws SQLException 
 	 * @throws AuthenticationException 
 	 */
