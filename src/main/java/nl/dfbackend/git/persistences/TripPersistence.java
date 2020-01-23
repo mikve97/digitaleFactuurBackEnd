@@ -114,6 +114,13 @@ public interface TripPersistence {
 	@SqlQuery("SELECT * FROM trips WHERE licenseplate = :licensePlate ORDER BY ID DESC LIMIT 1")
 	TripModel findLastTripByLicensePlate(@Bind("licensePlate") String licensePlate);
 
+	/**
+	 * @author Fifi Halley & Wietse Nicolaas
+	 * @return  List<TripModel> trips
+	 */
+	@SqlQuery("SELECT * FROM trips where licenseplate = :licensePlate")
+	List<TripModel> findTripsByLicensePlate(@Bind("licensePlate") String licensePlate);
+
 
 	void close();
 	
