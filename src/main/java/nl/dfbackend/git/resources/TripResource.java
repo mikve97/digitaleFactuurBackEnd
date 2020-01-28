@@ -32,17 +32,7 @@ public class TripResource {
 	public List<TripModel> getAllTrips(@HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
 		return tripService.fetchAllTrips(TokenHeaderParam);
 	}
-	
-	@POST
-	@Path("/testingPOST")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void testingBody(List<String> entity, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
-		System.out.println("body list param: " + entity);
-		System.out.println("header token param: " + TokenHeaderParam);
-		TripModel trip = tripService.fetchTrip(248, TokenHeaderParam);
-		System.out.println("Token works, trip is riden with licenseplate: " + trip.getLicensePlate());
-	}
-	
+
 	/**
 	 * @author Oussama Fahchouch
 	 * @throws AuthenticationException 

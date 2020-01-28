@@ -1,4 +1,4 @@
-package nl.dfbackend.git.authentication;
+package nl.dfbackend.git.old;
 
 import nl.dfbackend.git.models.UserModel;
 import nl.dfbackend.git.persistences.UserPersistence;
