@@ -177,6 +177,7 @@ public class TripResource {
 	 * @author Wietse Nicolaas & Fifi Halley
 	 * @throws AuthenticationException
 	 */
+	@Path("/getallByLicensePlate")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<TripModel> getTripsByLicensePlate(@QueryParam("licensePlate") String licensePlate, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
