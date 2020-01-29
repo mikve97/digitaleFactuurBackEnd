@@ -125,14 +125,15 @@ public class VehicleResource {
         return vehicleService.fetchAllVehiclesRegisteredByUser(userid, TokenHeaderParam);
     }
 
-//    /**
-//     * @author Fifi Halley
-//     */
-//    @Path("/delete/{vehicleId}")
-//    @DELETE
-//    public void getDel(@PathParam("vehicleId") int vehicleId, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
-//        vehicleService.deleteVehicleById(vehicleId, TokenHeaderParam);
-//    }
+    /**
+     * @author Fifi Halley
+     */
+    @Path("/delete/{vehicleId}")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void onDelVehicle(@PathParam("vehicleId") int vehicleId, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+        vehicleService.deleteVehicleById(vehicleId, TokenHeaderParam);
+    }
     
 	/**
 	 * @author Fifi Halley
