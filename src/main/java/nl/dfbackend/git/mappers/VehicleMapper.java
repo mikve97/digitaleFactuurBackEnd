@@ -22,7 +22,8 @@ public class VehicleMapper implements ResultSetMapper<VehicleModel> {
                 r.getInt("userid"),
                 r.getString("licenseplate"),
                 r.getString("vehiclename"),
-                r.getString("vehicletype")
+                r.getString("vehicletype"),
+                r.getString("vehicleBody")
         );
     }
 }

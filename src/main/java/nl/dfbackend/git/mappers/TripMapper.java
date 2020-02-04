@@ -29,7 +29,7 @@ public class TripMapper implements ResultSetMapper<TripModel> {
 				r.getString("endlocation"),
 				r.getDouble("startkilometergauge"),
 				r.getDouble("endkilometergauge"),
-				r.getDouble("drivenKm")
+				r.getFloat("drivenKm")
 				);
 	}
 }

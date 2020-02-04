@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import nl.dfbackend.git.models.CredentialModel;
 import nl.dfbackend.git.models.UserModel;
+import nl.dfbackend.git.models.UserToBeLoggedIn;
 import nl.dfbackend.git.services.AuthenticationService;
 
 @Path("/login")
@@ -23,12 +24,11 @@ public class AuthResource {
         this.authenticationService = new AuthenticationService();
     }
     
-    @Path("/{username}/{password}")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Optional<UserModel> onLogin(@PathParam("username") String username, @PathParam("password") String password) throws SQLException{
-        CredentialModel credential = new CredentialModel(username, password);
+    public Optional<UserModel> onLogin(UserToBeLoggedIn user) throws SQLException{
+        CredentialModel credential = new CredentialModel(user.getUsername(), user.getPassword());
 
         return authenticationService.authenticateUser(credential);
     }
