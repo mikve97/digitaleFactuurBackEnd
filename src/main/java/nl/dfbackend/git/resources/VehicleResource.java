@@ -59,30 +59,13 @@ public class VehicleResource {
 
     /**
      * @author Bram de Jong
-     */
-//    @Path("/vehicle/alter/for-user/{userId}/{licensePlate}/{vehicleName}/{vehicleType}")
-//    @POST
-//    @Produces(MediaType.APPLICATION_JSON)
-//    public boolean postAlterVehicleByUser(@PathParam("userId") int userId,
-//                                          @PathParam("licensePlate")String licensePlate,@PathParam("vehicleName") String vehicleName,@PathParam("vehicleType") String vehicleType) throws SQLException {
-//
-//        vehicleService.alterVehicleByUser(userId, licensePlate, vehicleName, vehicleType);
-//
-//        return true;
-//    }
-
-    /**
-     * @author Bram de Jong
      * @throws AuthenticationException 
      */
-    @Path("/vehicle/add/for-user/{userId}/{licensePlate}/{vehicleName}/{vehicleType}/{vehicleBody}")
+    @Path("/vehicle/add/for-user")
     @POST
     @Produces(MediaType.APPLICATION_JSON)
-    public boolean postVehicleByUser(@PathParam("userId") int userId,
-                                     @PathParam("licensePlate")String licensePlate,@PathParam("vehicleName") String vehicleName,@PathParam("vehicleType") String vehicleType,
-                                     @PathParam("vehicleBody") String vehicleBody
-                                     , @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
-        vehicleService.addVehicleByUser(userId, licensePlate, vehicleName, vehicleType, vehicleBody, TokenHeaderParam);
+    public boolean postVehicleByUser(VehicleModel vehicle, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+        vehicleService.addVehicleByUser(vehicle, TokenHeaderParam);
 
         return true;
     }

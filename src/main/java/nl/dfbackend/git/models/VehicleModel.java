@@ -2,23 +2,31 @@ package nl.dfbackend.git.models;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author Bram de Jong
  *
  */
 public class VehicleModel {
-    private int vehicle_id;
-    private int userId;
-    private String licensePlate;
-    private String vehicleName;
-    private String vehicleType;
-
-    public VehicleModel(int vehicle_id, int userId, String licensePlate, String vehicleName, String vehicleType) {
+	@JsonProperty int vehicle_id;
+    @JsonProperty int userId;
+    @JsonProperty String licensePlate;
+    @JsonProperty String vehicleName;
+    @JsonProperty String vehicleType;
+    @JsonProperty String vehicleBody;
+    
+    @JsonCreator
+    public VehicleModel(@JsonProperty("vehicle_id") int vehicle_id, @JsonProperty("userId") int userId, 
+    		@JsonProperty("licensePlate") String licensePlate, @JsonProperty("vehicleName") String vehicleName, 
+    		@JsonProperty("vehicleType") String vehicleType, @JsonProperty("vehicleBody") String vehicleBody) {
         this.vehicle_id = vehicle_id;
         this.userId = userId;
         this.licensePlate = licensePlate;
         this.vehicleName = vehicleName;
         this.vehicleType = vehicleType;
+        this.vehicleBody = vehicleBody;
     }
 
     public int getVehicle_id() {
@@ -44,8 +52,16 @@ public class VehicleModel {
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate;
     }
+    
+    public String getVehicleBody() {
+		return vehicleBody;
+	}
 
-    public String getVehicleName() { return vehicleName; }
+	public void setVehicleBody(String vehicleBody) {
+		this.vehicleBody = vehicleBody;
+	}
+
+	public String getVehicleName() { return vehicleName; }
 
     public void setVehicleName(String vehicleName) { this.vehicleName = vehicleName; }
 

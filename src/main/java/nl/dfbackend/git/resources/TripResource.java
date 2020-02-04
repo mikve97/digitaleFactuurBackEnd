@@ -49,17 +49,13 @@ public class TripResource {
 	 * @author Oussama Fahchouch
 	 * @throws AuthenticationException 
 	 */
-	@Path("/trip/add/for-project/{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}/{drivenKm}")
+	@Path("/trip/add/for-project")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean postTripForProject(@PathParam("projectId") int projectId,@PathParam("userId") int userId,
-			@PathParam("licensePlate")String licensePlate,@PathParam("startLocation") String startLocation,@PathParam("endLocation") String endLocation,
-			@PathParam("startKilometergauge") double startKilometergauge,
-			@PathParam("endKilometergauge") double endKilometergauge, @PathParam("drivenKm") float drivenKm, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
-		
-		tripService.addTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm, TokenHeaderParam);
-		
+	public boolean postTripForProjectNew(TripModel trip, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {		
+		tripService.addTripForProject(trip, TokenHeaderParam);
+
 		return true;
 	}
 
@@ -67,17 +63,13 @@ public class TripResource {
 	 * @author Ali Rezaa Ghariebiyan
 	 * @throws AuthenticationException 
 	 */
-	@Path("/trip/update/for-project/{tripId}/{projectId}/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}/{drivenKm}")
+	@Path("/trip/update/for-project")
 	@PUT
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean putTripForProject(@PathParam("tripId") int tripId,@PathParam("projectId") int projectId,@PathParam("userId") int userId,
-									  @PathParam("licensePlate")String licensePlate,@PathParam("startLocation") String startLocation,@PathParam("endLocation") String endLocation,
-									  @PathParam("startKilometergauge") double startKilometergauge,
-									  @PathParam("endKilometergauge") double endKilometergauge, @PathParam("drivenKm") float drivenKm
-									  , @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+	public boolean putTripForProject(TripModel trip, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
 
-		tripService.updateTripForProject(tripId, projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm, TokenHeaderParam);
+		tripService.updateTripForProject(trip, TokenHeaderParam);
 
 		return true;
 	}
@@ -86,16 +78,13 @@ public class TripResource {
 	 * @author Oussama Fahchouch
 	 * @throws AuthenticationException 
 	 */
-	@Path("/trip/add/for-user/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}")
+	@Path("/trip/add/for-user")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean postTripByUser(@PathParam("userId") int userId,
-			@PathParam("licensePlate")String licensePlate,@PathParam("startLocation") String startLocation,@PathParam("endLocation") String endLocation,
-			@PathParam("startKilometergauge") double startKilometergauge,@PathParam("endKilometergauge") double endKilometergauge
-			, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+	public boolean postTripByUser(TripModel trip, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
 		
-		tripService.addTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, TokenHeaderParam);
+		tripService.addTripByUser(trip, TokenHeaderParam);
 		
 		return true;
 	}
@@ -112,7 +101,7 @@ public class TripResource {
 	}
 	
 	/**
-	 * @author Oussama Fahchouch
+	 * @author Fifi & Oussama Fahchouch
 	 * @throws AuthenticationException 
 	 */
 	@Path("/delete")

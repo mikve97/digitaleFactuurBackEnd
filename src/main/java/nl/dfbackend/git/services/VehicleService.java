@@ -40,10 +40,11 @@ public class VehicleService {
      * @throws SQLException 
      * @throws AuthenticationException 
      */
-    public boolean addVehicleByUser(int userId,String licensePlate, String vehicleName, String vehicleType,  String vehicleBody, String tokenHeaderParam) throws SQLException, AuthenticationException {
+    public boolean addVehicleByUser(VehicleModel vehicle, String tokenHeaderParam) throws SQLException, AuthenticationException {
     	if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
     		vehicleDAO = dbi.open(VehiclePersistence.class);
-            vehicleDAO.createVehicleByUser(licensePlate, userId, vehicleName, vehicleType, vehicleBody);
+            vehicleDAO.createVehicleByUser(vehicle.getLicensePlate(), vehicle.getUserId(),
+            		vehicle.getVehicleName(), vehicle.getVehicleType(), vehicle.getVehicleBody());
 
             vehicleDAO.close();
 

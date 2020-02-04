@@ -35,11 +35,11 @@ public class TripService {
 	 * @throws SQLException 
 	 * @throws AuthenticationException 
 	 */
-	public boolean addTripByUser(int userId, String licensePlate, String startLocation, 
-			String endLocation, double startKilometergauge, double endKilometergauge, String tokenHeaderParam) throws SQLException, AuthenticationException {
+	public boolean addTripByUser(TripModel trip, String tokenHeaderParam) throws SQLException, AuthenticationException {
 		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
-			tripDAO.createTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge);
+			tripDAO.createTripByUser(trip.getUserId(), trip.getLicensePlate(), trip.getStartLocation(), trip.getEndLocation(),
+					trip.getStartKilometergauge(), trip.getEndKilometergauge());
 //			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 			
 			tripDAO.close();
@@ -55,12 +55,13 @@ public class TripService {
 	 * @throws SQLException 
 	 * @throws AuthenticationException 
 	 */
-	public boolean addTripForProject(int projectId, int userId, String licensePlate, String startLocation, 
-			String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm, String tokenHeaderParam) throws SQLException, AuthenticationException {
+	public boolean addTripForProject(TripModel trip, String tokenHeaderParam) throws SQLException, AuthenticationException {
 		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
-			tripDAO.createTripForProject(projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
+			tripDAO.createTripForProject(trip.getProjectId(), trip.getUserId(),
+					trip.getLicensePlate(), trip.getStartLocation(), trip.getEndLocation(), trip.getStartKilometergauge(), trip.getEndKilometergauge(),
+					trip.getDrivenKm());
 //			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 			
 			tripDAO.close();
@@ -76,12 +77,13 @@ public class TripService {
 	 * @throws SQLException
 	 * @throws AuthenticationException 
 	 */
-	public boolean updateTripForProject(int tripId, int projectId, int userId, String licensePlate, String startLocation,
-									 String endLocation, double startKilometergauge, double endKilometergauge, float drivenKm, String tokenHeaderParam) throws SQLException, AuthenticationException {
+	public boolean updateTripForProject(TripModel trip, String tokenHeaderParam) throws SQLException, AuthenticationException {
 		if (this.authenticationService.authenticate(tokenHeaderParam).isPresent()) {
 			tripDAO = dbi.open(TripPersistence.class);
 
-			tripDAO.updateTripForProject(tripId, projectId, userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, drivenKm);
+			tripDAO.updateTripForProject(trip.getTripId(), trip.getProjectId(), trip.getUserId(), 
+					trip.getLicensePlate(), trip.getStartLocation(), trip.getEndLocation(), trip.getStartKilometergauge(), trip.getEndKilometergauge(),
+					trip.getDrivenKm());
 //			tripDAO.incrementAmountOfTripsMadeWithVehicle(licensePlate);
 
 			tripDAO.close();

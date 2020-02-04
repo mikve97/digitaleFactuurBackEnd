@@ -3,13 +3,13 @@ package nl.dfbackend.git.models;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class MyEntity {
+public class UserToBeLoggedIn {
 	@JsonProperty String username;
 	
 	@JsonProperty String password;
 	
 	@JsonCreator
-    public MyEntity(@JsonProperty("username") String username,
+    public UserToBeLoggedIn(@JsonProperty("username") String username,
                      @JsonProperty("password") String password){
         this.username = username;
         this.password = password;

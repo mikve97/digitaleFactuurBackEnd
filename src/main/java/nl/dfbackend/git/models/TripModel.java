@@ -1,21 +1,28 @@
 package nl.dfbackend.git.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author Oussamam Fahchouch
  *
  */
 public class TripModel {
-    private int id;
-    private int projectId;
-    private int userId;
-    private String licensePlate;
-    private String startLocation;
-    private String endLocation;
-    private double startKilometergauge;
-    private double endKilometergauge;
-	private double drivenKm;
-
-    public TripModel(int id, int projectId, int userId, String licensePlate, String startLocation, String endLocation, double startKilometergauge, double endKilometergauge, double drivenKm) {
+	@JsonProperty int id;
+    @JsonProperty int projectId;
+    @JsonProperty int userId;
+    @JsonProperty String licensePlate;
+    @JsonProperty String startLocation;
+    @JsonProperty String endLocation;
+    @JsonProperty double startKilometergauge;
+    @JsonProperty double endKilometergauge;
+    @JsonProperty float drivenKm;
+    
+    @JsonCreator
+    public TripModel(@JsonProperty("id") int id, @JsonProperty("projectId") int projectId, @JsonProperty("userId") int userId, 
+    		@JsonProperty("licensePlate") String licensePlate, @JsonProperty("startLocation") String startLocation, 
+    		@JsonProperty("endLocation") String endLocation, @JsonProperty("startKilometergauge") double startKilometergauge, 
+    		@JsonProperty("endKilometergauge") double endKilometergauge, @JsonProperty("drivenKm") float drivenKm) {
 		this.id = id;
 		this.projectId = projectId;
 		this.userId = userId;
@@ -91,11 +98,11 @@ public class TripModel {
 		this.endKilometergauge = endKilometergauge;
 	}
 
-	public double getDrivenKm() {
+	public float getDrivenKm() {
 		return this.drivenKm;
 	}
 
-	public void setDrivenKm(double drivenKm) {
+	public void setDrivenKm(float drivenKm) {
 		this.drivenKm = drivenKm;
 	}
 }
