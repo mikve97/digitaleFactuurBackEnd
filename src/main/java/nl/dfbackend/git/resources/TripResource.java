@@ -54,8 +54,7 @@ public class TripResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public boolean postTripForProjectNew(TripModel trip, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {		
-		tripService.addTripForProject(trip.getProjectId(), trip.getUserId(), trip.getLicensePlate(), trip.getStartLocation(), trip.getEndLocation(), 
-				trip.getStartKilometergauge(), trip.getEndKilometergauge(), trip.getDrivenKm(), TokenHeaderParam);
+		tripService.addTripForProject(trip, TokenHeaderParam);
 
 		return true;
 	}
@@ -70,9 +69,7 @@ public class TripResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public boolean putTripForProject(TripModel trip, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
 
-		tripService.updateTripForProject(trip.getTripId(), trip.getProjectId(), trip.getUserId(), 
-				trip.getLicensePlate(), trip.getStartLocation(), trip.getEndLocation(), trip.getStartKilometergauge(), trip.getEndKilometergauge(),
-				trip.getDrivenKm(), TokenHeaderParam);
+		tripService.updateTripForProject(trip, TokenHeaderParam);
 
 		return true;
 	}
@@ -81,16 +78,13 @@ public class TripResource {
 	 * @author Oussama Fahchouch
 	 * @throws AuthenticationException 
 	 */
-	@Path("/trip/add/for-user/{userId}/{licensePlate}/{startLocation}/{endLocation}/{startKilometergauge}/{endKilometergauge}")
+	@Path("/trip/add/for-user")
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean postTripByUser(@PathParam("userId") int userId,
-			@PathParam("licensePlate")String licensePlate,@PathParam("startLocation") String startLocation,@PathParam("endLocation") String endLocation,
-			@PathParam("startKilometergauge") double startKilometergauge,@PathParam("endKilometergauge") double endKilometergauge
-			, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
+	public boolean postTripByUser(TripModel trip, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
 		
-		tripService.addTripByUser(userId, licensePlate, startLocation, endLocation, startKilometergauge, endKilometergauge, TokenHeaderParam);
+		tripService.addTripByUser(trip, TokenHeaderParam);
 		
 		return true;
 	}
@@ -107,7 +101,7 @@ public class TripResource {
 	}
 	
 	/**
-	 * @author Oussama Fahchouch
+	 * @author Fifi & Oussama Fahchouch
 	 * @throws AuthenticationException 
 	 */
 	@Path("/delete")

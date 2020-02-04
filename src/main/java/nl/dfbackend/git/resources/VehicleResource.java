@@ -65,8 +65,7 @@ public class VehicleResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     public boolean postVehicleByUser(VehicleModel vehicle, @HeaderParam("Token") String TokenHeaderParam) throws SQLException, AuthenticationException {
-        vehicleService.addVehicleByUser(vehicle.getUserId(), vehicle.getLicensePlate(), vehicle.getVehicleName(),
-        		vehicle.getVehicleType(), vehicle.getVehicleBody(), TokenHeaderParam);
+        vehicleService.addVehicleByUser(vehicle, TokenHeaderParam);
 
         return true;
     }
