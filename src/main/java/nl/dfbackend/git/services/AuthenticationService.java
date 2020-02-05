@@ -57,13 +57,8 @@ public class AuthenticationService implements Authenticator<String, UserModel> {
 		 
 		user.setAuthToken(authorisationService.encodeJWToken(user.getUsername()));
 		
-        System.out.println(user.getAuthToken());
-        
-      
         userDAO.close();
         
         return Optional.of(user);
     }
-
-
 }
