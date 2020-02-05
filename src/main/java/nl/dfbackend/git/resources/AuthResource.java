@@ -31,8 +31,15 @@ public class AuthResource {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public boolean onAuthenticateServingPage(String test, @HeaderParam("Token") String TokenHeaderParam) throws SQLException {    	
-        return authorisationService.decodeJWToken(TokenHeaderParam);
+    public boolean onAuthenticateServingPage(@HeaderParam("Token") String TokenHeaderParam) throws SQLException {
+    	boolean guard = false;
+    	
+    	if(authorisationService.decodeJWToken(TokenHeaderParam)) {
+    		guard = true;
+    		return guard;
+    	}
+    	
+        return guard;
     }
     
     @Path("/login")

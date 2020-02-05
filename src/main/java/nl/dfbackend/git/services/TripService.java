@@ -4,7 +4,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.dfbackend.git.persistences.VehiclePersistence;
 import org.skife.jdbi.v2.DBI;
 
 import io.dropwizard.auth.AuthenticationException;
